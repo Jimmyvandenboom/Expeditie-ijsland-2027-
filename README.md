@@ -45,7 +45,6 @@ Bewerk **data.js**. Hier staan alle programma's, routestops, paklijstitems, kenn
 { title: 'Aflevering 1', description: 'Onze eerste avonturen', src: 'audio/aflevering-1.mp3' }
 ```
 
-De audiospeler verschijnt automatisch wanneer er afleveringen zijn. De kaartpagina heeft routeoverzichten met Google Maps-knoppen, geen ingebedde live kaart. De South Coast-route heeft ook twee deelroutes omdat mobiele Google Maps-browsers soms maximaal drie tussenstops ondersteunen. Brúarfoss in dag 4 is optioneel; de hoofdroute bevat deze stop.
 
 De homekaart ‘Volgende avontuur’ gebruikt de eerste dag uit `days`; die kan later op datum/tijd worden geselecteerd. Alle weergegeven programmatijden zijn lokale tijden. De app geeft geen live wijzigingen of gegarandeerde noorderlichtwaarnemingen.
 
@@ -122,8 +121,32 @@ en het eerste programma-event, in Nederlandse wintertijd (UTC+1).
 Voeg later een podcast toe aan de bestaande `episodes`-lijst met `locationId`
 (gelijk aan het GEO-locatie-id), `title` en `src`; de locatiecard toont dan audio.
 Tot die tijd staat er expliciet ‘Locatiepodcast volgt’. Afbeeldingen en GEO-code
-worden offline opgeslagen door cacheversie v10.
+worden offline opgeslagen door cacheversie v11.
 
-`tests/geo-future.cjs` vergelijkt V1–V3-hero's pixel voor pixel met commit
+`tests/geo-future.cjs` vergelijkt alle berekende stijlen en afmetingen van V1–V3-hero's met commit
 `fb29c27` en controleert V4 op vier schermbreedtes, countdown-grenzen,
 centrale gegevens en uitklapbare kijkopdrachten.
+
+
+### Interactieve dagroutes
+
+De kaartpagina gebruikt lokaal meegeleverde Leaflet 1.9.4 (BSD-2-Clause),
+OpenStreetMap-kaarttegels met bronvermelding en de publieke OSRM-wegroutering.
+Er is geen API-key nodig. Deze externe diensten vereisen internet en kunnen
+tijdelijk onbeschikbaar zijn. Er worden geen tegels vooraf gedownload of door
+de service worker bulk-gecachet. Blokkeert de routering, dan tonen expliciet
+schematische stippellijnen de stopvolgorde. Offline blijven dagselector, stops
+en deze lijnen werken; de achtergrondkaart vereist internet. Dit toont de
+geplande reis, geen GPS-positie of live verkeersinformatie.
+
+Alle dagvolgordes komen uit `days[].route` in `data.js`. `routeLocations` bevat
+per unieke locatie één zichtbare naam en afgeronde kaartcoördinaten;
+hetzelfde wordt gebruikt voor alle vier de thema's. De laatst gekozen kaartdag
+wordt lokaal onthouden. Stops zijn aanklikbaar en de knop ‘Alle stops’ zoomt
+terug naar de volledige route. De externe Maps-link en de deelroutes voor
+lange routes worden uit dezelfde daggegevens samengesteld.
+
+`tests/route-map.cjs` test alle vijf dagen in vier thema's op telefoon en
+desktop, plus zoom/pan, pop-ups, routevolgorde, herstel na offline gebruik en
+fouten van de routering. Externe diensten gebruiken expliciete testfixtures:
+live OSM/OSRM zijn vanuit deze cloudomgeving geblokkeerd (HTTP 403).

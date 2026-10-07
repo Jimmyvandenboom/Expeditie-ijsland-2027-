@@ -11,7 +11,8 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
   const weather={utc_offset_seconds:0,hourly:{time:Array.from({length:96},(_,i)=>iso(today.getTime()+i*3600000)),cloud_cover:Array.from({length:96},(_,i)=>i%24===23?20:70)},daily:{sunrise:Array.from({length:4},(_,i)=>iso(today.getTime()+i*86400000+6*3600000)),sunset:Array.from({length:4},(_,i)=>iso(today.getTime()+i*86400000+18*3600000))}};
   await ctx.route('https://services.swpc.noaa.gov/**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(apiMode==='valid'?[['time_tag','Kp'],[iso(Date.now()-3600000)+':00',4]]:apiMode==='stale'?[['time_tag','Kp'],['2020-01-01 00:00:00',9]]:[])}));
   await ctx.route('https://api.open-meteo.com/**',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(apiMode==='valid'?weather:apiMode==='malformed'?{utc_offset_seconds:0,hourly:{time:'invalid',cloud_cover:[20]},daily:{sunrise:[],sunset:[]}}:{})}));
-  await ctx.addInitScript(()=>{if(!localStorage.getItem('expeditie-ijsland-2027-packing'))localStorage.setItem('expeditie-ijsland-2027-packing','["Winterjas"]');});
+  await require('./map-fixtures.cjs')(ctx);
+    await ctx.addInitScript(()=>{if(!localStorage.getItem('expeditie-ijsland-2027-packing'))localStorage.setItem('expeditie-ijsland-2027-packing','["Winterjas"]');});
   const page=await ctx.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(url);assert.ok(await page.locator('#welcome').isVisible());assert.equal(await page.locator('#welcome input').count(),2);assert.equal(await page.locator('#welcome [data-bus]').count(),0);
   await page.locator('#welcome input[name=firstName]').fill('Testreiziger');await page.locator('#welcome input[name=className]').fill('4T');await page.getByRole('button',{name:'Start mijn expeditie'}).click();

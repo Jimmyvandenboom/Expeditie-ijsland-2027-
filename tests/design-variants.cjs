@@ -17,6 +17,7 @@ const server=http.createServer((req,res)=>{
   const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH||'/usr/bin/chromium',args:['--no-sandbox']});
   try{
     const ctx=await browser.newContext({viewport:{width:375,height:812}});
+    await require('./map-fixtures.cjs')(ctx);
     await ctx.addInitScript(()=>{if(!localStorage.getItem('expeditie-ijsland-2027-profile'))localStorage.setItem('expeditie-ijsland-2027-profile',JSON.stringify({firstName:'Test',className:'Testklas',bus:null}));});
     const page=await ctx.newPage();const errors=[];
     page.on('pageerror',e=>errors.push(e.message));page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text());});
@@ -48,8 +49,8 @@ const server=http.createServer((req,res)=>{
         await page.goto(url+'/#programma');await page.locator(`.day-card[href="#dag-${day}"]`).click();await page.locator('.timeline').waitFor();
         assert.equal(await page.locator('.event').count(),await page.evaluate(i=>EXPEDITION.days[i].events.length,day-1));
       }
-      await page.goto(url+'/#kaart');assert.equal(await page.locator('.route-grid .button').count(),5);
-      for(const href of await page.locator('.route-grid .button').evaluateAll(links=>links.map(link=>link.href))){const u=new URL(href);assert.equal(u.hostname,'www.google.com');assert.ok(u.searchParams.get('origin'));assert.ok(u.searchParams.get('destination'));}
+      await page.goto(url+'/#kaart');assert.equal(await page.locator('.route-map-external .button').count(),1);
+      for(const href of await page.locator('.route-map-external .button').evaluateAll(links=>links.map(link=>link.href))){const u=new URL(href);assert.equal(u.hostname,'www.google.com');assert.ok(u.searchParams.get('origin'));assert.ok(u.searchParams.get('destination'));}
       await page.goto(url+'/#ontdek');await page.locator('summary').first().click();assert.ok(await page.locator('details').first().evaluate(el=>el.open));
       const fact=await page.locator('#fact-text').textContent();await page.locator('#new-fact').click();assert.notEqual(await page.locator('#fact-text').textContent(),fact);
       await page.goto(url+'/#praktisch');assert.equal(await page.locator('.plain-list li').count(),4);assert.equal(await page.locator('a[href="tel:112"]').count(),1);
