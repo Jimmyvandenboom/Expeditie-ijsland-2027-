@@ -257,3 +257,5 @@ dialog h2{font-size:30px;line-height:1.15}dialog .button{width:100%;margin:8px 0
  [data-design="v4"] .hero-content>.button{grid-column:1;grid-row:5;width:fit-content}
 }
 [data-design="v4"] .event:not(:last-child) .event-dot:after{background:none;border-left:1px dashed #bdcf9e}
+[data-design="v4"] .hero-caption{bottom:12px}
+@media(max-width:750px){[data-design="v4"] .hero{padding-bottom:58px}}
