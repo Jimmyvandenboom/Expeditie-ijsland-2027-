@@ -121,7 +121,7 @@ en het eerste programma-event, in Nederlandse wintertijd (UTC+1).
 Voeg later een podcast toe aan de bestaande `episodes`-lijst met `locationId`
 (gelijk aan het GEO-locatie-id), `title` en `src`; de locatiecard toont dan audio.
 Tot die tijd staat er expliciet ‘Locatiepodcast volgt’. Afbeeldingen en GEO-code
-worden offline opgeslagen door cacheversie v11.
+worden offline opgeslagen door cacheversie v12.
 
 `tests/geo-future.cjs` vergelijkt alle berekende stijlen en afmetingen van V1–V3-hero's met commit
 `fb29c27` en controleert V4 op vier schermbreedtes, countdown-grenzen,
@@ -150,3 +150,12 @@ lange routes worden uit dezelfde daggegevens samengesteld.
 desktop, plus zoom/pan, pop-ups, routevolgorde, herstel na offline gebruik en
 fouten van de routering. Externe diensten gebruiken expliciete testfixtures:
 live OSM/OSRM zijn vanuit deze cloudomgeving geblokkeerd (HTTP 403).
+
+
+De stops Bridge Between Continents en Gunnuhver hebben in `routeLocations`
+ook voorbereide GEO-velden: `geoTheme`, `description`, `podcastTitle`,
+`audioSrc`, `fact`, `lookTask`, `photoChallenge` en `visited`, naast id, naam en
+coördinaten. `audioSrc: null` betekent dat er nog geen podcastaudio bestaat.
+Lege contentvelden zijn gereserveerd voor later; `visited: false` is alleen
+een standaardwaarde voor toekomstige lokale bezoekregistratie. Er wordt
+geen bezoekstatus van leerlingen in de publieke reisdata opgeslagen.

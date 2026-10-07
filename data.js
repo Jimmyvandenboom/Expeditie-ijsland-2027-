@@ -2,7 +2,7 @@ window.EXPEDITION = {
   title: 'EXPEDITIE IJSLAND 2027', school: 'Maris College Bohemen', dates: '31 januari – 4 februari 2027', travelers: 27,
   practical: { guides: ['Mw. C. de Jong','Mr. J. van den Boom','Mr. Durmaz','Mr. Vink'], accommodation: 'Héraðsskólinn / The Old School', address: 'Laugarbraut 2, 840 Laugarvatn, Iceland', reykjavik: 'Hostel Reykjavík – wordt nog bekendgemaakt.', emergencyMessage: 'Bij een noodgeval: neem direct contact op met één van de begeleiders. Het noodnummer wordt tijdens de informatieavond gedeeld.', communication: 'Teams IJsland 2027' },
   days: [
-    { date: 'Zondag 31 januari', title: 'Welkom in IJsland', theme: 'Tussen twee continenten', icon: '✈️', events: [['08:30','Verzamelen bij Maris College Bohemen + paspoortcontrole'],['11:20','Vlucht HV6887 Schiphol → Keflavík'],['13:45','Aankomst Keflavík'],['14:30–16:00','Bridge Between Continents'],['±16:30','Vertrek richting Laugarvatn'],['±18:15','Aankomst Héraðsskólinn'],['19:00','Diner'],['20:00','Kamers + programma'],['21:30','Rust / bed']], route: ['Keflavík International Airport, Iceland','Bridge Between Continents, Iceland','Laugarvatn, Iceland'] },
+    { date: 'Zondag 31 januari', title: 'Welkom in IJsland', theme: 'Tussen twee continenten', icon: '✈️', events: [['08:30','Verzamelen Maris Bohemen + paspoortcheck'],['11:20','Vertrek Schiphol met HV6887'],['13:45','Aankomst Keflavík'],['±14:30','Vertrek vanaf Keflavík Airport'],['±15:00','Bridge Between Continents'],['±15:45','Gunnuhver Geothermal Area'],['±16:15','Vertrek richting Laugarvatn'],['±18:00','Aankomst accommodatie Laugarvatn'],['19:00','Diner'],['20:00','Kamers & avondprogramma'],['21:30','Naar bed']], route: ['Keflavík International Airport, Iceland','Bridge Between Continents, Iceland','Gunnuhver Geothermal Area, Iceland','Laugarvatn, Iceland'] },
     { date: 'Maandag 1 februari', title: 'Watervallen', theme: 'Watervallen, ijs & zwart zand', icon: '🌊', events: [['08:00','Ontbijt + lunchpakket maken'],['09:00','Vertrek Laugarvatn'],['10:00–11:00','Seljalandsfoss'],['11:30–13:00','Skógafoss + lunch'],['13:30–14:30','Sólheimajökull – wandeling'],['15:00–16:00','Reynisfjara – zwart strand'],['16:15–17:00','Vík – boodschappen Krónan'],['19:30','Aankomst Laugarvatn'],['20:00','Diner'],['22:00','Aurora Lookout'],['23:00','Terug / bed']], route: ['Laugarvatn, Iceland','Seljalandsfoss, Iceland','Skógafoss, Iceland','Sólheimajökull, Iceland','Reynisfjara, Iceland','Vík, Iceland','Laugarvatn, Iceland'] },
     { date: 'Dinsdag 2 februari', title: 'Geologie & Ontspanning', theme: 'Aardplaten ontmoeten warm water', icon: '♨️', events: [['08:00','Ontbijt + lunchpakket'],['09:00','Vertrek'],['09:00–12:00','Þingvellir / Silfra wandeling'],['12:45–13:15','Kerið + lunch'],['14:45–17:00','Secret Lagoon'],['17:30','Laugarvatn'],['18:00','Spelletjes / vrije tijd'],['20:00','Optioneel Aurora Lookout'],['23:00','Bed']], route: ['Laugarvatn, Iceland','Silfra, Thingvellir, Iceland','Kerið, Iceland','Secret Lagoon, Iceland','Laugarvatn, Iceland'] },
     { date: 'Woensdag 3 februari', title: 'Golden Circle & Reykjavík', theme: 'Van natuurkracht naar stadslicht', icon: '🌋', events: [['08:00','Ontbijt + tassen pakken'],['09:00','Vertrek Laugarvatn'],['09:30–10:30','Gullfoss'],['10:45–13:00','Geysir / Strokkur'],['±15:00','Aankomst Reykjavík'],['15:00–18:30','Reykjavík ontdekken'],['18:30–19:30','Diner Reykjavík'],['±20:00','Hostel / overnachting Reykjavík']], route: ['Laugarvatn, Iceland','Gullfoss, Iceland','Geysir, Iceland','Reykjavík, Iceland'] },
@@ -11,7 +11,22 @@ window.EXPEDITION = {
   // Eén locatiecatalogus voor de embedded kaart en de bestaande centrale dagroutes.
   routeLocations: {
     'Keflavík International Airport, Iceland': { name:'Keflavík Airport', lat:63.997, lng:-22.624 },
-    'Bridge Between Continents, Iceland': { name:'Bridge Between Continents', lat:63.868, lng:-22.675 },
+    // GEO-content voorbereid; audioSrc blijft null tot er echte audio beschikbaar is.
+    // visited is een standaardwaarde voor toekomstige lokale bezoekregistratie.
+    'Bridge Between Continents, Iceland': {
+      id:'bridge-between-continents', name:'Bridge Between Continents', lat:63.868, lng:-22.675,
+      geoTheme:'platentektoniek / Mid-Atlantische Rug',
+      description:'Een brug over een spleet in het vulkanische landschap van Reykjanes, bij de grens tussen twee aardplaten.',
+      podcastTitle:'Waarom scheurt IJsland uit elkaar?', audioSrc:null,
+      fact:'', lookTask:'', photoChallenge:'', visited:false
+    },
+    'Gunnuhver Geothermal Area, Iceland': {
+      id:'gunnuhver', name:'Gunnuhver Geothermal Area', lat:63.820, lng:-22.686,
+      geoTheme:'geothermie / vulkanisme',
+      description:'Een geothermisch gebied op Reykjanes met stoompluimen en hete modderbronnen.',
+      podcastTitle:'Waarom kookt de aarde hier?', audioSrc:null,
+      fact:'', lookTask:'', photoChallenge:'', visited:false
+    },
     'Laugarvatn, Iceland': { name:'Laugarvatn', lat:64.218, lng:-20.733 },
     'Seljalandsfoss, Iceland': { name:'Seljalandsfoss', lat:63.6156, lng:-19.9886 },
     'Skógafoss, Iceland': { name:'Skógafoss', lat:63.532, lng:-19.511 },
