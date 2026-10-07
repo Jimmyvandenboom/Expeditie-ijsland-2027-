@@ -1,1 +1,14 @@
-{"name":"expeditie-ijsland-2027","version":"1.1.0","private":true,"description":"Mobiele expeditiegids van Maris College Bohemen","scripts":{"start":"python3 -m http.server 8000 --bind 0.0.0.0","check":"node --check app.js && node --check data.js && node --check sw.js"}}
+{
+  "name": "expeditie-ijsland-2027",
+  "version": "1.1.0",
+  "private": true,
+  "description": "Mobiele expeditiegids van Maris College Bohemen",
+  "scripts": {
+    "start": "python3 -m http.server 8000 --bind 0.0.0.0",
+    "check": "node --check app.js && node --check data.js && node --check sw.js",
+    "test": "node tests/service-worker-update.cjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

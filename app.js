@@ -21,7 +21,7 @@ function heading(kicker,title,text='') { return `<div class="page-heading"><span
 const tiles = [ ['programma','📅','Programma','5 dagen vol avontuur'],['kaart','🗺️','Expeditiekaart','Volg onze route'],['paklijst','🎒','Paklijst','Klaar voor vertrek?'],['ontdek','🌋','Ontdek IJsland','Het land van vuur & ijs'],['podcast','🎙️','Podcast','Verhalen van onderweg'],['praktisch','🚨','Praktisch','Goed voorbereid op pad'] ];
 function tileGrid(items) { return `<div class="tile-grid">${items.map(([href,icon,title,sub]) => `<a class="tile" href="#${href}"><span class="tile-icon">${icon}</span><span><strong>${title}</strong><small>${sub}</small></span><span class="arrow">→</span></a>`).join('')}</div>`; }
 function home() {
-  return `<section class="hero"><div class="hero-content"><span class="eyebrow">MARIS COLLEGE BOHEMEN · EXPEDITIE 01</span><h1>Expeditie<br><em>IJsland</em></h1><p>Vuur onder je voeten. Noorderlicht boven je hoofd.<br>Vijf dagen IJsland die je niet vergeet.</p><div class="hero-meta"><span>📅 ${e(D.dates)}</span><span>👥 ${D.travelers} reizigers</span></div><a class="button" href="#programma">Ontdek het programma <span>→</span></a></div><span class="hero-caption">IJSLAND / LAND VAN VUUR & IJS<br>Illustratie van het IJslandse landschap</span></section>
+  return `<section class="hero"><div class="hero-logo-slot">${D.heroLogo ? `<img class="hero-logo" src="${e(D.heroLogo)}" alt="Maris College Bohemen" onerror="this.hidden=true" />` : ''}</div><div class="hero-content"><span class="eyebrow">MARIS COLLEGE BOHEMEN</span><div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><img class="hero-island" src="assets/iceland.svg" alt="Silhouet van IJsland" width="480" height="330"></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.<br>Vijf dagen IJsland die je niet vergeet.</p><div class="hero-meta"><span>📅 ${e(D.dates)}</span><span>👥 ${D.travelers} reizigers</span></div><a class="button" href="#programma">Ontdek het programma <span>→</span></a></div><span class="hero-caption">IJSLAND / LAND VAN VUUR & IJS<br>Illustratie van het IJslandse landschap</span></section>
   <div class="section-label"><span>JOUW EXPEDITIEGIDS</span><span>01 — 06</span></div>${tileGrid(tiles)}
   <section class="next-card"><div><span class="eyebrow">VOLGENDE AVONTUUR</span><h2>${e(D.days[0].title)}</h2><p>${e(D.days[0].date)} · 08:30 verzamelen bij school</p></div><a class="round-link" aria-label="Bekijk dag 1" href="#dag-1">→</a></section>
   <div class="fact-strip"><span>✦</span><p><strong>Wist je dat?</strong> ${e(D.facts[1])}</p><a href="#ontdek">Ontdek meer →</a></div>`;
@@ -62,4 +62,35 @@ main.addEventListener('change',event=>{
 main.addEventListener('click',event=>{ if(event.target.closest('#new-fact')) { factIndex=(factIndex+1)%D.facts.length; document.querySelector('#fact-text').textContent=D.facts[factIndex]; } });
 window.addEventListener('hashchange',()=>{render();main.focus({preventScroll:true});});
 render();
-if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{ const status=document.querySelector('#status'); status.textContent='Offline opslaan is niet beschikbaar. Je kunt de app online blijven gebruiken.'; status.hidden=false; });
+if ('serviceWorker' in navigator) {
+  const hadController = Boolean(navigator.serviceWorker.controller);
+  let reloading = false;
+  const reloadForUpdate = () => {
+    if (reloading) return;
+    reloading = true;
+    location.reload();
+  };
+  // Alleen een bestaande installatie herladen bij overname, niet het eerste bezoek.
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (hadController) reloadForUpdate();
+  });
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data?.type === 'APP_UPDATED') reloadForUpdate();
+  });
+  navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).then(registration => {
+    const checkUpdate = async () => {
+      if (!navigator.onLine || document.visibilityState !== 'visible') return;
+      try { await registration.update(); } catch { /* Offline cache blijft bruikbaar. */ }
+      navigator.serviceWorker.controller?.postMessage({ type: 'CHECK_APP_UPDATE' });
+    };
+    checkUpdate();
+    window.addEventListener('online', checkUpdate);
+    document.addEventListener('visibilitychange', checkUpdate);
+    // Ook een tabblad dat open blijft staan krijgt nieuwe deployments, zonder handmatig wissen.
+    setInterval(checkUpdate, 5 * 60 * 1000);
+  }).catch(() => {
+    const status = document.querySelector('#status');
+    status.textContent = 'Offline opslaan is niet beschikbaar. Je kunt de app online blijven gebruiken.';
+    status.hidden = false;
+  });
+}

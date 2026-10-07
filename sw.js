@@ -1,11 +1,89 @@
-const CACHE = 'expeditie-v3';
-const FILES = ['./','./index.html','./style.css','./data.js','./app.js','./manifest.webmanifest','./assets/landscape.svg','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
-self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES))); self.skipWaiting(); });
-self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('expeditie-') && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())); });
+const CACHE = 'expeditie-v5';
+const FILES = ['./index.html','./style.css','./data.js','./app.js','./manifest.webmanifest','./assets/landscape.svg','./assets/iceland.svg','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
+const appURLs = new Set(FILES.map(file => new URL(file, self.registration.scope).href));
+const indexURL = new URL('./index.html', self.registration.scope).href;
+let refreshPromise;
+
+// CacheStorage verzorgt offline gebruik. De HTTP-cache mag geen oude deployment leveren.
+async function download(file) {
+  const response = await fetch(new Request(file, { cache: 'no-store' }));
+  if (!response.ok) throw new Error(`Appbestand niet beschikbaar: ${response.status}`);
+  return response;
+}
+async function refreshApp(notify) {
+  if (refreshPromise) return refreshPromise;
+  refreshPromise = (async () => {
+    const cache = await caches.open(CACHE);
+    const urls = [...appURLs];
+    const previous = await Promise.all(urls.map(url => cache.match(url)));
+    const responses = await Promise.all(urls.map(download));
+    let changed = false;
+    for (let i = 0; i < urls.length; i++) {
+      if (previous[i] && !changed) {
+        const oldBytes = new Uint8Array(await previous[i].arrayBuffer());
+        const newBytes = new Uint8Array(await responses[i].clone().arrayBuffer());
+        changed = oldBytes.length !== newBytes.length || oldBytes.some((byte, j) => byte !== newBytes[j]);
+      }
+    }
+    // Pas publiceren als alle downloads gelukt zijn; mislukte checks bewaren de offline versie.
+    await Promise.all(urls.map((url, i) => cache.put(url, responses[i])));
+    if (notify && changed) {
+      const clients = await self.clients.matchAll({ type: 'window' });
+      clients.forEach(client => client.postMessage({ type: 'APP_UPDATED' }));
+    }
+  })().finally(() => { refreshPromise = undefined; });
+  return refreshPromise;
+}
+self.addEventListener('install', event => {
+  event.waitUntil(refreshApp(false).then(() => self.skipWaiting()));
+});
+self.addEventListener('activate', event => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    const legacyInstallation = keys.some(key => /^expeditie-v[123]$/.test(key));
+    await Promise.all(keys.filter(key => key.startsWith('expeditie-') && key !== CACHE).map(key => caches.delete(key)));
+    await self.clients.claim();
+    // De oude app heeft nog geen update-listener. Eenmalig ook die open tabbladen vernieuwen.
+    if (legacyInstallation) {
+      const clients = await self.clients.matchAll({ type: 'window' });
+      // Niet wachten op navigatie tijdens activate: de nieuwe pagina wacht op deze activatie.
+      clients.filter(client => client.url.startsWith(self.registration.scope)).forEach(client => { client.navigate(client.url).catch(() => {}); });
+    }
+  })());
+});
+self.addEventListener('message', event => {
+  if (event.data?.type === 'CHECK_APP_UPDATE') {
+    // Offline is een normale situatie; de bestaande complete cache blijft behouden.
+    event.waitUntil(refreshApp(true).catch(() => {}));
+  }
+});
+function withoutHTTPCache(response) {
+  const headers = new Headers(response.headers);
+  headers.set('Cache-Control', 'no-store');
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
 self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET' || new URL(event.request.url).origin !== self.location.origin) return;
-  event.respondWith(fetch(event.request).then(response => {
-    if (response.ok) { const copy = response.clone(); event.waitUntil(caches.open(CACHE).then(cache => cache.put(event.request, copy))); }
-    return response;
-  }).catch(() => caches.match(event.request).then(cached => cached || (event.request.mode === 'navigate' ? caches.match('./index.html') : Response.error()))));
+  const request = event.request;
+  const url = new URL(request.url);
+  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+  const navigation = request.mode === 'navigate' && url.href.startsWith(self.registration.scope);
+  if (!navigation && !appURLs.has(url.href)) return;
+  const cacheKey = navigation ? indexURL : url.href;
+  event.respondWith((async () => {
+    try {
+      // Network-first, ook voorbij de browser-HTTP-cache. Geen timeout die traag internet
+      // ten onrechte als offline behandelt en bezoekers opnieuw de oude versie toont.
+      const response = await fetch(new Request(request, { cache: 'no-store' }));
+      if (response.ok) {
+        const copy = response.clone();
+        event.waitUntil(caches.open(CACHE).then(cache => cache.put(cacheKey, copy)));
+        return withoutHTTPCache(response);
+      }
+      const cached = await (await caches.open(CACHE)).match(cacheKey);
+      return withoutHTTPCache(cached || response);
+    } catch {
+      const cached = await (await caches.open(CACHE)).match(cacheKey);
+      return cached ? withoutHTTPCache(cached) : Response.error();
+    }
+  })());
 });

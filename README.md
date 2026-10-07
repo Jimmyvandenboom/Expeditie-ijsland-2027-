@@ -57,8 +57,18 @@ De homekaart ‘Volgende avontuur’ gebruikt de eerste dag uit `days`; die kan 
 - `data.js`: alle aanpasbare inhoud.
 - `manifest.webmanifest`, `sw.js`, `assets/`: PWA, offline ondersteuning en lokale illustraties/iconen.
 
-Na een update: wijzig de cacheversie bovenin `sw.js` (bijvoorbeeld `expeditie-v2`) als appbestanden zijn veranderd. Online bezoeken laden de nieuwste bestanden; eerdere offline bestanden kunnen verouderd zijn. Nieuwe audio wordt niet automatisch offline opgeslagen.
+De serviceworker gebruikt network-first voor HTML, CSS, JavaScript, data en lokale assets, met `cache: no-store` om de browser-HTTP-cache te omzeilen. App-responses krijgen bovendien `Cache-Control: no-store`, zodat de browser geladen scripts niet opnieuw uit zijn geheugen-cache gebruikt. CacheStorage bewaart de offline kopieën onafhankelijk daarvan. Bij het openen, terugkeren naar het tabblad, opnieuw verbinden en elke vijf minuten in een zichtbaar tabblad controleert de app op updates. Gewijzigde bestanden worden opgeslagen en de pagina wordt automatisch herladen; de paklijst blijft behouden. Ook een deployment zonder wijziging in `sw.js` wordt zo opgehaald. Offline blijft de laatste opgeslagen versie beschikbaar. Een eerste online bezoek blijft nodig. Nieuwe audio wordt niet automatisch offline opgeslagen.
+
+Bij veranderingen aan de cachestructuur verhoog je de cacheversie in `sw.js`. Oude caches worden na een succesvolle installatie opgeruimd. De overgang vanuit V1/V1.1 herlaadt bestaande tabbladen eenmalig omdat die oudere versies nog geen update-listener hebben. Een al geopende oude app kan pas vernieuwen zodra de browser de nieuwe serviceworker heeft opgehaald; open of herlaad de app daarvoor online. GitHub Pages moet de deployment eerst volledig hebben afgerond.
 
 ## Controleren
 
 `npm run check` controleert de JavaScript-syntaxis. Controleer in de browser ook alle navigatie, de vijf reisdagen, Maps-routes en mobiele weergave. Vink een item af, herlaad en controleer of het vinkje blijft staan. Bezoek de app eerst online en herlaad vervolgens offline. Deze functionele controles zijn tijdens de bouw met Chromium uitgevoerd; iPhone/Safari en Android op echte apparaten blijven nuttige aanvullende controles.
+
+## Automatische update-test
+
+Voor de browsertest (niet nodig om de app te gebruiken): voer `npm ci` en `npm test` uit. De test gebruikt Chromium op `/usr/bin/chromium`; stel bij een andere installatie `CHROMIUM_PATH` in op het pad naar Chromium. De test simuleert een oude installatie, lang gecachte HTTP-bestanden, nieuwe deployments met dezelfde serviceworker, herverbinding en offline gebruik.
+
+## Logo in de hero
+
+De homepagina heeft rechtsboven ruimte voor het officiële logo; zonder logo blijft deze ruimte onzichtbaar. Zet het aangeleverde bestand later in `assets/maris-logo.png` en voeg `heroLogo: 'assets/maris-logo.png',` toe aan het object in `data.js`. Voeg dat bestand ook toe aan `FILES` in `sw.js` zodat het offline beschikbaar is, en verhoog de cacheversie. De weergave behoudt de beeldverhouding en reserveert op mobiel voldoende ruimte boven de titel. `assets/iceland.svg` is een lokaal, gestileerd silhouet zonder routes of plaatsnamen.

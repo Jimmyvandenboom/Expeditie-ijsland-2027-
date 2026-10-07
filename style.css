@@ -5,3 +5,20 @@
 .day-top{align-items:center;gap:16px}
 .day-label{display:block;color:var(--ice);font-size:clamp(2.5rem,5vw,3.5rem);font-weight:850;line-height:1.05;letter-spacing:-.04em}
 @media(max-width:750px){.day-label{font-size:2.75rem}}
+
+/* De expeditiehero: lokale kaart en optionele ruimte voor het officiële schoollogo. */
+.hero-content{width:100%}
+.hero-heading{display:flex;align-items:center;gap:clamp(20px,5vw,70px)}
+.hero-heading h1{flex-shrink:0}
+.hero-island{display:block;width:clamp(170px,28vw,330px);height:auto;max-width:100%;filter:drop-shadow(0 8px 22px #82deed22);transform:rotate(-5deg)}
+.hero-logo-slot{position:absolute;z-index:2;top:22px;right:24px;max-width:160px}
+.hero-logo{display:block;max-width:100%;width:160px;height:auto;max-height:105px;object-fit:contain;border-radius:7px}
+.hero:has(.hero-logo:not([hidden])){padding-top:135px}
+@media(max-width:750px){
+  .hero-heading{gap:8px;justify-content:space-between}
+  .hero-heading h1{font-size:clamp(2.25rem,10.5vw,3.1rem);margin:36px 0 23px}
+  .hero-island{width:clamp(58px,19vw,130px);flex-shrink:1}
+  .hero-logo-slot{top:16px;right:18px;max-width:110px}
+  .hero-logo{width:110px;max-height:82px}
+  .hero:has(.hero-logo:not([hidden])){padding-top:112px}
+}
