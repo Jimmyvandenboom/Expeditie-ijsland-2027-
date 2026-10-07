@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900">
+<defs><pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M80 0H0V80" stroke="#8ac9d0" stroke-width=".8" opacity=".2" fill="none"/></pattern></defs>
+<path d="M0 0h1400v900H0z" fill="url(#grid)"/>
+<g fill="none" stroke="#79c9c5" stroke-width="1.4" opacity=".45"><path d="M480 320c-125-155 23-298 192-210s95 253 258 272 142-165 305-94 202 199 179 275M460 345c-124-153 28-298 188-206s97 244 257 265 154-159 315-88 193 201 169 275M440 370c-123-151 32-298 184-202s99 235 256 258 166-153 325-82 184 203 159 275M420 395c-122-149 36-298 180-198s101 226 255 251 178-147 335-76 175 205 149 275M400 420c-121-147 40-298 176-194s103 217 254 244 190-141 345-70 166 207 139 275M380 445c-120-145 44-298 172-190s105 208 253 237 202-135 355-64 157 209 129 275M360 470c-119-143 48-298 168-186s107 199 252 230 214-129 365-58 148 211 119 275"/></g>
+<g transform="translate(1200 125)" fill="none" stroke="#e9e7b7" opacity=".8"><circle r="63"/><circle r="46" stroke-dasharray="2 7"/><path d="M0-55 8-8 0 0-8-8zM55 0 8 8 0 0 8-8zM0 55-8 8 0 0 8 8zM-55 0-8-8 0 0-8 8z" fill="#c7e4cd" stroke-width=".7"/><path d="M0-55 0 0 8-8z" fill="#ed9b68" stroke="none"/><text x="-5" y="-76" font-family="monospace" font-size="18" fill="#ede9c4" stroke="none">N</text></g>
+<path d="M510 850Q680 650 850 740T1280 590" fill="none" stroke="#f4ac73" stroke-width="3" stroke-dasharray="5 12" opacity=".8"/>
+<path d="M760 100 818 210 780 270 847 395 810 490 879 630" fill="none" stroke="#e0d794" stroke-width="2" stroke-dasharray="12 6 3 6" opacity=".35"/>
+<g fill="none" stroke="#476c51" stroke-width="1" opacity=".2"><path d="M20 790 112 685 210 790M65 790l47-60 46 60M130 870l135-200 145 200M200 850l65-130 85 130"/></g>
+<g font-family="monospace" fill="#b4d5c9" font-size="12" letter-spacing="3" opacity=".7"><text x="1010" y="325">64° N / 19° W</text><text x="890" y="825">ICELAND · FIELD EXPEDITION</text><text x="80" y="180">N ↑</text></g>
+<g stroke="#bcdbc9" stroke-width="2" opacity=".5"><path d="M980 850h270M980 840v20M1034 845v10M1088 840v20M1142 845v10M1196 840v20M1250 840v20"/></g>
+</svg>

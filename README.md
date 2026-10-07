@@ -109,3 +109,21 @@ De app probeert rechtstreeks, zonder sleutel of credentials:
 Externe requests hebben een timeout en gecontroleerde JSON-invoer. Onbereikbare bronnen, CORS-beperkingen, ongeldige data, verlopen Kp of offline gebruik geven een expliciete fallback. Live data worden niet in de serviceworker-cache opgeslagen; de offline app blijft wel werken. De NOAA- en Open-Meteo-domeinen waren in de bouwomgeving door de netwerkproxy geblokkeerd (HTTP 403). **De live verbinding is daarom niet end-to-end bevestigd.** Fixtures testen geldige, verlopen en ontbrekende data, maar bewijzen geen live bereikbaarheid vanuit GitHub Pages. De officiële link blijft beschikbaar. Een specifieke voorspelling voor 31 januari–2 februari 2027 is pas kort voor vertrek zinvol.
 
 `modules.js` beheert de gedeelde lokale profiel-/spelstaat en de voorbereide serviceadapters. Nieuwe spelinhoud, fotovermeldingen en bronconfiguratie staan centraal in `data.js`. `npm test` test daarnaast onboarding, profiel, bussen, alle vier thema’s, vijf spellen, de foto-/pushinterfaces, Aurora-fixtures, offline herladen en behoud van bestaande paklijstgegevens. Voor online brongebruik gelden de toegangs- en gebruiksvoorwaarden van de aanbieders.
+
+### V4 · GEO Future
+
+V4 deelt de Adventure-componenten en basisstyling van V3. Alleen V4 krijgt de
+cartografische SVG-laag, Geo Future Route-identiteit, countdown en locatiecards.
+De achtergrondlijnen en stippelroute zijn illustratief, geen navigatiekaart.
+`data.js` bevat alle GEO-locaties, afgeronde locatiecoördinaten, thema's, weetjes
+en kijkopdrachten onder `geo`. Bestaande routes en tijden blijven de bron voor
+de dagselectie en het verzameltijdstip. De countdown gebruikt `geo.startDate`
+en het eerste programma-event, in Nederlandse wintertijd (UTC+1).
+Voeg later een podcast toe aan de bestaande `episodes`-lijst met `locationId`
+(gelijk aan het GEO-locatie-id), `title` en `src`; de locatiecard toont dan audio.
+Tot die tijd staat er expliciet ‘Locatiepodcast volgt’. Afbeeldingen en GEO-code
+worden offline opgeslagen door cacheversie v10.
+
+`tests/geo-future.cjs` vergelijkt V1–V3-hero's pixel voor pixel met commit
+`fb29c27` en controleert V4 op vier schermbreedtes, countdown-grenzen,
+centrale gegevens en uitklapbare kijkopdrachten.

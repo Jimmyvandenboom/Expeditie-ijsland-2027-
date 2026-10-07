@@ -30,6 +30,18 @@ window.EXPEDITION = {
   ],
   facts: ['IJsland heeft geen inheemse landreptielen.', 'Reykjavík betekent ongeveer “rookbaai”.', 'Het IJslandse parlement werd in 930 bij Þingvellir opgericht.', 'In februari zijn de dagen kort: perfect om de donkere hemel te bekijken.', 'Het woord “geiser” komt van de IJslandse naam Geysir.'],
   // Voeg afleveringen toe: { title: 'Aflevering 1', description: '...', src: 'audio/aflevering-1.mp3' }
+  geo: {
+    startDate: '2027-01-31',
+    badge: 'GEO FUTURE ROUTE · ICELAND 2027',
+    locations: [
+      { id:'solheimajokull', routeName:'Sólheimajökull', name:'Sólheimajökull', latitude:63.532, longitude:-19.370, theme:'ice', label:'Gletsjers & klimaat', symbol:'🧊', fact:'Donkere strepen in het ijs kunnen bestaan uit vulkanische as en gesteente.', task:'Zoek vanaf het veilige pad naar sporen die het bewegende ijs in het landschap achterlaat.' },
+      { id:'geysir', routeName:'Geysir', name:'Geysir & Strokkur', latitude:64.312, longitude:-20.301, theme:'heat', label:'Geothermie', symbol:'♨️', fact:'Het woord geiser is afgeleid van de naam Geysir.', task:'Observeer een uitbarsting van Strokkur vanaf het afgezette pad. Welke stappen zie je vóór de waterkolom?' },
+      { id:'kerid', routeName:'Kerið', name:'Kerið', latitude:64.041, longitude:-20.885, theme:'lava', label:'Vulkanisme', symbol:'🌋', fact:'De rode kraterwanden danken hun kleur onder meer aan ijzerhoudend gesteente.', task:'Vergelijk de kleuren van de kraterwand, het water en de begroeiing. Welke processen zouden ze verklaren?' },
+      { id:'thingvellir', routeName:'Silfra', name:'Þingvellir / Silfra', latitude:64.255, longitude:-21.124, theme:'tectonic', label:'Aardplaten & breuklijnen', symbol:'🗺️', fact:'Hier bewegen de Noord-Amerikaanse en Euraziatische plaat uit elkaar.', task:'Zoek vanaf het wandelpad naar scheuren en hoogteverschillen. Schets hoe twee platen uit elkaar bewegen.' },
+      { id:'skogafoss', routeName:'Skógafoss', name:'Skógafoss', latitude:63.532, longitude:-19.511, theme:'water', label:'Water & erosie', symbol:'🌊', fact:'Skógafoss valt ongeveer 60 meter naar beneden.', task:'Kijk waar nevel ontstaat en waar water het gesteente raakt. Waar verwacht je de meeste erosie?' },
+      { id:'reynisfjara', routeName:'Reynisfjara', name:'Reynisfjara', latitude:63.404, longitude:-19.044, theme:'nature', label:'Kust & vulkanisch landschap', symbol:'🌱', fact:'De basaltzuilen ontstonden toen lava afkoelde en kromp.', task:'Bekijk de vormen van de basaltzuilen vanaf veilige afstand. Blijf ruim uit de buurt van de zee.' }
+    ]
+  },
   photos: { enabled: false, entries: [], moderationRequired: true },
   push: { enabled: false, topics: ['Verzamelen en vertrek', 'Programmawijzigingen', 'Foto-opdrachten', 'Bus Battle', 'Aurora-alerts', 'Berichten van begeleiders'] },
   aurora: { location: 'Laugarvatn', latitude: 64.217, longitude: -20.733, officialURL: 'https://en.vedur.is/weather/forecasts/aurora/', kpURL: 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json', weatherURL: 'https://api.open-meteo.com/v1/forecast' },

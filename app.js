@@ -1,12 +1,13 @@
 // Eén app, één gegevensbron: de kiezer verandert uitsluitend de CSS-presentatie.
-const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v3: 'Adventure', v4: 'GEO / Iceland Explorer' };
+const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v3: 'Adventure', v4: 'GEO Future' };
 const designStorageKey = 'expeditie-ijsland-2027-design';
 function applyDesign(design) {
   if (!Object.hasOwn(designNames, design)) design = 'v1';
   document.documentElement.dataset.design = design;
   document.querySelectorAll('[data-design-choice]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.designChoice === design)));
   document.querySelector('#design-name').textContent = designNames[design];
-  document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#15221c',v4:'#0d262a'}[design];
+  document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#15221c',v4:'#102e35'}[design];
+  window.GeoUI?.refresh();
 }
 let initialDesign = 'v1';
 try { initialDesign = localStorage.getItem(designStorageKey) || 'v1'; } catch { /* Default blijft bruikbaar zonder opslag. */ }
@@ -47,15 +48,15 @@ function heading(kicker,title,text='') { return `<div class="page-heading"><span
 const tiles = [ ['programma','📅','Programma','5 dagen vol avontuur'],['kaart','🗺️','Expeditiekaart','Volg onze route'],['paklijst','🎒','Paklijst','Klaar voor vertrek?'],['ontdek','🌋','Ontdek IJsland','Het land van vuur & ijs'],['podcast','🎙️','Podcast','Verhalen van onderweg'],['praktisch','🚨','Praktisch','Goed voorbereid op pad'],['spelletjes','🎮','Spelletjes','Quiz, bingo & busplezier'],['fotos','📸','Onze expeditie','Foto’s van onderweg'],['profiel','👤','Mijn profiel','Jouw gegevens & instellingen'] ];
 function tileGrid(items) { return `<div class="tile-grid">${items.map(([href,icon,title,sub]) => `<a class="tile" href="#${href}"><span class="tile-icon">${icon}</span><span><strong>${title}</strong><small>${sub}</small></span><span class="arrow">→</span></a>`).join('')}</div>`; }
 function home() {
-  return `<section class="hero"><div class="hero-logo-slot">${D.heroLogo ? `<img class="hero-logo" src="${e(D.heroLogo)}" alt="Maris College Bohemen" onerror="this.hidden=true" />` : ''}</div><div class="hero-content"><span class="eyebrow">MARIS COLLEGE BOHEMEN</span><div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><img class="hero-island" src="assets/iceland.svg" alt="Silhouet van IJsland" width="480" height="330"><img class="geo-atlas" src="assets/geo-atlas.svg" alt="Veldatlas van IJsland met windroos, hoogtelijnen, vulkanen en een schematische route" width="640" height="590"></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.<br>Vijf dagen IJsland die je niet vergeet.</p><div class="hero-meta"><span>📅 ${e(D.dates)}</span><span>👥 ${D.travelers} reizigers</span></div><a class="button" href="#programma">Ontdek het programma <span>→</span></a></div><span class="hero-caption">IJSLAND / LAND VAN VUUR & IJS<br>Illustratie van het IJslandse landschap</span></section>
-  ${profileGreeting()}<a class="aurora-home panel" href="#aurora"><span>🌌</span><div><strong>Aurora Watch · Laugarvatn</strong><small>Bekijk actuele bronnen en de bewolking →</small></div></a><div class="section-label"><span>JOUW EXPEDITIEGIDS</span><span>01 — 09</span></div>${tileGrid(tiles)}
+  return `<section class="hero"><div class="hero-logo-slot">${D.heroLogo ? `<img class="hero-logo" src="${e(D.heroLogo)}" alt="Maris College Bohemen" onerror="this.hidden=true" />` : ''}</div><div class="hero-content"><span class="eyebrow">MARIS COLLEGE BOHEMEN</span>${geoHomeIdentity()}<div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><img class="hero-island" src="assets/iceland.svg" alt="Silhouet van IJsland" width="480" height="330"><img class="geo-atlas" src="assets/geo-atlas.svg" alt="Veldatlas van IJsland met windroos, hoogtelijnen, vulkanen en een schematische route" width="640" height="590"></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.<br>Vijf dagen IJsland die je niet vergeet.</p><div class="hero-meta"><span>📅 ${e(D.dates)}</span><span>👥 ${D.travelers} reizigers</span></div><a class="button" href="#programma">Ontdek het programma <span>→</span></a></div><span class="hero-caption">IJSLAND / LAND VAN VUUR & IJS<br>Illustratie van het IJslandse landschap</span></section>
+  ${geoLocationSection()}${profileGreeting()}<a class="aurora-home panel" href="#aurora"><span>🌌</span><div><strong>Aurora Watch · Laugarvatn</strong><small>Bekijk actuele bronnen en de bewolking →</small></div></a><div class="section-label"><span>JOUW EXPEDITIEGIDS</span><span>01 — 09</span></div>${tileGrid(tiles)}
   <section class="next-card"><div><span class="eyebrow">VOLGENDE AVONTUUR</span><h2>${e(D.days[0].title)}</h2><p>${e(D.days[0].date)} · 08:30 verzamelen bij school</p></div><a class="round-link" aria-label="Bekijk dag 1" href="#dag-1">→</a></section>
   <div class="fact-strip"><span>✦</span><p><strong>Wist je dat?</strong> ${e(D.facts[1])}</p><a href="#ontdek">Ontdek meer →</a></div>`;
 }
 function programme() { return heading('DE REIS','Vijf dagen. Eén expeditie.','Van de eerste paspoortcheck tot de laatste herinnering. Alle tijden zijn lokale tijden; het programma kan wijzigen.') + `<div class="day-grid">${D.days.map((day,i) => `<a class="day-card day-${i}" href="#dag-${i+1}"><div class="day-top"><span class="day-label">DAG ${i+1}</span><span>${day.icon}</span></div><small>${e(day.date)}</small><h2>${e(day.title)}</h2><p>${e(day.theme)}</p><span class="day-bottom">${day.events.length} momenten <span>Bekijk dag →</span></span></a>`).join('')}</div><p class="info-note">IJsland is in februari 1 uur vroeger dan Nederland. Tijden met ± zijn bij benadering.</p>`; }
 function dayPage(index) {
   const day = D.days[index];
-  return `<a class="back" href="#programma">← Alle reisdagen</a>${heading(`DAG 0${index+1} · ${e(day.date)}`, e(day.title),e(day.theme))}<nav class="day-tabs" aria-label="Kies een reisdag">${D.days.map((_,i) => `<a ${i===index?'aria-current="page"':''} href="#dag-${i+1}">Dag ${i+1}</a>`).join('')}</nav><section class="panel timeline"><span class="eyebrow">OP HET PROGRAMMA · LOKALE TIJDEN</span>${day.events.map(([time,event])=>`<div class="event"><time>${e(time)}</time><span class="event-dot"></span><p>${e(event)}</p></div>`).join('')}</section>${index===3?`<p class="info-note">🛏️ ${e(D.practical.reykjavik)}</p>`:''}${index===1?'<a class="warning compact" href="#praktisch">⚠️ Reynisfjara: houd ruim afstand van zee. Lees de veiligheidsinfo →</a>':''}<section class="panel"><span class="eyebrow">ONDERWEG</span><h2>De route van dag ${index+1}</h2><p class="route-text">${day.route.map(stop=>e(stop.replace(', Iceland',''))).join(' → ')}</p>${routeLinks(day)}</section><div class="page-controls">${index>0?`<a href="#dag-${index}">← Dag ${index}</a>`:'<span></span>'}${index<4?`<a href="#dag-${index+2}">Dag ${index+2} →</a>`:'<a href="#home">Naar home →</a>'}</div>`;
+  return `<a class="back" href="#programma">← Alle reisdagen</a>${heading(`DAG 0${index+1} · ${e(day.date)}`, e(day.title),e(day.theme))}<nav class="day-tabs" aria-label="Kies een reisdag">${D.days.map((_,i) => `<a ${i===index?'aria-current="page"':''} href="#dag-${i+1}">Dag ${i+1}</a>`).join('')}</nav><section class="panel timeline"><span class="eyebrow">OP HET PROGRAMMA · LOKALE TIJDEN</span>${day.events.map(([time,event])=>`<div class="event"><time>${e(time)}</time><span class="event-dot"></span><p>${e(event)}</p></div>`).join('')}</section>${index===3?`<p class="info-note">🛏️ ${e(D.practical.reykjavik)}</p>`:''}${index===1?'<a class="warning compact" href="#praktisch">⚠️ Reynisfjara: houd ruim afstand van zee. Lees de veiligheidsinfo →</a>':''}<section class="panel"><span class="eyebrow">ONDERWEG</span><h2>De route van dag ${index+1}</h2><p class="route-text">${day.route.map(stop=>e(stop.replace(', Iceland',''))).join(' → ')}</p>${routeLinks(day)}</section>${geoLocationSection(index)}<div class="page-controls">${index>0?`<a href="#dag-${index}">← Dag ${index}</a>`:'<span></span>'}${index<4?`<a href="#dag-${index+2}">Dag ${index+2} →</a>`:'<a href="#home">Naar home →</a>'}</div>`;
 }
 function mapPage() { return heading('OP PAD','Expeditiekaart','Vijf routes door het land van vuur en ijs. Open de navigatie in Google Maps.') + `<div class="map-banner"><div><span class="eyebrow">ZUIDWEST-IJSLAND</span><h2>Van kust naar krater.</h2><p>Reykjavík · Golden Circle · South Coast</p></div><span aria-hidden="true">⌖</span></div><p class="info-note">De routeoverzichten hieronder openen de echte kaart in Google Maps. Internet is daarvoor nodig. Dag 4 bevat de optionele stop Brúarfoss.</p><div class="route-grid">${D.days.map((day,i)=>`<section class="panel"><span class="eyebrow">DAG 0${i+1} · ${e(day.date)}</span><h2>${e(day.title)}</h2><ol class="route-stops">${day.route.map(stop=>`<li>${e(stop.replace(', Iceland',''))}</li>`).join('')}</ol>${routeLinks(day)}</section>`).join('')}</div>`; }
 const allItems = Object.values(D.packing).flat();
@@ -76,6 +77,7 @@ function render() {
   document.querySelectorAll('.bottom-nav a').forEach(link=>{ if(link.hash==='#'+active) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current'); });
   if(page==='paklijst') updatePacking();
   afterModuleRender(page);
+  window.GeoUI?.refresh();
   window.scrollTo(0,0);
 }
 main.addEventListener('change',event=>{
@@ -90,6 +92,7 @@ main.addEventListener('click',event=>{ if(event.target.closest('#new-fact')) { f
 window.addEventListener('hashchange',()=>{render();main.focus({preventScroll:true});});
 render();
 initModules();
+window.GeoUI?.start();
 if ('serviceWorker' in navigator) {
   const hadController = Boolean(navigator.serviceWorker.controller);
   let reloading = false;
