@@ -1,4 +1,4 @@
-const CACHE = 'expeditie-v2';
+const CACHE = 'expeditie-v3';
 const FILES = ['./','./index.html','./style.css','./data.js','./app.js','./manifest.webmanifest','./assets/landscape.svg','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
 self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES))); self.skipWaiting(); });
 self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('expeditie-') && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())); });
