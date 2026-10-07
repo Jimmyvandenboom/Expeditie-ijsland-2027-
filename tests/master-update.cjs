@@ -27,6 +27,7 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
         await page.goto(url+'/#'+route);assert.equal(await page.locator('h1').count(),1);assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${design}/${route}/${width} overflow`);
       }
     }
+    await page.goto(url+'/#home');assert.equal(await page.locator('.geo-atlas').isVisible(),design==='v4');
     await page.goto(url+'/#paklijst');assert.ok(await page.getByLabel('Winterjas',{exact:true}).isChecked());
   }
   await page.goto(url+'/#quiz');await page.locator('[data-answer="0"]').click();assert.ok((await page.locator('#quiz-feedback').textContent()).includes('Goed!'));await page.goto(url+'/#spelletjes');await page.goto(url+'/#quiz');assert.ok(await page.locator('#quiz-next').isVisible());
