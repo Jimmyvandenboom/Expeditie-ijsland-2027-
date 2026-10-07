@@ -1,0 +1,161 @@
+/* Tijdelijke vergelijking. V1 gebruikt verder de bestaande style.css ongewijzigd. */
+.design-switcher{max-width:1040px;margin:16px auto 0;display:flex;align-items:center;gap:14px;padding:10px 15px;border:1px solid var(--border);border-radius:12px;background:var(--panel);color:var(--text)}
+.design-switcher-label{font-size:9px;letter-spacing:.15em;font-weight:700;color:var(--muted)}
+.design-switcher-buttons{display:flex;gap:5px}
+.design-switcher button{min-height:38px;min-width:48px;border:1px solid var(--border);border-radius:8px;background:transparent;color:var(--muted);font-size:13px;font-weight:750;padding:6px 12px}
+.design-switcher button[aria-pressed="true"]{background:var(--ice);color:var(--bg);border-color:var(--ice)}
+#design-name{font-size:12px;margin-left:auto;font-weight:600}
+@media(max-width:750px){.design-switcher{margin:12px 18px 0;padding:8px 10px;gap:9px}.design-switcher-label{display:none}#design-name{font-size:10px}}
+
+/* V2 — Iceland Fresh: lichte reisgids met ruime, zachte kaarten. */
+[data-design="v2"]{color-scheme:light;--bg:#f3f9f9;--panel:#fff;--border:#d8e9ec;--ice:#087d8a;--text:#153f4b;--muted:#506c77;--lava:#b95126;--mint:#137864}
+[data-design="v2"] body{background:radial-gradient(ellipse at top right,#d8f2f3,transparent 50%),var(--bg)}
+[data-design="v2"] .topbar{padding-top:30px;padding-bottom:32px}
+[data-design="v2"] .brand{letter-spacing:.08em}
+[data-design="v2"] .brand-icon{background:white;border-radius:50%;width:50px;height:50px;display:grid;place-items:center;box-shadow:0 5px 20px #1e687512}
+[data-design="v2"] .header-tag{background:white}
+[data-design="v2"] .hero{background:linear-gradient(90deg,#fffffff5 20%,#ffffff20 80%),url('assets/fresh-landscape.svg') center/cover;border:0;border-radius:32px;box-shadow:0 16px 45px #22697412;padding:52px;min-height:510px}
+[data-design="v2"] .hero h1{font-weight:650;letter-spacing:-.065em;color:#123c4b}
+[data-design="v2"] .hero h1 em{color:#098c9b}
+[data-design="v2"] .hero .eyebrow{color:#21828b;letter-spacing:.15em}
+[data-design="v2"] .hero p{color:#3d6472;line-height:1.8}
+[data-design="v2"] .hero-island{opacity:.85;filter:drop-shadow(0 8px 15px #0e849833)}
+[data-design="v2"] .hero-meta span{background:#ffffffd9;border:1px solid #cee7ea;border-radius:30px;padding:8px 13px;color:#275d6a}
+[data-design="v2"] .hero-caption{color:#376777}
+[data-design="v2"] .button{background:#087d8a;color:white;border-radius:30px;padding:14px 24px;box-shadow:0 6px 16px #087d8a20}
+[data-design="v2"] .button:hover{background:#056573}
+[data-design="v2"] .button.secondary{background:white;border-color:#bedee3;color:#087d8a;box-shadow:none}
+[data-design="v2"] .section-label{margin-top:44px;color:#517883}
+[data-design="v2"] .tile-grid{gap:20px}
+[data-design="v2"] .tile{background:white;border:0;border-radius:24px;box-shadow:0 5px 24px #234a5710;padding:26px 20px;min-height:110px}
+[data-design="v2"] .tile-icon{background:#e1f5f4;border-radius:50%;padding:14px}
+[data-design="v2"] .next-card{background:#e5f4ef;border-color:#c2e2d5;border-radius:25px;padding:30px}
+[data-design="v2"] .round-link{border-color:#65a69d;background:white}
+[data-design="v2"] .fact-strip{border-color:#d6e8e9}
+[data-design="v2"] .bottom-nav{background:#fffffff5;border-color:#cee2e6;box-shadow:0 8px 35px #244d5b18;border-radius:28px}
+[data-design="v2"] .bottom-nav a[aria-current]{background:#def3f2;color:#096d7a}
+[data-design="v2"] .page-heading{padding:35px 0 28px}
+[data-design="v2"] .page-heading h1{font-weight:650}
+[data-design="v2"] .day-grid{gap:24px}
+[data-design="v2"] .day-card{background:white;border:0;border-radius:28px;padding:30px;box-shadow:0 6px 28px #234a5710;position:relative;border-top:5px solid #64bec4}
+[data-design="v2"] .day-card:nth-child(2n){border-top-color:#a6cbb3}
+[data-design="v2"] .day-label{font-weight:700;color:#087d8a}
+[data-design="v2"] .day-top>span:last-child{background:#e7f6f5;padding:10px;border-radius:50%}
+[data-design="v2"] .day-card small{color:#507480}
+[data-design="v2"] .day-bottom{border-color:#dfedef}
+[data-design="v2"] .panel{border:0;border-radius:24px;box-shadow:0 5px 24px #234a570c;padding:30px}
+[data-design="v2"] .info-note{background:#e6f3f5;border-radius:18px;color:#335f6c}
+[data-design="v2"] .day-tabs a{background:white;border-radius:30px}
+[data-design="v2"] .day-tabs a[aria-current]{background:#087d8a;color:white}
+[data-design="v2"] .map-banner{background:linear-gradient(90deg,#f7ffffed,#f7ffff44),url('assets/fresh-landscape.svg') center/cover;border:0;border-radius:28px}
+[data-design="v2"] .map-banner p{color:#3d6472}
+[data-design="v2"] .route-stops li{color:#335b69}
+[data-design="v2"] .check-item{border-color:#e0eef0}
+[data-design="v2"] .check-item:has(input:checked) span{color:#5c7c78}
+[data-design="v2"] progress,[data-design="v2"] progress::-webkit-progress-bar{background:#ddecf0}
+[data-design="v2"] .knowledge{padding:20px 25px}
+[data-design="v2"] .knowledge-icon{background:#edf8f7;border-radius:17px;padding:10px}
+[data-design="v2"] .fact-box{background:#e2f2ec}
+[data-design="v2"] .podcast-hero{background:radial-gradient(ellipse at top,#caefeb,#f0faf9 75%);border:0;border-radius:32px}
+[data-design="v2"] .mic{background:white;border:0;box-shadow:0 12px 30px #227a7920}
+[data-design="v2"] .pill{border-color:#a4c6ce}
+[data-design="v2"] .contact-card{background:#ddf1f3;border:0;border-radius:28px}
+[data-design="v2"] .warning{background:#fff0e6;border-color:#edcfba;border-radius:22px}
+[data-design="v2"] .warning h2{color:#863a21}
+[data-design="v2"] .warning p{color:#795244}
+[data-design="v2"] .rules{color:#506c77}
+[data-design="v2"] .status{background:#fff0e6;color:#603924}
+
+/* V3 — Adventure: expressieve reisposter met mos, ijs en vulkanisch contrast. */
+[data-design="v3"]{color-scheme:light;--bg:#f3f2e8;--panel:#fffef7;--border:#d4dbc8;--ice:#235e52;--text:#172c25;--muted:#51655c;--lava:#b64924;--mint:#36684c}
+[data-design="v3"] body{background:#f3f2e8;background-image:radial-gradient(#2743320c .8px,transparent .8px);background-size:10px 10px}
+[data-design="v3"] .design-switcher{background:#15221c;border-color:#304638;color:#ecf4dc}
+[data-design="v3"] .design-switcher button{color:#bdc9b1;border-color:#3c5142}
+[data-design="v3"] .design-switcher button[aria-pressed="true"]{background:#d4ee82;border-color:#d4ee82;color:#15221c}
+[data-design="v3"] .design-switcher-label{color:#bdc9b1}
+[data-design="v3"] .brand{font-weight:750;letter-spacing:.07em}
+[data-design="v3"] .header-tag{background:#dce9c5;border:0;color:#2a4e36;transform:rotate(3deg)}
+[data-design="v3"] .hero{background:linear-gradient(90deg,#071e25e8,#071e2510 85%),url('assets/adventure-landscape.svg') center/cover;border:0;border-radius:12px 40px 12px 40px;min-height:550px;padding:48px;box-shadow:0 12px 0 #cbd4bd;color:#eff8dd}
+[data-design="v3"] .hero .eyebrow{color:#d4ee82;letter-spacing:.25em}
+[data-design="v3"] .hero h1{font-family:Impact,'Arial Narrow',ui-sans-serif,sans-serif;font-size:clamp(3rem,7vw,5.3rem);font-weight:800;text-transform:uppercase;letter-spacing:.01em;line-height:.98;color:#f8fbef;transform:rotate(-2deg)}
+[data-design="v3"] .hero h1 em{color:#d4ee82}
+[data-design="v3"] .hero p{color:#d1e2d4}
+[data-design="v3"] .hero-meta{color:#e6f0d9;font-weight:600}
+[data-design="v3"] .hero-caption{color:#c8dcce}
+[data-design="v3"] .hero-island{filter:drop-shadow(0 0 24px #79f0d93b);opacity:.8}
+[data-design="v3"] .button{background:#d4ee82;color:#172c25;border-radius:8px;font-weight:850;border-bottom:3px solid #9bb954;padding:14px 22px;box-shadow:0 4px 0 #0000000c}
+[data-design="v3"] .button:hover{background:#c3df6e}
+[data-design="v3"] .button.secondary{background:transparent;color:#235e52;border:1px solid #9aac91;box-shadow:none}
+[data-design="v3"] .hero .button{margin-top:8px}
+[data-design="v3"] .section-label{font-weight:800;margin-top:44px;letter-spacing:.2em}
+[data-design="v3"] .tile{background:#e3eacb;border:0;border-radius:12px 24px 12px 24px;min-height:120px;gap:14px;padding:23px 18px}
+[data-design="v3"] .tile:nth-child(3n+2){background:#c4e7e7}
+[data-design="v3"] .tile:nth-child(3n){background:#f0d6bb}
+[data-design="v3"] .tile strong{font-size:17px;font-weight:850}
+[data-design="v3"] .tile small{color:#45594e}
+[data-design="v3"] .tile-icon{background:#ffffff70;border-radius:50%}
+[data-design="v3"] .next-card{background:#172e25;border:0;border-radius:14px;color:#f3f6e8;padding:30px;border-left:6px solid #d4ee82}
+[data-design="v3"] .next-card .eyebrow{color:#d4ee82}
+[data-design="v3"] .next-card p{color:#c0d2c4}
+[data-design="v3"] .round-link{color:#d4ee82;border-color:#7e9a7e}
+[data-design="v3"] .fact-strip{border-color:#cad2be}
+[data-design="v3"] .bottom-nav{background:#15221cf5;border-color:#3b5341;box-shadow:0 12px 32px #15221c25;border-radius:16px}
+[data-design="v3"] .bottom-nav a{color:#bdcdbf}
+[data-design="v3"] .bottom-nav a[aria-current]{background:#d4ee82;color:#172c25}
+[data-design="v3"] .page-heading h1{font-weight:850;letter-spacing:-.05em}
+[data-design="v3"] .day-grid{gap:20px}
+[data-design="v3"] .day-card{background:#d8e8a9;border:0;border-radius:12px 30px 12px 30px;padding:28px;border-bottom:5px solid #b3c986}
+[data-design="v3"] .day-card:nth-child(2n){background:#bde4e8;border-bottom-color:#90bfc6}
+[data-design="v3"] .day-card:nth-child(3){background:#eed0b6;border-bottom-color:#cead90}
+[data-design="v3"] .day-label{font-family:Impact,'Arial Narrow',sans-serif;font-size:4rem;letter-spacing:0;font-weight:800;color:#19382d}
+[data-design="v3"] .day-top{margin-bottom:20px}
+[data-design="v3"] .day-top>span:last-child{font-size:44px}
+[data-design="v3"] .day-card h2{font-weight:850;font-size:29px}
+[data-design="v3"] .day-card small,[data-design="v3"] .day-card p,[data-design="v3"] .day-bottom{color:#395346}
+[data-design="v3"] .day-bottom{border-color:#173c2924;font-weight:600}
+[data-design="v3"] .panel{border:1px solid #d3dbc7;border-radius:14px;box-shadow:0 4px 0 #dde1d2}
+[data-design="v3"] .info-note{background:#e0e9cf;color:#3c5945;border-radius:10px;border-left:4px solid #69815d}
+[data-design="v3"] .day-tabs a{background:#fffef7;border-radius:8px;font-weight:750}
+[data-design="v3"] .day-tabs a[aria-current]{background:#203a2d;color:#e0f49c}
+[data-design="v3"] .map-banner{background:linear-gradient(90deg,#09282cdd,#09282c30),url('assets/adventure-landscape.svg') center/cover;border:0;border-radius:12px 30px;color:#f7fbea;min-height:270px}
+[data-design="v3"] .map-banner .eyebrow,[data-design="v3"] .map-banner p,[data-design="v3"] .map-banner>span{color:#d4ee82}
+[data-design="v3"] .route-stops li{color:#36513f}
+[data-design="v3"] .check-item{border-color:#dfe4d6}
+[data-design="v3"] .check-item:has(input:checked) span{color:#61795f}
+[data-design="v3"] progress,[data-design="v3"] progress::-webkit-progress-bar{background:#dce4cd}
+[data-design="v3"] progress::-webkit-progress-value{background:#466b40}
+[data-design="v3"] progress::-moz-progress-bar{background:#466b40}
+[data-design="v3"] .knowledge-icon{font-size:34px}
+[data-design="v3"] .fact-box{background:#d9e8ae;border:0}
+[data-design="v3"] .podcast-hero{background:linear-gradient(135deg,#152d25,#385644);color:#f3f8e5;border:0;border-radius:12px 36px}
+[data-design="v3"] .podcast-hero .pill{color:#f0cda7;border-color:#70826a}
+[data-design="v3"] .podcast-hero p{color:#cbdac8}
+[data-design="v3"] .waveform span{background:linear-gradient(#d4ee82,#7bc6c8)}
+[data-design="v3"] .contact-card{background:#dbe9b9;border:0;border-left:6px solid #6c8a4f;border-radius:14px}
+[data-design="v3"] .warning{background:#f6ddc8;border-color:#ce9770;border-radius:12px;border-left:6px solid #b5633b}
+[data-design="v3"] .warning h2{color:#743816}
+[data-design="v3"] .warning p{color:#765139}
+[data-design="v3"] .pill{border-color:#74876d}
+[data-design="v3"] .status{background:#f6ddc8;color:#643b25}
+@media(max-width:750px){
+  [data-design="v2"] .topbar{padding-top:22px;padding-bottom:24px}
+  [data-design="v2"] .hero{padding:28px 24px;min-height:510px;border-radius:26px;background-position:65% center;background-image:linear-gradient(180deg,#ffffffe0,#ffffff44),url('assets/fresh-landscape.svg')}
+  [data-design="v2"] .hero-heading{gap:8px}
+  [data-design="v2"] .hero-meta span{padding:6px 10px;font-size:11px;width:fit-content}
+  [data-design="v2"] .tile-grid{gap:12px}
+  [data-design="v2"] .tile{padding:18px 15px;min-height:145px}
+  [data-design="v2"] .tile-icon{padding:10px}
+  [data-design="v2"] .tile strong{font-size:14px}
+  [data-design="v2"] .panel{padding:23px}
+  [data-design="v2"] .bottom-nav{border-radius:22px 22px 0 0}
+  [data-design="v3"] .hero{padding:28px 24px;min-height:530px;border-radius:10px 30px 10px 30px;background-position:65% center;background-image:linear-gradient(180deg,#09202899,#09202855),url('assets/adventure-landscape.svg')}
+  [data-design="v3"] .hero-heading h1{font-size:clamp(2.15rem,9.5vw,3rem)}
+  [data-design="v3"] .hero-meta{font-size:11px}
+  [data-design="v3"] .tile{padding:18px 14px;min-height:144px}
+  [data-design="v3"] .tile strong{font-size:15px}
+  [data-design="v3"] .day-label{font-size:3.5rem}
+  [data-design="v3"] .day-card h2{font-size:26px}
+  [data-design="v3"] .bottom-nav{border-radius:16px 16px 0 0}
+  [data-design="v2"] .hero:has(.hero-logo:not([hidden])),[data-design="v3"] .hero:has(.hero-logo:not([hidden])){padding-top:112px}
+}
+@media(min-width:751px){[data-design="v2"] .hero:has(.hero-logo:not([hidden])),[data-design="v3"] .hero:has(.hero-logo:not([hidden])){padding-top:135px}}

@@ -1,5 +1,5 @@
-const CACHE = 'expeditie-v6';
-const FILES = ['./index.html','./style.css','./data.js','./app.js','./manifest.webmanifest','./assets/landscape.svg','./assets/iceland.svg','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
+const CACHE = 'expeditie-v7';
+const FILES = ['./index.html','./style.css','./themes.css','./data.js','./app.js','./manifest.webmanifest','./assets/landscape.svg','./assets/iceland.svg','./assets/fresh-landscape.svg','./assets/adventure-landscape.svg','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
 const appURLs = new Set(FILES.map(file => new URL(file, self.registration.scope).href));
 const indexURL = new URL('./index.html', self.registration.scope).href;
 let refreshPromise;

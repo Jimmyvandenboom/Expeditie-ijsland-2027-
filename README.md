@@ -72,3 +72,15 @@ Voor de browsertest (niet nodig om de app te gebruiken): voer `npm ci` en `npm t
 ## Logo in de hero
 
 De homepagina heeft rechtsboven ruimte voor het officiële logo; zonder logo blijft deze ruimte onzichtbaar. Zet het aangeleverde bestand later in `assets/maris-logo.png` en voeg `heroLogo: 'assets/maris-logo.png',` toe aan het object in `data.js`. Voeg dat bestand ook toe aan `FILES` in `sw.js` zodat het offline beschikbaar is, en verhoog de cacheversie. De weergave behoudt de beeldverhouding en reserveert op mobiel voldoende ruimte boven de titel. `assets/iceland.svg` is een lokaal, gestileerd silhouet zonder routes of plaatsnamen.
+
+## Drie ontwerpen vergelijken
+
+Bovenaan kies je tijdelijk **V1 / V2 / V3**:
+
+- **V1 · Expedition:** het bestaande donkere expeditieontwerp.
+- **V2 · Iceland Fresh:** lichte, ruime kaarten, turquoise accenten en een frisse lokale landschapillustratie.
+- **V3 · Adventure:** avontuurlijke reisposter, vulkanisch landschap, grote titels en mosgroene/gletsjerblauwe dagkaarten.
+
+Het actieve ontwerp wordt gemarkeerd en lokaal onthouden onder `expeditie-ijsland-2027-design`. De paklijst gebruikt zijn bestaande, aparte opslagsleutel. Wisselen verandert alleen CSS en laadt geen aparte app: alle ontwerpen gebruiken dezelfde pagina's, functies en `data.js`. De huidige pagina en aangevinkte items blijven behouden. De varianten staan in `themes.css`; V1 blijft gebaseerd op `style.css`. Alle illustraties zijn lokale SVG-bestanden en werken offline.
+
+`npm test` controleert ook alle drie de ontwerpen op vier schermbreedtes, wisselen en herladen, behouden paklijstgegevens, gedeelde gegevenswijzigingen en offline gebruik.

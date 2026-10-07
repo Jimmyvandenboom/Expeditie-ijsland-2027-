@@ -1,3 +1,29 @@
+// Eén app, één gegevensbron: de kiezer verandert uitsluitend de CSS-presentatie.
+const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v3: 'Adventure' };
+const designStorageKey = 'expeditie-ijsland-2027-design';
+function applyDesign(design) {
+  if (!Object.hasOwn(designNames, design)) design = 'v1';
+  document.documentElement.dataset.design = design;
+  document.querySelectorAll('[data-design-choice]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.designChoice === design)));
+  document.querySelector('#design-name').textContent = designNames[design];
+  document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#15221c'}[design];
+}
+let initialDesign = 'v1';
+try { initialDesign = localStorage.getItem(designStorageKey) || 'v1'; } catch { /* Default blijft bruikbaar zonder opslag. */ }
+applyDesign(initialDesign);
+document.querySelector('.design-switcher').addEventListener('click', event => {
+  const button = event.target.closest('[data-design-choice]');
+  if (!button) return;
+  const design = button.dataset.designChoice;
+  applyDesign(design);
+  try { localStorage.setItem(designStorageKey, design); } catch {
+    const status = document.querySelector('#status');
+    status.textContent = 'Dit ontwerp kan niet worden onthouden in deze browser. Je kunt wel blijven wisselen.';
+    status.hidden = false;
+  }
+});
+window.addEventListener('storage', event => { if (event.key === designStorageKey) applyDesign(event.newValue); });
+
 const D = window.EXPEDITION;
 const main = document.querySelector('main');
 const storageKey = 'expeditie-ijsland-2027-packing';
