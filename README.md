@@ -30,7 +30,7 @@ Alle paden zijn relatief, dus de app werkt ook onder de projectmap van GitHub Pa
 - **iPhone:** open de online app in Safari → Deel → Zet op beginscherm.
 - **Android:** open de online app in Chrome → menu → App installeren / Toevoegen aan startscherm.
 
-Na het eerste bezoek en succesvol laden worden appbestanden offline opgeslagen. De paklijst bewaart vinkjes in localStorage op dit apparaat en in deze browser. Ze worden niet gedeeld met school of andere apparaten. Wissen van browsergegevens wist de vinkjes. Google Maps, WhatsApp en toekomstige externe audio vereisen internet.
+Na het eerste bezoek en succesvol laden worden appbestanden offline opgeslagen. De paklijst bewaart vinkjes in localStorage op dit apparaat en in deze browser. Ze worden niet gedeeld met school of andere apparaten. Wissen van browsergegevens wist de vinkjes. Google Maps en toekomstige externe audio vereisen internet.
 
 ## Inhoud aanpassen
 
