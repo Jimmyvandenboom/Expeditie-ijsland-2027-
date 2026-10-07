@@ -1,5 +1,5 @@
-const CACHE = 'expeditie-v7';
-const FILES = ['./index.html','./style.css','./themes.css','./data.js','./app.js','./manifest.webmanifest','./assets/landscape.svg','./assets/iceland.svg','./assets/fresh-landscape.svg','./assets/adventure-landscape.svg','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
+const CACHE = 'expeditie-v8';
+const FILES = ['./index.html','./style.css','./themes.css','./data.js','./app.js','./modules.js','./manifest.webmanifest','./assets/landscape.svg','./assets/iceland.svg','./assets/geo-contours.svg','./assets/fresh-landscape.svg','./assets/adventure-landscape.svg','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
 const appURLs = new Set(FILES.map(file => new URL(file, self.registration.scope).href));
 const indexURL = new URL('./index.html', self.registration.scope).href;
 let refreshPromise;
@@ -86,4 +86,24 @@ self.addEventListener('fetch', event => {
       return cached ? withoutHTTPCache(cached) : Response.error();
     }
   })());
+});
+
+// Ontvangst voorbereid; geen abonnement, keys of verzendbackend actief.
+self.addEventListener('push', event => {
+  let payload = {};
+  try { payload = event.data?.json() || {}; } catch { /* Ongeldige payload toont een algemene melding. */ }
+  const title = typeof payload.title === 'string' ? payload.title.slice(0,100) : 'Expeditie IJsland';
+  const body = typeof payload.body === 'string' ? payload.body.slice(0,300) : 'Er is een nieuw expeditiebericht.';
+  let target = new URL('./#home', self.registration.scope);
+  try { const requested = new URL(payload.url, self.registration.scope); if (requested.href.startsWith(self.registration.scope)) target = requested; } catch {}
+  event.waitUntil(self.registration.showNotification(title, { body, icon:new URL('./assets/icon-192.png',self.registration.scope).href, data:{url:target.href} }).catch(() => {}));
+});
+self.addEventListener('notificationclick', event => {
+  event.notification.close();
+  const target = event.notification.data?.url || new URL('./#home',self.registration.scope).href;
+  event.waitUntil(self.clients.matchAll({type:'window'}).then(async clients => {
+    const client=clients.find(client=>client.url.startsWith(self.registration.scope));
+    if(client){await client.navigate(target);return client.focus();}
+    return self.clients.openWindow(target);
+  }));
 });

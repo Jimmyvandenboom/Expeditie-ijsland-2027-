@@ -1,4 +1,4 @@
-/* Tijdelijke vergelijking. V1 gebruikt verder de bestaande style.css ongewijzigd. */
+/* Permanente stijlkiezer voor iedere reiziger. V1 gebruikt verder de bestaande style.css ongewijzigd. */
 .design-switcher{max-width:1040px;margin:16px auto 0;display:flex;align-items:center;gap:14px;padding:10px 15px;border:1px solid var(--border);border-radius:12px;background:var(--panel);color:var(--text)}
 .design-switcher-label{font-size:9px;letter-spacing:.15em;font-weight:700;color:var(--muted)}
 .design-switcher-buttons{display:flex;gap:5px}
@@ -159,3 +159,60 @@
   [data-design="v2"] .hero:has(.hero-logo:not([hidden])),[data-design="v3"] .hero:has(.hero-logo:not([hidden])){padding-top:112px}
 }
 @media(min-width:751px){[data-design="v2"] .hero:has(.hero-logo:not([hidden])),[data-design="v3"] .hero:has(.hero-logo:not([hidden])){padding-top:135px}}
+
+/* V4 — GEO / Iceland Explorer: veldwerk, raster, contouren en kompasdetails. */
+[data-design="v4"]{color-scheme:dark;--bg:#0b2025;--panel:#112c32;--border:#315159;--ice:#93e5cf;--text:#eef4dc;--muted:#acc7c1;--lava:#f3b276;--mint:#b9d78b}
+[data-design="v4"] body{background-color:var(--bg);background-image:linear-gradient(#7cd6d508 1px,transparent 1px),linear-gradient(90deg,#7cd6d508 1px,transparent 1px);background-size:32px 32px}
+[data-design="v4"] .topbar{border-bottom:1px solid #426563;margin-bottom:20px}
+[data-design="v4"] .brand,[data-design="v4"] .eyebrow,[data-design="v4"] .section-label,[data-design="v4"] .header-tag{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+[data-design="v4"] .header-tag{border-radius:3px;border-color:#71917f;color:#b9d78b}
+[data-design="v4"] .hero{background:linear-gradient(110deg,#0a272df5,#133c38b8),url('assets/geo-contours.svg') center/cover;border:1px solid #619789;border-radius:6px;padding:45px;position:relative;box-shadow:8px 8px 0 #273d33;min-height:520px}
+[data-design="v4"] .hero::after{content:'N\A ◇\A S';white-space:pre;text-align:center;position:absolute;top:18px;right:24px;font-family:ui-monospace,monospace;line-height:1.3;font-size:12px;color:#b9d78b;opacity:.75}
+[data-design="v4"] .hero:has(.hero-logo:not([hidden]))::after{display:none}
+[data-design="v4"] .hero h1{font-weight:800;letter-spacing:-.035em}
+[data-design="v4"] .hero h1 em{color:#b9d78b}
+[data-design="v4"] .hero p{color:#b8d5cc}
+[data-design="v4"] .hero-meta{font-family:ui-monospace,monospace;font-size:11px;color:#d6e8cd}
+[data-design="v4"] .hero-island{filter:drop-shadow(0 0 20px #7df1c92a);opacity:.9}
+[data-design="v4"] .hero-caption{color:#9abbaf}
+[data-design="v4"] .button{background:#b9d78b;color:#15322b;border-radius:4px;font-weight:800}
+[data-design="v4"] .button:hover{background:#d1eba9}
+[data-design="v4"] .button.secondary{background:transparent;border-color:#5b7d70;color:#c4e6b0}
+[data-design="v4"] .tile{background:#153037;border-radius:5px;border:1px solid #47655e;box-shadow:3px 3px 0 #203a35}
+[data-design="v4"] .tile-icon{background:#263f37;border-radius:4px}
+[data-design="v4"] .next-card{background:linear-gradient(90deg,#1a3d34,#112c32);border:1px solid #67876a;border-radius:5px;border-left:5px solid #b9d78b}
+[data-design="v4"] .bottom-nav{border-radius:6px;background:#102c31f5;border-color:#5a7e70}
+[data-design="v4"] .bottom-nav a{border-radius:4px}
+[data-design="v4"] .bottom-nav a[aria-current]{background:#b9d78b;color:#17342a}
+[data-design="v4"] .page-heading h1{font-weight:800;letter-spacing:-.035em}
+[data-design="v4"] .day-card{border-radius:5px;border:1px solid #54786c;border-left:5px solid #b9d78b;background:linear-gradient(110deg,#123238dd,#183c33ee),url('assets/geo-contours.svg') center/cover}
+[data-design="v4"] .day-label{font-family:ui-monospace,monospace;font-size:clamp(2.6rem,5vw,3.8rem);font-weight:700;color:#b9d78b;letter-spacing:-.06em}
+[data-design="v4"] .day-card small{font-family:ui-monospace,monospace;color:#b8d5bf}
+[data-design="v4"] .panel{border-radius:5px;border-color:#3b6057;box-shadow:3px 3px 0 #203a35}
+[data-design="v4"] .day-tabs a{border-radius:3px;font-family:ui-monospace,monospace}
+[data-design="v4"] .info-note{background:#1c3e36;border-left:3px solid #b9d78b;border-radius:3px}
+[data-design="v4"] .map-banner{background:linear-gradient(110deg,#143332dd,#1a4436aa),url('assets/geo-contours.svg') center/cover;border-color:#668c77;border-radius:5px}
+[data-design="v4"] .map-banner>span{color:#b9d78b}
+[data-design="v4"] .fact-box{background:#1c3e36}
+[data-design="v4"] .contact-card{background:#1c3e36;border-color:#648975;border-radius:5px}
+[data-design="v4"] .podcast-hero{background:linear-gradient(110deg,#173c35dd,#17323dee),url('assets/geo-contours.svg') center/cover;border-radius:5px}
+@media(max-width:750px){[data-design="v4"] .hero{padding:28px 24px;min-height:500px}[data-design="v4"] .hero::after{font-size:10px;right:15px;top:15px}[data-design="v4"] .day-label{font-size:2.6rem}[data-design="v4"] .hero:has(.hero-logo:not([hidden])){padding-top:112px}}
+
+/* Gedeelde modules blijven binnen elk gekozen thema. */
+form label{display:block;color:var(--text);font-size:14px;font-weight:600;margin:18px 0}
+form input{display:block;width:100%;max-width:520px;margin-top:7px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);padding:13px 14px;min-height:48px;font:inherit}
+dialog{width:min(500px,calc(100% - 30px));max-height:calc(100dvh - 30px);overflow:auto;background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:22px;padding:30px;box-shadow:0 25px 90px #0008}
+dialog::backdrop{background:#041722c9;backdrop-filter:blur(9px)}
+dialog h2{font-size:30px;line-height:1.15}dialog .button{width:100%;margin:8px 0}
+.choice-row{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.choice-row [aria-pressed="true"]{background:var(--ice)!important;color:var(--bg)!important;border-color:var(--ice)!important}
+.profile-greeting{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:24px 0 0}.profile-greeting p{margin:0}.profile-greeting strong{color:var(--text)}.profile-greeting a{color:var(--ice);font-size:12px}
+.aurora-home{display:flex;align-items:center;gap:18px;margin:22px 0 0;padding:20px!important}.aurora-home>span{font-size:30px}.aurora-home strong{display:block;font-size:15px}.aurora-home small{display:block;color:var(--muted);font-size:12px;margin-top:4px}
+.module-banner{margin-top:24px}.quiz-options{display:grid;gap:12px;margin:25px 0}.quiz-options button{text-align:left;justify-content:flex-start;white-space:normal}.quiz-options button:disabled{cursor:default;opacity:.65}
+.bingo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.bingo-grid button{min-height:92px;padding:12px 7px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:9px;font-size:13px;font-weight:650;overflow-wrap:anywhere}.bingo-grid button[aria-pressed="true"]{background:var(--ice);color:var(--bg);border-color:var(--ice)}
+.seconds-game{text-align:center}.seconds-game #seconds-clock{font-size:80px;line-height:1.2;font-weight:800;color:var(--ice)}#seconds-words ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:12px}#seconds-words li{padding:12px 16px;border:1px solid var(--border);border-radius:12px;font-size:18px;font-weight:700}
+.photo-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}.photo-wall{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.photo-wall figure{margin:0}.photo-wall img{width:100%;height:220px;object-fit:cover;border-radius:12px}.photo-wall figcaption{font-size:12px;color:var(--muted)}
+.photo-placeholder{min-height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1px dashed var(--border);border-radius:14px;background:linear-gradient(130deg,var(--panel),var(--bg));padding:20px;text-align:center}.photo-placeholder span{font-size:32px;opacity:.6}.photo-placeholder small{color:var(--muted);font-size:12px}
+.aurora-metrics{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:25px 0}.aurora-metrics>div{background:var(--bg);border-radius:10px;padding:18px}.aurora-metrics small{display:block;font-size:12px;color:var(--muted)}.aurora-metrics strong{display:block;font-size:20px;margin:10px 0}.game-result{text-align:center}.game-result h2{font-size:45px}
+@media(max-width:750px){.profile-greeting{align-items:flex-start;flex-direction:column;gap:6px}.photo-wall{grid-template-columns:1fr 1fr}.aurora-metrics{grid-template-columns:1fr}.bingo-grid{gap:6px}.bingo-grid button{font-size:11px;min-height:82px;padding:8px 3px}.photo-placeholder{padding:12px;min-height:150px}.design-switcher{flex-wrap:wrap}#design-name{font-size:10px}.photo-filters{gap:6px}.photo-filters .button{padding:8px 12px;font-size:12px}}
+@media(max-width:430px){#design-name{flex-basis:100%;margin-left:0;text-align:right}}
+[data-design="v4"] .hero-caption::before{content:'0   1   2   3   4';display:block;letter-spacing:.15em;font-family:ui-monospace,monospace;border-top:2px solid #92b8a3;margin-bottom:8px;padding-top:4px;opacity:.65}

@@ -1,12 +1,12 @@
 // Eén app, één gegevensbron: de kiezer verandert uitsluitend de CSS-presentatie.
-const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v3: 'Adventure' };
+const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v3: 'Adventure', v4: 'GEO / Iceland Explorer' };
 const designStorageKey = 'expeditie-ijsland-2027-design';
 function applyDesign(design) {
   if (!Object.hasOwn(designNames, design)) design = 'v1';
   document.documentElement.dataset.design = design;
   document.querySelectorAll('[data-design-choice]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.designChoice === design)));
   document.querySelector('#design-name').textContent = designNames[design];
-  document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#15221c'}[design];
+  document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#15221c',v4:'#0d262a'}[design];
 }
 let initialDesign = 'v1';
 try { initialDesign = localStorage.getItem(designStorageKey) || 'v1'; } catch { /* Default blijft bruikbaar zonder opslag. */ }
@@ -44,11 +44,11 @@ function routeLinks(day) {
   return html;
 }
 function heading(kicker,title,text='') { return `<div class="page-heading"><span class="eyebrow">${kicker}</span><h1>${title}</h1>${text ? `<p>${text}</p>` : ''}</div>`; }
-const tiles = [ ['programma','📅','Programma','5 dagen vol avontuur'],['kaart','🗺️','Expeditiekaart','Volg onze route'],['paklijst','🎒','Paklijst','Klaar voor vertrek?'],['ontdek','🌋','Ontdek IJsland','Het land van vuur & ijs'],['podcast','🎙️','Podcast','Verhalen van onderweg'],['praktisch','🚨','Praktisch','Goed voorbereid op pad'] ];
+const tiles = [ ['programma','📅','Programma','5 dagen vol avontuur'],['kaart','🗺️','Expeditiekaart','Volg onze route'],['paklijst','🎒','Paklijst','Klaar voor vertrek?'],['ontdek','🌋','Ontdek IJsland','Het land van vuur & ijs'],['podcast','🎙️','Podcast','Verhalen van onderweg'],['praktisch','🚨','Praktisch','Goed voorbereid op pad'],['spelletjes','🎮','Spelletjes','Quiz, bingo & busplezier'],['fotos','📸','Onze expeditie','Foto’s van onderweg'],['profiel','👤','Mijn profiel','Jouw gegevens & instellingen'] ];
 function tileGrid(items) { return `<div class="tile-grid">${items.map(([href,icon,title,sub]) => `<a class="tile" href="#${href}"><span class="tile-icon">${icon}</span><span><strong>${title}</strong><small>${sub}</small></span><span class="arrow">→</span></a>`).join('')}</div>`; }
 function home() {
   return `<section class="hero"><div class="hero-logo-slot">${D.heroLogo ? `<img class="hero-logo" src="${e(D.heroLogo)}" alt="Maris College Bohemen" onerror="this.hidden=true" />` : ''}</div><div class="hero-content"><span class="eyebrow">MARIS COLLEGE BOHEMEN</span><div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><img class="hero-island" src="assets/iceland.svg" alt="Silhouet van IJsland" width="480" height="330"></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.<br>Vijf dagen IJsland die je niet vergeet.</p><div class="hero-meta"><span>📅 ${e(D.dates)}</span><span>👥 ${D.travelers} reizigers</span></div><a class="button" href="#programma">Ontdek het programma <span>→</span></a></div><span class="hero-caption">IJSLAND / LAND VAN VUUR & IJS<br>Illustratie van het IJslandse landschap</span></section>
-  <div class="section-label"><span>JOUW EXPEDITIEGIDS</span><span>01 — 06</span></div>${tileGrid(tiles)}
+  ${profileGreeting()}<a class="aurora-home panel" href="#aurora"><span>🌌</span><div><strong>Aurora Watch · Laugarvatn</strong><small>Bekijk actuele bronnen en de bewolking →</small></div></a><div class="section-label"><span>JOUW EXPEDITIEGIDS</span><span>01 — 09</span></div>${tileGrid(tiles)}
   <section class="next-card"><div><span class="eyebrow">VOLGENDE AVONTUUR</span><h2>${e(D.days[0].title)}</h2><p>${e(D.days[0].date)} · 08:30 verzamelen bij school</p></div><a class="round-link" aria-label="Bekijk dag 1" href="#dag-1">→</a></section>
   <div class="fact-strip"><span>✦</span><p><strong>Wist je dat?</strong> ${e(D.facts[1])}</p><a href="#ontdek">Ontdek meer →</a></div>`;
 }
@@ -64,17 +64,18 @@ function updatePacking() { const count = allItems.filter(item=>packed.includes(i
 function discover() { return heading('LAND VAN VUUR & IJS','Een eiland. Eindeloos bijzonder.','Ontdek de natuurkracht achter de plekken die we bezoeken.') + `<div class="knowledge-grid">${D.knowledge.map(([icon,title,text])=>`<details class="panel knowledge"><summary><span class="knowledge-icon">${icon}</span><strong>${e(title)}</strong><span class="expand">+</span></summary><p>${e(text)}</p></details>`).join('')}</div><section class="panel fact-box"><span class="eyebrow">WIST JE DAT?</span><h2 id="fact-text">${e(D.facts[0])}</h2><button class="button secondary" id="new-fact">Nog een weetje ✦</button></section>`; }
 function podcast() { return heading('VERHALEN VAN DE EXPEDITIE','Expeditie IJsland Podcast','Het avontuur, straks ook in je oren.') + `<section class="podcast-hero"><div class="mic" aria-hidden="true">🎙️</div><span class="pill">${D.episodes.length?'LUISTER MEE':'BINNENKORT BESCHIKBAAR'}</span><h2>Vuur, ijs & verhalen.</h2><p>${D.episodes.length?'Luister naar onze afleveringen.':'Onze podcast is nog in de maak. Hier verschijnen later de afleveringen.'}</p><div class="waveform" aria-hidden="true">${Array.from({length:32},(_,i)=>`<span style="height:${18+(i*37%65)}px"></span>`).join('')}</div></section><section class="panel"><span class="eyebrow">AFLEVERINGEN</span>${D.episodes.length?D.episodes.map(ep=>`<article class="episode"><h2>${e(ep.title)}</h2><p>${e(ep.description || '')}</p><audio controls preload="metadata" src="${e(ep.src)}">Je browser ondersteunt geen audiospeler.</audio></article>`).join(''):'<h2>Het eerste verhaal komt eraan.</h2><p class="muted">Zodra een aflevering beschikbaar is, kun je die hier afspelen.</p>'}</section>`; }
 function practical() { const p=D.practical; return heading('GOED VOORBEREID','Praktisch & veilig','Alles wat je onderweg bij de hand wilt hebben.') + `<section class="contact-card"><div><span class="eyebrow">BIJ EEN NOODGEVAL</span><h2>Neem contact op met een begeleider</h2><p>${e(p.emergencyMessage)}</p></div><p class="small muted">Bij direct levensgevaar in IJsland: bel <a href="tel:112">112</a>.</p></section><div class="practical-grid"><section class="panel"><span class="eyebrow">JOUW TEAM</span><h2>Begeleiders</h2><ul class="plain-list">${p.guides.map(name=>`<li>${e(name)}</li>`).join('')}</ul></section><section class="panel"><span class="eyebrow">ONZE UITVALSBASIS</span><h2>${e(p.accommodation)}</h2><p>${e(p.address)}</p><a class="text-link" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.accommodation+' '+p.address)}" target="_blank" rel="noopener noreferrer">Bekijk locatie →</a><p class="muted">${e(p.reykjavik)}</p></section><section class="panel"><span class="eyebrow">IN CONTACT</span><h2>${e(p.communication)}</h2><p>Houd de schoolgroep in Teams in de gaten voor updates en afspraken.</p></section></div><section class="warning"><span class="eyebrow">⚠ REYNISFJARA · ZWART STRAND</span><h2>De zee is sterker dan je denkt.</h2><p>Sneaker waves zijn plotselinge, grote golven die ver het strand op komen. Houd ruim afstand van de zee, blijf alert en volg altijd de instructies van je begeleiders. Ga niet het water in.</p></section><section class="panel"><h2>Samen op expeditie</h2><ul class="rules"><li>Geen alcohol of drugs.</li><li>Niet roken.</li><li>Afspraken en tijden naleven.</li><li>Instructies van begeleiders opvolgen.</li><li>Bij problemen direct contact opnemen met een begeleider.</li></ul></section>`; }
-function more() { return heading('NOG MEER EXPEDITIE','Alles voor onderweg.','Ontdekken, luisteren en goed voorbereid op pad.') + tileGrid(tiles.slice(3)) + `<section class="panel"><h2>Neem je gids mee</h2><p>Op iPhone: open in Safari, tik op Deel en kies ‘Zet op beginscherm’. Op Android: open het browsermenu en kies ‘App installeren’ of ‘Toevoegen aan startscherm’.</p><p class="muted small">Na je eerste online bezoek zijn de gids en paklijst offline beschikbaar. Google Maps heeft internet nodig. Je paklijst blijft privé op dit apparaat.</p></section>`; }
+function more() { return heading('NOG MEER EXPEDITIE','Alles voor onderweg.','Ontdekken, luisteren en goed voorbereid op pad.') + tileGrid([...tiles.slice(3),['aurora','🌌','Aurora Watch','Noorderlicht bij Laugarvatn']]) + `<section class="panel"><h2>Neem je gids mee</h2><p>Op iPhone: open in Safari, tik op Deel en kies ‘Zet op beginscherm’. Op Android: open het browsermenu en kies ‘App installeren’ of ‘Toevoegen aan startscherm’.</p><p class="muted small">Na je eerste online bezoek zijn de gids en paklijst offline beschikbaar. Google Maps heeft internet nodig. Je paklijst blijft privé op dit apparaat.</p></section>`; }
 let factIndex = 0;
 function render() {
   const page = location.hash.slice(1) || 'home';
-  const routes = {home,programma:programme,kaart:mapPage,paklijst:packing,ontdek:discover,podcast,praktisch:practical,meer:more};
+  const routes = {home,programma:programme,kaart:mapPage,paklijst:packing,ontdek:discover,podcast,praktisch:practical,meer:more,profiel:profilePage,spelletjes:gamesPage,quiz:quizPage,bingo:bingoPage,raadplek:placesPage,'30seconds':secondsPage,challenges:challengesPage,fotos:photosPage,aurora:auroraPage};
   const match=page.match(/^dag-([1-5])$/);
   main.innerHTML = match ? dayPage(Number(match[1])-1) : (routes[page] || home)();
-  document.title = `${match?D.days[Number(match[1])-1].title:({home:'Home',programma:'Programma',kaart:'Expeditiekaart',paklijst:'Paklijst',ontdek:'Ontdek IJsland',podcast:'Podcast',praktisch:'Praktisch',meer:'Meer'}[page] || 'Home')} · Expeditie IJsland 2027`;
-  const active = match?'programma':(['ontdek','podcast','praktisch'].includes(page)?'meer':routes[page]?page:'home');
+  document.title = `${match?D.days[Number(match[1])-1].title:({home:'Home',programma:'Programma',kaart:'Expeditiekaart',paklijst:'Paklijst',ontdek:'Ontdek IJsland',podcast:'Podcast',praktisch:'Praktisch',meer:'Meer',profiel:'Mijn profiel',spelletjes:'Spelletjes',quiz:'IJsland Quiz',bingo:'Busbingo',raadplek:'Raad de plek','30seconds':'IJsland 30 Seconds',challenges:'Challenges',fotos:'Onze expeditie',aurora:'Aurora Watch'}[page] || 'Home')} · Expeditie IJsland 2027`;
+  const active = match?'programma':(['ontdek','podcast','praktisch','profiel','spelletjes','quiz','bingo','raadplek','30seconds','challenges','fotos','aurora'].includes(page)?'meer':routes[page]?page:'home');
   document.querySelectorAll('.bottom-nav a').forEach(link=>{ if(link.hash==='#'+active) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current'); });
   if(page==='paklijst') updatePacking();
+  afterModuleRender(page);
   window.scrollTo(0,0);
 }
 main.addEventListener('change',event=>{
@@ -88,6 +89,7 @@ main.addEventListener('change',event=>{
 main.addEventListener('click',event=>{ if(event.target.closest('#new-fact')) { factIndex=(factIndex+1)%D.facts.length; document.querySelector('#fact-text').textContent=D.facts[factIndex]; } });
 window.addEventListener('hashchange',()=>{render();main.focus({preventScroll:true});});
 render();
+initModules();
 if ('serviceWorker' in navigator) {
   const hadController = Boolean(navigator.serviceWorker.controller);
   let reloading = false;

@@ -30,5 +30,21 @@ window.EXPEDITION = {
   ],
   facts: ['IJsland heeft geen inheemse landreptielen.', 'Reykjavík betekent ongeveer “rookbaai”.', 'Het IJslandse parlement werd in 930 bij Þingvellir opgericht.', 'In februari zijn de dagen kort: perfect om de donkere hemel te bekijken.', 'Het woord “geiser” komt van de IJslandse naam Geysir.'],
   // Voeg afleveringen toe: { title: 'Aflevering 1', description: '...', src: 'audio/aflevering-1.mp3' }
+  photos: { enabled: false, entries: [], moderationRequired: true },
+  push: { enabled: false, topics: ['Verzamelen en vertrek', 'Programmawijzigingen', 'Foto-opdrachten', 'Bus Battle', 'Aurora-alerts', 'Berichten van begeleiders'] },
+  aurora: { location: 'Laugarvatn', latitude: 64.217, longitude: -20.733, officialURL: 'https://en.vedur.is/weather/forecasts/aurora/', kpURL: 'https://services.swpc.noaa.gov/products/noaa-planetary-k-index.json', weatherURL: 'https://api.open-meteo.com/v1/forecast' },
+  games: {
+    quiz: [
+      { question: 'Welk gesteente maakt het strand van Reynisfjara zwart?', options: ['Basalt', 'Krijt', 'Marmer'], answer: 0, explanation: 'Basalt ontstaat uit afgekoelde lava.' },
+      { question: 'Welke twee aardplaten ontmoeten elkaar bij Þingvellir?', options: ['Afrikaanse en Pacifische', 'Noord-Amerikaanse en Euraziatische', 'Antarctische en Indische'], answer: 1, explanation: 'De Noord-Amerikaanse en Euraziatische plaat bewegen hier uit elkaar.' },
+      { question: 'Waar komt geothermische warmte vandaan?', options: ['Van wind', 'Uit zeewater', 'Uit heet gesteente onder de grond'], answer: 2, explanation: 'Heet gesteente verwarmt grondwater.' },
+      { question: 'Wat doe je bij Reynisfjara?', options: ['De golven opzoeken', 'Ruim afstand houden van zee', 'Op natte rotsen klimmen'], answer: 1, explanation: 'Sneaker waves kunnen plotseling ver het strand op komen.' },
+      { question: 'Wat heb je nodig om noorderlicht goed te zien?', options: ['Een donkere, heldere hemel', 'Zon en wolken', 'Een volle maan'], answer: 0, explanation: 'Donkerte en weinig bewolking helpen, maar geven geen garantie.' }
+    ],
+    bingo: ['Waterval', 'Schaap', 'Paard', 'Zwart strand', 'Berg met sneeuw', 'Brug', 'IJslandse vlag', 'Lava', 'Kerk', 'Warme bron', 'Bus', 'Regenboog', 'Gletsjer', 'Vulkanisch gesteente', 'Zee', 'Wolk'],
+    places: [{ clue: 'Ik ben een zwart strand met basaltzuilen. Mijn golven zijn gevaarlijk.', answer: 'Reynisfjara' }, { clue: 'Bij mij zie je aardplaten uit elkaar bewegen. Silfra ligt hier.', answer: 'Þingvellir' }, { clue: 'Mijn water spuit om de paar minuten omhoog.', answer: 'Strokkur' }, { clue: 'Ik ben een waterval van ongeveer 60 meter hoog aan de zuidkust.', answer: 'Skógafoss' }],
+    words: ['Gletsjer', 'Noorderlicht', 'Geysir', 'Vulkaan', 'Laugarvatn', 'Waterval', 'Basalt', 'Reykjavík', 'Aardplaat', 'Thermokleding', 'Secret Lagoon', 'Zwart strand', 'Lunchpakket', 'Powerbank', 'Schiphol'],
+    challenges: ['Bedenk met je buur drie verschillen tussen IJsland en Nederland.', 'Maak samen een mini-verhaal met de woorden lava, ijs en rugzak.', 'Leg in één minuut uit hoe een geiser werkt.', 'Spot drie verschillende soorten landschap vanuit je busstoel.']
+  },
   episodes: []
 };
