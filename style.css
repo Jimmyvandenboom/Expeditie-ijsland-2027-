@@ -10,15 +10,20 @@
 .hero-content{width:100%}
 .hero-heading{display:flex;align-items:center;gap:clamp(20px,5vw,70px)}
 .hero-heading h1{flex-shrink:0}
-.hero-island{display:block;width:clamp(170px,28vw,330px);height:auto;max-width:100%;filter:drop-shadow(0 8px 22px #82deed22);transform:rotate(-5deg)}
+.hero-island{display:block;width:clamp(220px,30vw,380px);height:auto;max-width:100%;filter:drop-shadow(0 0 18px #61d9ed30) drop-shadow(0 0 5px #83eafa1c)}
 .hero-logo-slot{position:absolute;z-index:2;top:22px;right:24px;max-width:160px}
 .hero-logo{display:block;max-width:100%;width:160px;height:auto;max-height:105px;object-fit:contain;border-radius:7px}
 .hero:has(.hero-logo:not([hidden])){padding-top:135px}
 @media(max-width:750px){
   .hero-heading{gap:8px;justify-content:space-between}
   .hero-heading h1{font-size:clamp(2.25rem,10.5vw,3.1rem);margin:36px 0 23px}
-  .hero-island{width:clamp(58px,19vw,130px);flex-shrink:1}
+  .hero-island{width:clamp(80px,28vw,145px);flex-shrink:1}
   .hero-logo-slot{top:16px;right:18px;max-width:110px}
   .hero-logo{width:110px;max-height:82px}
   .hero:has(.hero-logo:not([hidden])){padding-top:112px}
+}
+
+@media(max-width:360px){
+  .hero-heading{flex-wrap:wrap;justify-content:flex-start}
+  .hero-island{width:185px;max-width:90%;margin:0 0 16px 8px;flex-shrink:0}
 }
