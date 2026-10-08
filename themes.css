@@ -313,3 +313,10 @@ dialog h2{font-size:30px;line-height:1.15}dialog .button{width:100%;margin:8px 0
 [data-design="v5"] .next-card{max-width:680px;margin-inline:auto;padding:20px;border-radius:16px}
 [data-design="v5"] .bottom-nav{max-width:540px}
 @media(max-width:750px){[data-design="v5"] .hero:has(.hero-logo:not([hidden])){padding-top:92px;padding-bottom:24px}[data-design="v5"] .hero-logo-slot{top:16px;right:16px}[data-design="v5"] .geo-identity{margin:8px 0 18px}[data-design="v5"] .hero h1{font-size:clamp(2rem,9vw,2.8rem)}[data-design="v5"] .hero-caption{display:none}}
+
+/* Stijloverzicht altijd bovenaan, met de actuele V1–V5 nummering. */
+[data-design] .design-switcher{position:relative;inset:auto;z-index:2;width:auto;max-width:1040px;margin:12px auto 0;padding:10px 15px;border-radius:12px;display:flex;flex-wrap:wrap;gap:10px}
+[data-design] .design-switcher-label{display:block}
+[data-design] #design-name{display:block;font-size:11px;margin-left:auto}
+[data-design] .design-switcher button{min-height:38px;min-width:44px;font-size:12px;padding:6px 10px}
+@media(max-width:750px){[data-design] .design-switcher{margin:10px 18px 0;padding:8px 10px;gap:7px}[data-design] .design-switcher-label{flex-basis:100%;font-size:8px}[data-design] #design-name{flex-basis:100%;text-align:right;margin:0;font-size:10px}[data-design] .design-switcher-buttons{width:100%;justify-content:space-between}}

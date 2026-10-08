@@ -6,7 +6,7 @@ function applyDesign(design) {
   try { localStorage.setItem(designStorageKey, design); } catch { /* Opslag is optioneel. */ }
   document.documentElement.dataset.design = design;
   document.querySelectorAll('[data-design-choice]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.designChoice === design)));
-  document.querySelector('#design-name').textContent = designNames[design];
+  document.querySelector('#design-name').textContent = `${design.toUpperCase()} · ${designNames[design]}`;
   document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#102e35',v4:'#ffffff',v5:'#951b81'}[design];
   window.GeoUI?.refresh();
   if(homeDesignReady && (!location.hash || location.hash==='#home'))render();
