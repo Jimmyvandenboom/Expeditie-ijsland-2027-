@@ -19,7 +19,7 @@ const stops=[['Keflavík Airport','Bridge Between Continents','Gunnuhver Geother
  assert.deepEqual(metadata.map(location=>location.podcastTitle),['Waarom scheurt IJsland uit elkaar?','Waarom kookt de aarde hier?']);
  for(const location of metadata){for(const field of ['id','name','lat','lng','geoTheme','description','podcastTitle','audioSrc','fact','lookTask','photoChallenge','visited'])assert.ok(Object.hasOwn(location,field));assert.equal(location.audioSrc,null);assert.equal(location.visited,false);assert.ok(Number.isFinite(location.lat)&&Number.isFinite(location.lng));}
  assert.equal(await page.locator('audio').count(),0);
- for(const design of ['v1','v2','v4','v5','v6'])for(const width of [375,1440]){
+ for(const design of ['v1','v2','v3','v4','v5'])for(const width of [375,1440]){
    await page.setViewportSize({width,height:950});await page.locator(`[data-design-choice=${design}]`).click();
    await page.goto(url+'/#dag-1');assert.deepEqual(await page.locator('.event').evaluateAll(rows=>rows.map(row=>[row.querySelector('time').textContent,row.querySelector('p').textContent])),expectedEvents);
    assert.match(await page.locator('.route-text').innerText(),/Bridge Between Continents → Gunnuhver Geothermal Area → Laugarvatn/);
@@ -36,7 +36,7 @@ const stops=[['Keflavík Airport','Bridge Between Continents','Gunnuhver Geother
      await page.locator('[data-route-stop="1"]').click();await page.locator('.leaflet-popup').waitFor();assert.match(await page.locator('.leaflet-popup').innerText(),new RegExp(stops[day][1].replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
      const zoom=await page.evaluate(()=>RouteMap.map.getZoom());await page.locator('.leaflet-control-zoom-in').click();await page.waitForFunction(expected=>RouteMap.map.getZoom()===expected,zoom+1);assert.equal(await page.evaluate(()=>RouteMap.map.getZoom()),zoom+1);await page.locator('#route-fit').click();
      const center=await page.evaluate(()=>RouteMap.map.getCenter());await page.locator('#route-map').evaluate(()=>RouteMap.map.panBy([60,0],{animate:false}));assert.notEqual(await page.evaluate(()=>RouteMap.map.getCenter().lng),center.lng);
-     if(design==='v4'&&day===3)await page.screenshot({path:`/tmp/routes-v4-${width}.png`,fullPage:true});
+     if(design==='v3'&&day===3)await page.screenshot({path:`/tmp/routes-v4-${width}.png`,fullPage:true});
    }
  }
  // Rapid day changes cannot publish a previous day's route, and leaving destroys the map.

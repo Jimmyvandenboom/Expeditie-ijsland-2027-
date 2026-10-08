@@ -20,4 +20,4 @@ function updateGeoCountdown(now=Date.now()) {
   const values=[Math.floor(seconds/86400),Math.floor(seconds%86400/3600),Math.floor(seconds%3600/60),seconds%60];
   target.innerHTML=values.map((value,i)=>`<span class="geo-countdown-unit"><strong>${String(value).padStart(2,'0')}</strong><span>${['dagen','uur','min','sec'][i]}</span></span>`).join('');
 }
-window.GeoUI={refresh:()=>updateGeoCountdown(),start:()=>{updateGeoCountdown();setInterval(()=>{if(['v4','v6'].includes(document.documentElement.dataset.design)&&document.visibilityState==='visible')updateGeoCountdown();},1000);}};
+window.GeoUI={refresh:()=>updateGeoCountdown(),start:()=>{updateGeoCountdown();setInterval(()=>{if(['v3','v5'].includes(document.documentElement.dataset.design)&&document.visibilityState==='visible')updateGeoCountdown();},1000);}};

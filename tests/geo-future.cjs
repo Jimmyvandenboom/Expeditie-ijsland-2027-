@@ -33,7 +33,7 @@ function serve(old){return http.createServer((req,res)=>{let file=new URL(req.ur
   })));
   assert.deepEqual(layouts[0],layouts[1],`${design}/${width}: hero styles/layout changed`);
  }
- const page=pages[1];await page.locator('[data-design-choice=v4]').click();
+ const page=pages[1];await page.locator('[data-design-choice=v3]').click();
  assert.equal(await page.locator('.geo-route-badge').innerText(),'GEO FUTURE ROUTE · ICELAND 2027');
  assert.equal(await page.locator('.geo-location-card').count(),6);
  await page.evaluate(()=>updateGeoCountdown(Date.parse('2027-01-30T07:30:00Z')));

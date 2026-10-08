@@ -1,27 +1,30 @@
 // Eén app, één gegevensbron: de kiezer verandert uitsluitend de CSS-presentatie.
-const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v4: 'GEO Future', v5: 'Maris Reisdashboard', v6: 'Maris GEO Mobile' };
+const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v3: 'GEO Future', v4: 'Maris Reisdashboard', v5: 'Maris GEO Mobile' };
 const designStorageKey = 'expeditie-ijsland-2027-design';
 function applyDesign(design) {
-  if (design === 'v3') design = 'v4';
-  if (!Object.hasOwn(designNames, design)) design = 'v5';
+  if (!Object.hasOwn(designNames, design)) design = 'v4';
   try { localStorage.setItem(designStorageKey, design); } catch { /* Opslag is optioneel. */ }
   document.documentElement.dataset.design = design;
   document.querySelectorAll('[data-design-choice]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.designChoice === design)));
   document.querySelector('#design-name').textContent = designNames[design];
-  document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v4:'#102e35',v5:'#ffffff',v6:'#951b81'}[design];
+  document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#102e35',v4:'#ffffff',v5:'#951b81'}[design];
   window.GeoUI?.refresh();
   if(homeDesignReady && (!location.hash || location.hash==='#home'))render();
 }
 let homeDesignReady = false;
-let initialDesign = 'v5';
+let initialDesign = 'v4';
 try {
   // Introduce the approved release once, while preserving profile and checklist.
   if(localStorage.getItem('expeditie-ijsland-2027-design-release')==='v5') {
-    initialDesign=localStorage.getItem(designStorageKey)||'v5';
+    initialDesign=localStorage.getItem(designStorageKey)||'v4';
+    if(localStorage.getItem('expeditie-ijsland-2027-design-numbering')!=='sequential-5'){
+      initialDesign=({v3:'v3',v4:'v3',v5:'v4',v6:'v5'})[initialDesign]||initialDesign;
+    }
   } else {
     localStorage.setItem('expeditie-ijsland-2027-design-release','v5');
-    localStorage.setItem(designStorageKey,'v5');
+    localStorage.setItem(designStorageKey,'v4');
   }
+  localStorage.setItem('expeditie-ijsland-2027-design-numbering','sequential-5');
 } catch { /* Default blijft bruikbaar zonder opslag. */ }
 applyDesign(initialDesign);
 document.querySelector('.design-switcher').addEventListener('click', event => {
@@ -73,7 +76,7 @@ function syncSchoolLogos() {
   });
 }
 function home() {
-  if(document.documentElement.dataset.design==='v5')return dashboardHome();
+  if(document.documentElement.dataset.design==='v4')return dashboardHome();
   return `<section class="hero"><div class="hero-logo-slot">${schoolLogoMarkup('hero-logo')}</div><div class="hero-content"><span class="eyebrow">MARIS COLLEGE BOHEMEN</span>${geoHomeIdentity()}<div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.<br>Vijf dagen IJsland die je niet vergeet.</p><div class="hero-meta"><span>📅 ${e(D.dates)}</span><span>👥 ${D.travelers} reizigers</span></div><a class="button" href="#programma">Ontdek het programma <span>→</span></a></div><span class="hero-caption">IJSLAND / LAND VAN VUUR & IJS<br>Illustratie van het IJslandse landschap</span></section>
   ${geoLocationSection()}${profileGreeting()}<a class="aurora-home panel" href="#aurora"><span>🌌</span><div><strong>Aurora Watch · Laugarvatn</strong><small>Bekijk actuele bronnen en de bewolking →</small></div></a><div class="section-label"><span>JOUW EXPEDITIEGIDS</span><span>01 — 09</span></div>${tileGrid(tiles)}
   <section class="next-card"><div><span class="eyebrow">VOLGENDE AVONTUUR</span><h2>${e(D.days[0].title)}</h2><p>${e(D.days[0].date)} · 08:30 verzamelen bij school</p></div><a class="round-link" aria-label="Bekijk dag 1" href="#dag-1">→</a></section>
