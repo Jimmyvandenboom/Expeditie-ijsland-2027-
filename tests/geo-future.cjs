@@ -10,6 +10,7 @@ const baseline=new Map(['index.html','app.js','data.js','themes.css'].map(file=>
 baseline.set('data.js',Buffer.from(baseline.get('data.js').toString().replace('window.EXPEDITION = {',"window.EXPEDITION = { heroLogo:'assets/maris-logo.png',")));
 // Apply the requested map replacement to the baseline; compare all remaining theme styles.
 baseline.set('app.js',Buffer.from(baseline.get('app.js').toString().replace('class="hero-island" src="assets/iceland.svg"','class="hero-island hero-topography" src="assets/iceland-topography.png"')));
+baseline.set('app.js',Buffer.from(baseline.get('app.js').toString().replace(/<img class="hero-island[^>]*>/g,'')));
 const homeMapCSS=fs.readFileSync(path.join(root,'themes.css'),'utf8').split('/* Topographic home map')[1];
 assert.ok(homeMapCSS,'Explicit home-map styles must exist');
 baseline.set('themes.css',Buffer.concat([baseline.get('themes.css'),Buffer.from('/* Topographic home map'+homeMapCSS)]));
@@ -20,13 +21,13 @@ function serve(old){return http.createServer((req,res)=>{let file=new URL(req.ur
  const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox']});
  try{
  const pages=[];for(const server of servers){const ctx=await browser.newContext({serviceWorkers:'block'});await ctx.addInitScript(()=>localStorage.setItem('expeditie-ijsland-2027-profile',JSON.stringify({firstName:'Test',className:'4T'})));const page=await ctx.newPage();await page.goto(`http://127.0.0.1:${server.address().port}`);pages.push(page);}
- for(const design of ['v1','v2','v3'])for(const width of [375,1440]){
+ for(const design of ['v1','v2'])for(const width of [375,1440]){
   const shots=[];for(const page of pages){await page.setViewportSize({width,height:1000});await page.locator(`[data-design-choice=${design}]`).click();await page.evaluate(()=>document.fonts.ready);shots.push(await page.locator('.hero').screenshot({animations:'disabled'}));}
   shots.forEach((shot,i)=>fs.writeFileSync(`/tmp/hero-regression-${design}-${width}-${i}.png`,shot));
   // GPU shadow rasterization can differ by one RGB unit between documents.
   // Compare complete computed styles and dimensions of every visible hero component.
   const layouts=[];
-  for(const page of pages)layouts.push(await page.evaluate(()=>['.hero','.hero-content','.hero .eyebrow','.hero-heading','h1','h1 em','.hero-island','.hero-content>p','.hero-meta','.hero .button','.hero-caption','.hero-logo-slot'].map(selector=>{
+  for(const page of pages)layouts.push(await page.evaluate(()=>['.hero','.hero-content','.hero .eyebrow','.hero-heading','h1','h1 em','.hero-content>p','.hero-meta','.hero .button','.hero-caption','.hero-logo-slot'].map(selector=>{
     const el=document.querySelector(selector),style=getComputedStyle(el),rect=el.getBoundingClientRect();
     return {selector,width:rect.width,height:rect.height,styles:Object.fromEntries([...style].map(key=>[key,style.getPropertyValue(key).replaceAll(location.origin,'TEST_ORIGIN')]))};
   })));

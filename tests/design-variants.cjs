@@ -25,7 +25,7 @@ const server=http.createServer((req,res)=>{
     await page.getByLabel('Winterjas',{exact:true}).check();
     const packingBefore=await page.evaluate(()=>localStorage.getItem('expeditie-ijsland-2027-packing'));
     const sharedData=await page.evaluate(()=>JSON.stringify(EXPEDITION));
-    for(const design of ['v1','v2','v3','v4','v5','v6']){
+    for(const design of ['v1','v2','v4','v5','v6']){
       await page.locator(`[data-design-choice="${design}"]`).click();
       assert.equal(await page.evaluate(()=>document.documentElement.dataset.design),design);
       assert.equal(await page.locator('[aria-pressed="true"]').count(),1);
@@ -41,6 +41,7 @@ const server=http.createServer((req,res)=>{
         for(const route of ['home','programma','dag-1','dag-2','dag-3','dag-4','dag-5','kaart','paklijst','ontdek','podcast','praktisch','meer']){
           await page.goto(url+'/#'+route);
           assert.equal(await page.locator('h1').count(),1);
+          if(route==='home')assert.equal(await page.locator('.hero-island,.geo-atlas').count(),0);
           if(route==='home' && ['v4','v6'].includes(design)){assert.equal(await page.locator('.hero-island,.geo-atlas').count(),0);assert.ok(await page.locator('.geo-route-badge').isVisible());assert.ok(await page.locator('.geo-countdown').isVisible());if(design==='v6')assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--ice').trim()),'#951b81');}
           assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${design}/${route}/${width}: overflow`);
         }
@@ -57,7 +58,7 @@ const server=http.createServer((req,res)=>{
       await page.goto(url+'/#praktisch');assert.equal(await page.locator('.plain-list li').count(),4);assert.equal(await page.locator('a[href="tel:112"]').count(),1);
       // Eén centrale wijziging in data moet in ieder ontwerp zichtbaar blijven.
       await page.evaluate(()=>{EXPEDITION.days[0].events[0][0]='08:42';EXPEDITION.practical.reykjavik='Testhostel centraal';});
-      for(const choice of ['v1','v2','v3','v4','v5','v6']){
+      for(const choice of ['v1','v2','v4','v5','v6']){
         await page.locator(`[data-design-choice="${choice}"]`).click();await page.goto(url+'/#dag-1');assert.equal(await page.locator('.event time').first().textContent(),'08:42');
         await page.goto(url+'/#praktisch');assert.ok((await page.locator('main').innerText()).includes('Testhostel centraal'));
       }
@@ -72,9 +73,10 @@ const server=http.createServer((req,res)=>{
       await page.locator(`[data-design-choice="${design}"]`).click();await page.reload();assert.equal(await page.evaluate(()=>document.documentElement.dataset.design),design);
       await ctx.setOffline(false);
     }
+    await page.evaluate(()=>localStorage.setItem('expeditie-ijsland-2027-design','v3'));await page.reload();assert.equal(await page.evaluate(()=>document.documentElement.dataset.design),'v4');assert.equal(await page.locator('[data-design-choice=v3]').count(),0);
     // Ongeldige opgeslagen keus heeft een werkende standaard.
     await page.evaluate(()=>localStorage.setItem('expeditie-ijsland-2027-design','invalid'));await page.reload();assert.equal(await page.evaluate(()=>document.documentElement.dataset.design),'v5');
     assert.deepEqual(errors,[]);
-    console.log('PASS: six designs, every page at four widths, active selector and persistence, shared data changes, checklist retained, day buttons/Maps/facts/contacts, offline design selection, no console errors.');
+    console.log('PASS: five designs, every page at four widths, active selector and persistence, shared data changes, checklist retained, day buttons/Maps/facts/contacts, offline design selection, no console errors.');
   }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(()=>{server.closeAllConnections();server.close();});

@@ -53,9 +53,7 @@ const server = http.createServer((req, res) => {
     await page.goto(url + '/#paklijst');await page.getByLabel('Muts',{exact:true}).check();
     console.log('Offline checks');await context.setOffline(true);await page.reload();assert.ok(await page.getByLabel('Muts',{exact:true}).isChecked());
     await page.goto(url + '/#home');assert.equal(await page.locator('.hero h1').innerText(),'Expeditie\nIJsland');
-    await page.locator('.hero-island').evaluate(img=>img.decode());
-    assert.equal(await page.locator('.hero-island').getAttribute('src'),'assets/iceland-topography.png');
-    assert.equal(await page.locator('.hero-island').evaluate(img=>img.naturalWidth),1040);
+    assert.equal(await page.locator('.hero-island').count(),0);
     await page.locator('.hero-logo').evaluate(img=>img.decode());
     assert.equal(await page.locator('.hero-logo').getAttribute('src'),'assets/maris-logo.png');
     assert.equal(await page.locator('.hero-logo').evaluate(img=>img.naturalWidth),495);
@@ -77,13 +75,11 @@ const server = http.createServer((req, res) => {
       await page.setViewportSize({width,height:900});
       await page.goto(url + '/#home');
       assert.ok(!(await page.locator('.hero').innerText()).includes('EXPEDITIE 01'));
-      assert.equal(await page.locator('.hero-island').count(),1);
+      assert.equal(await page.locator('.hero-island').count(),0);
       for (const logo of [null,mockLogo]) {
         await page.evaluate(value=>{EXPEDITION.heroLogo=value;render();},logo);
         assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
         const title = await page.locator('.hero h1').boundingBox();
-        const island = await page.locator('.hero-island').boundingBox();
-        assert.ok(width<=750 ? island.y>=title.y+title.height-1 : island.x>=title.x+title.width-1,'Kaart blijft naast de titel, of eronder op kleine schermen');
         if (logo) {
           const image=page.locator('.hero-logo');await image.evaluate(img=>img.decode());
           assert.equal(await page.locator('.brand .school-logo').getAttribute('src'),logo);
@@ -102,7 +98,7 @@ const server = http.createServer((req, res) => {
     await page.screenshot({path:'/tmp/expeditie-hero-mobile.png',fullPage:true});
     const before = counts['/index.html'];
     await page.evaluate(()=>navigator.serviceWorker.controller.postMessage({type:'CHECK_APP_UPDATE'}));
-    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v17');return Boolean(await cache.match('./app.js'));});
+    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v18');return Boolean(await cache.match('./app.js'));});
     await page.waitForTimeout(400);
     assert.ok(counts['/index.html']-before<=1,'Ongewijzigde bestanden veroorzaken geen reload-loop');
     assert.deepEqual(errors,[]);
