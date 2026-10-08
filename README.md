@@ -223,3 +223,5 @@ V3 is verwijderd uit de kiezer. Een opgeslagen V3-keuze gaat naar V4. Alle homes
 De stijlen zijn opeenvolgend hernummerd: oude V4 → V3 (GEO Future), oude V5 → V4 (Maris Reisdashboard), oude V6 → V5 (Maris GEO Mobile). Eenmalige migratie behoudt de gekozen presentatie en alle overige opgeslagen gegevens. V5 heeft een smallere, compactere paarse hero en avontuurkaart. PWA-cache: `expeditie-v19`.
 
 V5 mobiel verfijnd: compacte titel/countdown, vier directe snelkoppelingen, horizontale dagkaarten uit de centrale reisdata en GEO-locatiekaarten op de routepagina. De overige functies blijven bereikbaar. V1–V4 zijn visueel ongewijzigd. PWA-cache: `expeditie-v22`.
+
+V5: Podcast vervangt Paklijst in de onderste navigatie en in de snelknoppen; Paklijst is bereikbaar via Meer. Ontdek IJsland bevat negen uitklapbare GEO-thema’s met uitgebreide uitleg, lokale schematische SVG-illustraties, reisdaglinks en onderzoeksvragen. Aanvullende inhoud staat centraal in `data.js` (`knowledgeDetails`). Alle visuals worden offline gecachet. Cache: `expeditie-v23`.

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "python3 -m http.server 8000 --bind 0.0.0.0",
     "check": "node --check app.js && node --check modules.js && node --check geo.js && node --check routes.js && node --check v5.js && node --check data.js && node --check sw.js",
-    "test": "node tests/service-worker-update.cjs && node tests/design-variants.cjs && node tests/master-update.cjs && node tests/geo-future.cjs && node tests/route-map.cjs && node tests/v5-dashboard.cjs"
+    "test": "node tests/service-worker-update.cjs && node tests/design-variants.cjs && node tests/master-update.cjs && node tests/geo-future.cjs && node tests/route-map.cjs && node tests/v5-dashboard.cjs && node tests/geo-learning.cjs"
   },
   "devDependencies": {
     "playwright": "^1.63.0"

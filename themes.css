@@ -353,3 +353,21 @@ dialog h2{font-size:30px;line-height:1.15}dialog .button{width:100%;margin:8px 0
 [data-design="v5"] .tile{border-radius:16px;min-height:118px;padding:18px 14px}[data-design="v5"] .tile strong{font-size:14px}
 @media(min-width:751px){[data-design="v5"] .mobile-shortcuts{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){[data-design="v5"] .mobile-day-strip{scroll-snap-type:none}}
+
+/* V5: illustrated, readable GEO explanations within the existing theme buttons. */
+[data-design="v5"] .geo-learning{padding:0;overflow:hidden;border-radius:18px;background:#fff}
+[data-design="v5"] .geo-learning summary{padding:20px 18px;min-height:72px}
+[data-design="v5"] .geo-learning[open] summary{background:#f6eaf8;border-bottom:1px solid #e4d9eb}
+[data-design="v5"] .geo-learning-content{padding:0 20px 22px}
+[data-design="v5"] .geo-learning-content p{font-size:14px;line-height:1.8;max-width:65ch;margin:18px 0;color:#57495f}
+[data-design="v5"] .geo-learning-content h3{font-size:18px;color:#951b81;margin:24px 0 0;line-height:1.3}
+[data-design="v5"] .geo-learning-content figure{margin:20px 0;background:#f0fbff;border:1px solid #d6eef7;border-radius:14px;overflow:hidden}
+[data-design="v5"] .geo-learning-content figure img{display:block;width:100%;height:auto;max-height:260px;object-fit:contain}
+[data-design="v5"] .geo-learning-content figcaption{font-size:10px;color:#6a5b72;padding:8px 12px;background:#fff}
+[data-design="v5"] .geo-learning-field{border-left:3px solid #00a8e8;background:#effaff;padding:16px;border-radius:0 12px 12px 0;margin-top:20px}
+[data-design="v5"] .geo-learning-field .eyebrow{color:#006780;margin:0;font-size:9px}
+[data-design="v5"] .geo-learning-field p{margin:12px 0;font-size:13px}
+[data-design="v5"] .geo-learning-field .text-link{display:inline-block;font-size:12px;min-height:32px}
+[data-design="v5"] .geo-learning-question{margin-top:20px;border-top:1px dashed #d9bce0;padding-top:16px}
+[data-design="v5"] .geo-learning-question strong{font-size:12px;color:#951b81}
+[data-design="v5"] .geo-learning-question p{font-size:13px;margin:8px 0 0}

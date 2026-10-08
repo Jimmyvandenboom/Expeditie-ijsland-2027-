@@ -31,8 +31,8 @@ function dashboardHome() {
 
 // V5 mobile GEO edition: the same data and pages, with shortcuts before field notes.
 function mobileGeoHome(){
-  const shortcuts=[['programma','Programma','Alle vijf reisdagen'],['kaart','Locaties & routes','Stops en GEO-veldwerk'],['paklijst','Paklijst','Klaar voor vertrek'],['praktisch','Praktische info','Goed voorbereid']];
-  const extras=tiles.filter(([route])=>!shortcuts.some(([shortcut])=>shortcut===route));
+  const shortcuts=[['programma','Programma','Alle vijf reisdagen'],['kaart','Locaties & routes','Stops en GEO-veldwerk'],['podcast','Podcast','Verhalen van onderweg'],['praktisch','Praktische info','Goed voorbereid']];
+  const extras=tiles.filter(([route])=>route!=='paklijst'&&!shortcuts.some(([shortcut])=>shortcut===route));
   const first=D.days[0];
   return `<section class="hero mobile-geo-hero"><div class="hero-content"><span class="geo-route-badge">${e(D.geo.badge)}</span><div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><span class="mobile-north" aria-hidden="true">N<br>↑</span></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.</p><div class="hero-meta"><span>${e(D.dates)}</span><span>${D.travelers} reizigers</span></div>${geoHomeIdentity(false)}<a class="button" href="#programma">Ontdek het programma <span>→</span></a><div class="mobile-field-mark" aria-hidden="true">65° N · 19° W <span>GEO / FIELD NOTES</span></div></div></section>
   <section class="mobile-shortcuts" aria-label="Snel naar">${shortcuts.map(([route,title,subtitle])=>`<a href="#${route}" class="mobile-shortcut">${dashboardIcon(route)}<strong>${title}</strong><small>${subtitle}</small><span aria-hidden="true">↗</span></a>`).join('')}</section>
@@ -42,4 +42,9 @@ function mobileGeoHome(){
   <div class="section-label"><span>MEER ONTDEKKEN</span><span>GEO FUTURE ROUTE</span></div>${tileGrid(extras)}
   <a class="aurora-home panel" href="#aurora"><span>🌌</span><div><strong>Aurora Watch · Laugarvatn</strong><small>Bekijk actuele bronnen en de bewolking →</small></div></a>
   <div class="fact-strip"><span>✦</span><p><strong>Wist je dat?</strong> ${e(D.facts[1])}</p><a href="#ontdek">Ontdek meer →</a></div>`;
+}
+
+function mobileGeoDiscover(){
+  return heading('GEO FUTURE ROUTE','Ontdek IJsland','Van aardplaten tot noorderlicht: ontdek hoe het landschap werkt. Tik op een thema voor uitleg, een visual en een kijkvraag.')+
+    `<div class="knowledge-grid">${D.knowledge.map(([icon,title,text],index)=>{const detail=D.knowledgeDetails[index];return `<details class="panel knowledge geo-learning"><summary><span class="knowledge-icon">${icon}</span><strong>${e(title)}</strong><span class="expand">+</span></summary><div class="geo-learning-content"><p class="geo-learning-intro">${e(text)}</p><figure><img src="${e(detail.illustration)}" alt="${e(detail.alt)}" width="360" height="200" loading="lazy"><figcaption>Schematische illustratie · niet op schaal</figcaption></figure><h3>Hoe werkt het?</h3><p>${e(detail.explanation)}</p><div class="geo-learning-field"><span class="eyebrow">TIJDENS ONZE EXPEDITIE</span><p>${e(detail.field)}</p><a class="text-link" href="#${e(detail.route)}">${detail.route==='aurora'?'Bekijk Aurora Watch':'Bekijk de reisdag'} →</a></div><div class="geo-learning-question"><strong>Onderzoeksvraag</strong><p>${e(detail.question)}</p></div></div></details>`;}).join('')}</div><section class="panel fact-box"><span class="eyebrow">WIST JE DAT?</span><h2 id="fact-text">${e(D.facts[0])}</h2><button class="button secondary" id="new-fact">Nog een weetje ✦</button></section>`;
 }

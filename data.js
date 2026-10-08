@@ -61,6 +61,80 @@ window.EXPEDITION = {
     ['🌍','Þingvellir en aardplaten','Hier zie je de grens tussen de Noord-Amerikaanse en Euraziatische plaat. Ze bewegen langzaam uit elkaar. De spleet Silfra is gevuld met helder grondwater. Wij wandelen hier; zwemmen is geen onderdeel van het programma.'],
     ['💦','Geysir & Strokkur','Ondergronds water wordt door heet gesteente verwarmd. Door druk kan het plots omhoog spuiten. Strokkur barst meestal om de paar minuten uit. Blijf op de paden: het water is extreem heet.']
   ],
+  knowledgeDetails: [
+  {
+    "illustration": "assets/geo-tectonic.svg",
+    "alt": "Twee platen bewegen uiteen; magma vult de ruimte ertussen.",
+    "explanation": "De aardkorst bestaat uit platen die langzaam bewegen. IJsland ligt op een spreidingsrug: de Noord-Amerikaanse en Euraziatische plaat bewegen uit elkaar. Magma kan via scheuren omhoog komen en afkoelen tot nieuw gesteente. De extra warmte van een hotspot helpt verklaren waarom hier een eiland boven zee ligt.",
+    "field": "Bij Bridge Between Continents en Þingvellir kun je het landschap bekijken dat door deze beweging wordt gevormd. Een brug overspant een scheur; de plaatgrens is een brede zone.",
+    "question": "Waarom ontstaan er juist bij een spreidingsrug veel scheuren en vulkanen?",
+    "route": "dag-1"
+  },
+  {
+    "illustration": "assets/geo-volcano.svg",
+    "alt": "Magma stijgt vanuit de ondergrond op; lava stroomt over het oppervlak.",
+    "explanation": "Magma is gesmolten gesteente onder de grond. Aan het oppervlak noemen we het lava. Bij het afkoelen ontstaat nieuw gesteente. Gas, de samenstelling van magma en de aanwezigheid van water beïnvloeden hoe een uitbarsting verloopt: rustig uitstromend of explosiever. Niet elke krater heeft dezelfde ontstaansgeschiedenis.",
+    "field": "Bij Kerið zie je een krater met gekleurde wanden en een meer. Bekijk de vormen en kleuren zonder van het pad af te gaan.",
+    "question": "Welke sporen in een landschap wijzen op vroegere vulkanische activiteit?",
+    "route": "dag-3"
+  },
+  {
+    "illustration": "assets/geo-glacier.svg",
+    "alt": "Sneeuw wordt ijs; de gletsjer beweegt en voert gesteente mee.",
+    "explanation": "Als er langere tijd meer sneeuw bijkomt dan er smelt, wordt sneeuw onder druk steeds dichter en uiteindelijk gletsjerijs. Door de zwaartekracht beweegt het ijs. Meegevoerd zand en stenen schuren de ondergrond. Smeltwater verplaatst materiaal verder. De balans tussen aangroei en verlies bepaalt of een gletsjer groeit of krimpt.",
+    "field": "Bij Sólheimajökull kun je vanaf het veilige pad ijs, donker gesteente en smeltwater onderscheiden. Donkere strepen kunnen vulkanische as en meegevoerd materiaal bevatten.",
+    "question": "Hoe kun je aan het landschap herkennen dat hier ijs heeft bewogen?",
+    "route": "dag-2"
+  },
+  {
+    "illustration": "assets/geo-energy.svg",
+    "alt": "Water neemt warmte op uit heet gesteente en brengt die naar boven.",
+    "explanation": "Regen- en grondwater kunnen via scheuren de ondergrond in zakken. Heet gesteente verwarmt dat water. Via bronnen of putten komt warmte weer beschikbaar. Warm water kan gebouwen verwarmen; stoom of andere technieken kunnen elektriciteit helpen opwekken. Geothermie gebruikt warmte uit de aarde, maar installaties en leidingen blijven nodig.",
+    "field": "Bij Gunnuhver zie je stoom en heet water aan het oppervlak. Bij een warm bad ervaar je hoe aardwarmte kan worden gebruikt. Blijf bij geothermische gebieden op de aangegeven paden.",
+    "question": "Wat is het verschil tussen aardwarmte gebruiken voor verwarming en voor elektriciteit?",
+    "route": "dag-1"
+  },
+  {
+    "illustration": "assets/geo-aurora.svg",
+    "alt": "Deeltjes van de zon volgen het magnetisch veld en laten de hoge atmosfeer oplichten.",
+    "explanation": "De zon zendt geladen deeltjes uit. Het magnetisch veld rond de aarde beïnvloedt hun beweging. Bij de poolgebieden kunnen deeltjes energie afgeven aan gassen hoog in de atmosfeer. Die gassen stralen vervolgens licht uit. Onder meer het soort gas en de hoogte beïnvloeden de kleur. Bewolking en lichtvervuiling kunnen het zicht blokkeren.",
+    "field": "Gebruik Aurora Watch om actuele bronnen te bekijken. Een verwachting is geen garantie: ook met activiteit heb je een donkere, heldere hemel nodig.",
+    "question": "Waarom is een hoge verwachting alleen niet genoeg om het noorderlicht te zien?",
+    "route": "aurora"
+  },
+  {
+    "illustration": "assets/geo-waterfall.svg",
+    "alt": "Een rivier stroomt over een rand; water en meegevoerd materiaal eroderen het gesteente.",
+    "explanation": "Water zoekt onder invloed van de zwaartekracht de weg naar beneden. Waar een rivier een steile rand passeert, kan een waterval ontstaan. Hard en zacht gesteente slijten verschillend. Water en meegenomen zand of stenen kunnen de ondergrond uithollen. Nevel ontstaat wanneer vallend water uiteenvalt in kleine druppels.",
+    "field": "Bij Seljalandsfoss en Skógafoss zie je verschillende watervalvormen. Let vanaf het veilige pad op nevel, de rand en de plek waar het water neerkomt.",
+    "question": "Waar verwacht je de meeste slijtage: bovenaan, in de wand of onderaan? Leg uit.",
+    "route": "dag-2"
+  },
+  {
+    "illustration": "assets/geo-basalt.svg",
+    "alt": "Afkoelende lava vormt basalt; golven maken er stenen en zand van.",
+    "explanation": "Basalt is donker vulkanisch gesteente. Als lava afkoelt, krimpt het gesteente en kunnen scheuren ontstaan. Zo kunnen zuilen worden gevormd. Golven breken en verplaatsen gesteente tot kleinere stukken en zand. Een zwart strand is dus een landschap waarin vulkanisme en kustprocessen samen zichtbaar zijn.",
+    "field": "Bij Reynisfjara kun je basaltzuilen en zwart zand herkennen. Blijf ruim uit de buurt van de zee: onverwacht grote golven kunnen ver het strand op komen.",
+    "question": "Welke twee processen zijn nodig om van lava een zwart zandstrand te maken?",
+    "route": "dag-2"
+  },
+  {
+    "illustration": "assets/geo-rift.svg",
+    "alt": "De aardkorst rekt uit; langs breuken zakken delen van het landschap.",
+    "explanation": "Als platen uit elkaar bewegen, wordt de aardkorst uitgerekt. Gesteente kan daarbij langs breuken verschuiven. Delen kunnen ten opzichte van hun omgeving zakken, zodat een slenk ontstaat. De beweging is langzaam, maar maakt op lange termijn grote vormen in het landschap. Spleten kunnen zich met grondwater vullen.",
+    "field": "Bij Þingvellir zie je breuken en hoogteverschillen. Silfra bevat helder grondwater. We wandelen hier; zwemmen hoort niet bij ons programma.",
+    "question": "Wat vertellen een steile breukwand en een lager gelegen strook over de beweging van het gesteente?",
+    "route": "dag-3"
+  },
+  {
+    "illustration": "assets/geo-geyser.svg",
+    "alt": "Water wordt onder druk verhit; stoomexpansie duwt water omhoog.",
+    "explanation": "Een geiser heeft warmte, water en een geschikt ondergronds stelsel van gangen nodig. Onder druk kan water extra heet worden. Als druk verandert en stoom ontstaat, zet die sterk uit. Daardoor wordt water naar boven geduwd. Na de uitbarsting kan het stelsel zich opnieuw vullen en begint het proces weer.",
+    "field": "Bij Strokkur kun je vanaf het afgezette pad letten op de waterbel vlak vóór een uitbarsting. Blijf achter de afzetting: het water is extreem heet.",
+    "question": "Waarom kan een geiser niet op iedere plek met warm water ontstaan?",
+    "route": "dag-4"
+  }
+],
   facts: ['IJsland heeft geen inheemse landreptielen.', 'Reykjavík betekent ongeveer “rookbaai”.', 'Het IJslandse parlement werd in 930 bij Þingvellir opgericht.', 'In februari zijn de dagen kort: perfect om de donkere hemel te bekijken.', 'Het woord “geiser” komt van de IJslandse naam Geysir.'],
   // Voeg afleveringen toe: { title: 'Aflevering 1', description: '...', src: 'audio/aflevering-1.mp3' }
   geo: {

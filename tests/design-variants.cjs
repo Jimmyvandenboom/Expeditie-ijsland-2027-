@@ -48,6 +48,11 @@ const server=http.createServer((req,res)=>{
           assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${design}/${route}/${width}: overflow`);
         }
       }
+      if(design==='v5'){
+        await page.goto(url+'/#home');assert.equal(await page.locator('.mobile-shortcut[href="#podcast"]').count(),1);assert.equal(await page.locator('main a[href="#paklijst"]').count(),0);
+        await page.locator('.bottom-nav a[href="#podcast"]').click();await page.waitForFunction(()=>document.querySelector('.bottom-nav a[aria-current]')?.hash==='#podcast');assert.equal(await page.locator('.bottom-nav a[aria-current]').getAttribute('href'),'#podcast');
+        await page.locator('.bottom-nav a[href="#meer"]').click();await page.locator('main a[href="#paklijst"]').click();await page.getByLabel('Winterjas',{exact:true}).waitFor();assert.ok(await page.getByLabel('Winterjas',{exact:true}).isChecked());assert.equal(await page.locator('.bottom-nav a[aria-current]').getAttribute('href'),'#meer');
+      }else{assert.equal(await page.locator('.bottom-nav a[href="#paklijst"]').count(),1);assert.equal(await page.locator('.bottom-nav a[href="#podcast"]').count(),0);}
       await page.goto(url+'/#programma');assert.equal(await page.locator('.day-card').count(),5);
       for(let day=1;day<=5;day++){
         await page.goto(url+'/#programma');await page.locator(`.day-card[href="#dag-${day}"]`).click();await page.locator('.timeline').waitFor();
