@@ -70,7 +70,7 @@ Voor de browsertest (niet nodig om de app te gebruiken): voer `npm ci` en `npm t
 
 ## Logo in de hero
 
-De homepagina heeft rechtsboven ruimte voor het officiële logo; zonder logo blijft deze ruimte onzichtbaar. Zet het aangeleverde bestand later in `assets/maris-logo.png` en voeg `heroLogo: 'assets/maris-logo.png',` toe aan het object in `data.js`. Voeg dat bestand ook toe aan `FILES` in `sw.js` zodat het offline beschikbaar is, en verhoog de cacheversie. De weergave behoudt de beeldverhouding en reserveert op mobiel voldoende ruimte boven de titel. `assets/iceland.svg` is een lokaal, gestileerd silhouet zonder routes of plaatsnamen.
+De homepagina heeft rechtsboven ruimte voor het officiële logo; zonder logo blijft deze ruimte onzichtbaar. Zet het aangeleverde bestand later in `assets/maris-logo.png` en voeg `heroLogo: 'assets/maris-logo.png',` toe aan het object in `data.js`. Voeg dat bestand ook toe aan `FILES` in `sw.js` zodat het offline beschikbaar is, en verhoog de cacheversie. De weergave behoudt de beeldverhouding en reserveert op mobiel voldoende ruimte boven de titel. `assets/iceland-topography.png` is de lokale topografische homekaart zonder routes of plaatsnamen.
 
 ## Vier permanente stijlen
 
@@ -121,7 +121,7 @@ en het eerste programma-event, in Nederlandse wintertijd (UTC+1).
 Voeg later een podcast toe aan de bestaande `episodes`-lijst met `locationId`
 (gelijk aan het GEO-locatie-id), `title` en `src`; de locatiecard toont dan audio.
 Tot die tijd staat er expliciet ‘Locatiepodcast volgt’. Afbeeldingen en GEO-code
-worden offline opgeslagen door cacheversie v12.
+worden offline opgeslagen door cacheversie v13.
 
 `tests/geo-future.cjs` vergelijkt alle berekende stijlen en afmetingen van V1–V3-hero's met commit
 `fb29c27` en controleert V4 op vier schermbreedtes, countdown-grenzen,
@@ -159,3 +159,15 @@ coördinaten. `audioSrc: null` betekent dat er nog geen podcastaudio bestaat.
 Lege contentvelden zijn gereserveerd voor later; `visited: false` is alleen
 een standaardwaarde voor toekomstige lokale bezoekregistratie. Er wordt
 geen bezoekstatus van leerlingen in de publieke reisdata opgeslagen.
+
+
+### Topografische homekaart
+
+De homekaart gebruikt `assets/iceland-topography.png`: een lokale uitsnede
+van Natural Earth I met echt shaded relief en satelliet-afgeleid landdek,
+gemaskerd met de gedetailleerde Natural Earth 1:10m-kustlijn. Zee is transparant;
+de blauwe kleurtonen en kustverlichting passen bij de expeditie-achtergrond.
+Er zijn geen verzonnen reliëflijnen of AI-geografische vormen toegevoegd.
+Op desktop staat de kaart naast de titel; op telefoon schaalt hij onder de
+titel. Bronvermelding, resolutie, projectie en reproduceerbare bronbestanden
+staan in `assets/map-source/README.md`. De PNG is opgenomen in de offlinecache.

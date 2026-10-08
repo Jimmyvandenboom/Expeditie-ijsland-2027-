@@ -1,0 +1,13 @@
+{
+  "west": -25,
+  "north": 68,
+  "pixelDegrees": 0.016666666666666666,
+  "source": "Natural Earth NE1_HR_LC_SR.tif",
+  "sourceCommit": "f04832c819e7a203d159dffe93cd9245332d6b33",
+  "globalCropPixels": [
+    9300,
+    1320,
+    10080,
+    1680
+  ]
+}

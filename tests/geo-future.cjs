@@ -6,6 +6,11 @@ const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
 const baseline=new Map(['index.html','app.js','data.js','themes.css'].map(file=>[file,execFileSync('git',['show',`fb29c2797b925625c24d19ea3d27bf3d0f5ce0a7:${file}`],{cwd:root})]));
+// Apply the requested map replacement to the baseline; compare all remaining theme styles.
+baseline.set('app.js',Buffer.from(baseline.get('app.js').toString().replace('class="hero-island" src="assets/iceland.svg"','class="hero-island hero-topography" src="assets/iceland-topography.png"')));
+const homeMapCSS=fs.readFileSync(path.join(root,'themes.css'),'utf8').split('/* Topographic home map')[1];
+assert.ok(homeMapCSS,'Explicit home-map styles must exist');
+baseline.set('themes.css',Buffer.concat([baseline.get('themes.css'),Buffer.from('/* Topographic home map'+homeMapCSS)]));
 const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png'};
 function serve(old){return http.createServer((req,res)=>{let file=new URL(req.url,'http://localhost').pathname.slice(1)||'index.html';if(file==='sw.js'){res.writeHead(404);res.end();return;}const target=path.join(root,file);if(!fs.existsSync(target)){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',types[path.extname(file)]||'text/plain');res.end(old&&baseline.has(file)?baseline.get(file):fs.readFileSync(target));});}
 (async()=>{
