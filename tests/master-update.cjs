@@ -15,19 +15,19 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
     await ctx.addInitScript(()=>{if(!localStorage.getItem('expeditie-ijsland-2027-packing'))localStorage.setItem('expeditie-ijsland-2027-packing','["Winterjas"]');});
   const page=await ctx.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(url);assert.ok(await page.locator('#welcome').isVisible());assert.equal(await page.locator('#welcome input').count(),2);assert.equal(await page.locator('#welcome [data-bus]').count(),0);
-  // Layout fixture only; never shipped as a replacement for the official logo.
-  const schoolLogoFixture='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="495" height="430"><rect width="495" height="430" fill="white"/></svg>');
-  await page.evaluate(src=>{EXPEDITION.heroLogo=src;render();},schoolLogoFixture);
+  const schoolLogoSource=await page.evaluate(()=>EXPEDITION.heroLogo);
+  assert.equal(schoolLogoSource,'assets/maris-logo.png');
   for(const design of ['v1','v2','v3','v4'])for(const width of [320,375,1440]){
     await page.evaluate(choice=>applyDesign(choice),design);await page.setViewportSize({width,height:900});
     const logo=page.locator('#welcome .school-logo');await logo.evaluate(img=>img.decode());
+    assert.deepEqual(await logo.evaluate(img=>[img.naturalWidth,img.naturalHeight]),[495,430]);
     const logoBox=await logo.boundingBox(), titleBox=await page.locator('#welcome-title').boundingBox(), inputBox=await page.locator('#welcome input[name=firstName]').boundingBox();
     assert.ok(logoBox.y+logoBox.height<=titleBox.y,'Welcome logo above title');assert.ok(logoBox.y+logoBox.height<inputBox.y,'Welcome logo above name field');
     assert.equal(await logo.evaluate(img=>getComputedStyle(img).objectFit),'contain');
-    assert.equal(await page.locator('.brand .school-logo').getAttribute('src'),schoolLogoFixture);assert.equal(await page.locator('.hero-logo').getAttribute('src'),schoolLogoFixture);
+    assert.equal(await page.locator('.brand .school-logo').getAttribute('src'),schoolLogoSource);assert.equal(await page.locator('.hero-logo').getAttribute('src'),schoolLogoSource);
     assert.ok(await page.locator('#welcome').evaluate(el=>el.scrollWidth<=el.clientWidth),'Welcome has no horizontal clipping');
   }
-  await page.evaluate(()=>{delete EXPEDITION.heroLogo;applyDesign('v1');render();});await page.setViewportSize({width:375,height:812});
+  await page.evaluate(()=>{applyDesign('v1');render();});await page.setViewportSize({width:375,height:812});
   await page.locator('#welcome input[name=firstName]').fill('Testreiziger');await page.locator('#welcome input[name=className]').fill('4T');await page.getByRole('button',{name:'Start mijn expeditie'}).click();
   assert.ok(await page.locator('#welcome').isHidden());assert.ok((await page.locator('.profile-greeting').innerText()).includes('Testreiziger'));assert.equal(await page.locator('.profile-greeting .pill').count(),0);
   await page.reload();assert.ok(await page.locator('#welcome').isHidden());await page.goto(url+'/#paklijst');assert.ok(await page.getByLabel('Winterjas',{exact:true}).isChecked());

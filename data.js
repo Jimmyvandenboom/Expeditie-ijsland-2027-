@@ -1,4 +1,5 @@
 window.EXPEDITION = {
+  heroLogo: 'assets/maris-logo.png',
   title: 'EXPEDITIE IJSLAND 2027', school: 'Maris College Bohemen', dates: '31 januari – 4 februari 2027', travelers: 27,
   practical: { guides: ['Mw. C. de Jong','Mr. J. van den Boom','Mr. Durmaz','Mr. Vink'], accommodation: 'Héraðsskólinn / The Old School', address: 'Laugarbraut 2, 840 Laugarvatn, Iceland', reykjavik: 'Hostel Reykjavík – wordt nog bekendgemaakt.', emergencyMessage: 'Bij een noodgeval: neem direct contact op met één van de begeleiders. Het noodnummer wordt tijdens de informatieavond gedeeld.', communication: 'Teams IJsland 2027' },
   days: [

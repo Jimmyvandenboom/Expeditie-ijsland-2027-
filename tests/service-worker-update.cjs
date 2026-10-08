@@ -56,6 +56,10 @@ const server = http.createServer((req, res) => {
     await page.locator('.hero-island').evaluate(img=>img.decode());
     assert.equal(await page.locator('.hero-island').getAttribute('src'),'assets/iceland-topography.png');
     assert.equal(await page.locator('.hero-island').evaluate(img=>img.naturalWidth),1040);
+    await page.locator('.hero-logo').evaluate(img=>img.decode());
+    assert.equal(await page.locator('.hero-logo').getAttribute('src'),'assets/maris-logo.png');
+    assert.equal(await page.locator('.hero-logo').evaluate(img=>img.naturalWidth),495);
+    assert.equal(await page.locator('.brand .school-logo').getAttribute('src'),'assets/maris-logo.png');
     // Zelfde sw.js, gewijzigde HTML/CSS/JS/data: reconnect moet ook die deployment ophalen.
     console.log('Reconnect check');deployment='next';await context.setOffline(false);
     await page.evaluate(()=>window.dispatchEvent(new Event('online')));
@@ -98,7 +102,7 @@ const server = http.createServer((req, res) => {
     await page.screenshot({path:'/tmp/expeditie-hero-mobile.png',fullPage:true});
     const before = counts['/index.html'];
     await page.evaluate(()=>navigator.serviceWorker.controller.postMessage({type:'CHECK_APP_UPDATE'}));
-    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v14');return Boolean(await cache.match('./app.js'));});
+    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v15');return Boolean(await cache.match('./app.js'));});
     await page.waitForTimeout(400);
     assert.ok(counts['/index.html']-before<=1,'Ongewijzigde bestanden veroorzaken geen reload-loop');
     assert.deepEqual(errors,[]);

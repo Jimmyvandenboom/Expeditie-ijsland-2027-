@@ -1,8 +1,9 @@
-const CACHE = 'expeditie-v14';
-const FILES = ['./index.html','./style.css','./themes.css','./data.js','./app.js','./modules.js','./geo.js','./routes.js','./assets/leaflet/leaflet.js','./assets/leaflet/leaflet.css','./manifest.webmanifest','./assets/landscape.svg','./assets/iceland.svg','./assets/iceland-topography.png','./assets/geo-contours.svg','./assets/geo-atlas.svg','./assets/geo-future-layer.svg','./assets/fresh-landscape.svg','./assets/adventure-landscape.svg','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
+const CACHE = 'expeditie-v15';
+const FILES = ['./index.html','./style.css','./themes.css','./data.js','./app.js','./modules.js','./geo.js','./routes.js','./assets/leaflet/leaflet.js','./assets/leaflet/leaflet.css','./manifest.webmanifest','./assets/landscape.svg','./assets/iceland.svg','./assets/iceland-topography.png','./assets/maris-logo.png','./assets/geo-contours.svg','./assets/geo-atlas.svg','./assets/geo-future-layer.svg','./assets/fresh-landscape.svg','./assets/adventure-landscape.svg','./assets/icon.svg','./assets/icon-192.png','./assets/icon-512.png'];
 const appURLs = new Set(FILES.map(file => new URL(file, self.registration.scope).href));
 const indexURL = new URL('./index.html', self.registration.scope).href;
 let refreshPromise;
+let refreshQueued = false;
 
 // CacheStorage verzorgt offline gebruik. De HTTP-cache mag geen oude deployment leveren.
 async function download(file) {
@@ -11,7 +12,18 @@ async function download(file) {
   return response;
 }
 async function refreshApp(notify) {
-  if (refreshPromise) return refreshPromise;
+  if (refreshPromise) {
+    // Een foreground/reconnect-check tijdens een oudere check verdient een
+    // nieuwe downloadronde: de deployment kan intussen veranderd zijn.
+    if (notify) refreshQueued = true;
+    await refreshPromise;
+    if (refreshQueued) {
+      refreshQueued = false;
+      return refreshApp(true);
+    }
+    return;
+  }
+  refreshQueued = false;
   refreshPromise = (async () => {
     const cache = await caches.open(CACHE);
     const urls = [...appURLs];

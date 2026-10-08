@@ -70,7 +70,7 @@ Voor de browsertest (niet nodig om de app te gebruiken): voer `npm ci` en `npm t
 
 ## Logo in de hero
 
-De homepagina heeft rechtsboven ruimte voor het officiële logo; zonder logo blijft deze ruimte onzichtbaar. Zet het aangeleverde bestand later in `assets/maris-logo.png` en voeg `heroLogo: 'assets/maris-logo.png',` toe aan het object in `data.js`. Voeg dat bestand ook toe aan `FILES` in `sw.js` zodat het offline beschikbaar is, en verhoog de cacheversie. De weergave behoudt de beeldverhouding en reserveert op mobiel voldoende ruimte boven de titel. `assets/iceland-topography.png` is de lokale topografische homekaart zonder routes of plaatsnamen.
+Het originele schoollogo staat rechtsboven in de hero en wordt ook gebruikt in de header en het welkomstscherm. `heroLogo` in `data.js` verwijst naar `assets/maris-logo.png`, dat offline wordt gecachet. De beeldverhouding blijft behouden en mobiel is ruimte boven de titel gereserveerd. `assets/iceland-topography.png` is de lokale topografische homekaart zonder routes of plaatsnamen.
 
 ## Vier permanente stijlen
 
@@ -121,7 +121,7 @@ en het eerste programma-event, in Nederlandse wintertijd (UTC+1).
 Voeg later een podcast toe aan de bestaande `episodes`-lijst met `locationId`
 (gelijk aan het GEO-locatie-id), `title` en `src`; de locatiecard toont dan audio.
 Tot die tijd staat er expliciet ‘Locatiepodcast volgt’. Afbeeldingen en GEO-code
-worden offline opgeslagen door cacheversie v14.
+worden offline opgeslagen door cacheversie v15.
 
 `tests/geo-future.cjs` vergelijkt alle berekende stijlen en afmetingen van V1–V3-hero's met commit
 `fb29c27` en controleert V4 op vier schermbreedtes, countdown-grenzen,
@@ -173,11 +173,10 @@ titel. Bronvermelding, resolutie, projectie en reproduceerbare bronbestanden
 staan in `assets/map-source/README.md`. De PNG is opgenomen in de offlinecache.
 
 
-Het welkomstscherm, de header en de hero delen dezelfde originele asset via
-`heroLogo` in `data.js`. Header en welkomstscherm tonen hun logo alleen als
-die asset is ingesteld; ontbrekende afbeeldingen worden verborgen. Het
-officiële bestand is nog niet toegevoegd omdat het niet als downloadbare
-bijlage beschikbaar is. Voeg na ontvangst `assets/maris-logo.png` toe,
-configureer `heroLogo: 'assets/maris-logo.png'` en neem dit bestaande bestand
-op in `FILES` van de serviceworker. Zo blijft offline installatie volledig: een
-niet-bestaand logobestand wordt nooit aan de verplichte cachelijst toegevoegd.
+Het welkomstscherm, de header en de hero gebruiken hetzelfde originele logo:
+`assets/maris-logo.png`, ingesteld via `heroLogo` in `data.js`. Het bestand is
+byte voor byte gelijk aan de upload uit commit `317afc5`; alleen de bestandsnaam
+is genormaliseerd. De oorspronkelijke kleuren en verhoudingen blijven behouden
+met `height: auto` en `object-fit: contain`. De serviceworker bewaart het logo
+offline in cacheversie v15. Bij een ontbrekend bestand blijven de logoplekken
+verborgen zodat de app bruikbaar blijft.

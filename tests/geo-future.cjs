@@ -6,6 +6,8 @@ const path=require('node:path');
 const {execFileSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
 const baseline=new Map(['index.html','app.js','data.js','themes.css'].map(file=>[file,execFileSync('git',['show',`fb29c2797b925625c24d19ea3d27bf3d0f5ce0a7:${file}`],{cwd:root})]));
+// Compare other hero styles with the explicitly requested original logo enabled.
+baseline.set('data.js',Buffer.from(baseline.get('data.js').toString().replace('window.EXPEDITION = {',"window.EXPEDITION = { heroLogo:'assets/maris-logo.png',")));
 // Apply the requested map replacement to the baseline; compare all remaining theme styles.
 baseline.set('app.js',Buffer.from(baseline.get('app.js').toString().replace('class="hero-island" src="assets/iceland.svg"','class="hero-island hero-topography" src="assets/iceland-topography.png"')));
 const homeMapCSS=fs.readFileSync(path.join(root,'themes.css'),'utf8').split('/* Topographic home map')[1];
