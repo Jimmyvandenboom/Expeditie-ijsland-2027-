@@ -11,7 +11,7 @@ function applyDesign(design) {
   document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#102e35',v4:'#ffffff',v5:'#951b81'}[design];
   updateNavigation();
   window.GeoUI?.refresh();
-  if(homeDesignReady && (!location.hash || location.hash==='#home' || location.hash==='#meer'))render();
+  if(homeDesignReady && (!location.hash || location.hash==='#home' || location.hash==='#meer' || location.hash==='#kaart'))render();
 }
 let homeDesignReady = false;
 let initialDesign = 'v5';
@@ -102,25 +102,27 @@ let factIndex = 0;
 function updateNavigation(){
   const mobile=document.documentElement.dataset.design==='v5';
   const secondary=document.querySelector('[data-secondary-nav]');
+  document.querySelector('[data-extra-packing]').hidden=!mobile;
   secondary.href=mobile?'#podcast':'#paklijst';
   secondary.innerHTML=mobile?`<span aria-hidden="true">🎧</span>Podcast`:`<span aria-hidden="true">♧</span>Paklijst`;
   const page=location.hash.slice(1)||'home';
   const mainPages=['home','programma','kaart','paklijst'];
-  const active=/^dag-[1-5]$/.test(page)?'programma':mobile&&page==='podcast'?'podcast':mobile&&page==='paklijst'?'meer':mainPages.includes(page)?page:'meer';
+  const active=/^dag-[1-5]$/.test(page)?'programma':mobile&&page==='podcast'?'podcast':mainPages.includes(page)?page:'meer';
   document.querySelectorAll('.bottom-nav a,.v5-top-nav a').forEach(link=>{const target=link.closest('.v5-top-nav')&&page==='praktisch'?'praktisch':active;if(link.hash==='#'+target)link.setAttribute('aria-current','page');else link.removeAttribute('aria-current');});
 }
 function render() {
+  window.CurrentLocation?.destroy();
   window.RouteMap?.destroy();
   syncSchoolLogos();
   const page = location.hash.slice(1) || 'home';
   const routes = {home,programma:programme,kaart:mapPage,paklijst:packing,ontdek:discover,podcast,praktisch:practical,meer:more,profiel:profilePage,spelletjes:gamesPage,quiz:quizPage,bingo:bingoPage,raadplek:placesPage,'30seconds':secondsPage,challenges:challengesPage,fotos:photosPage,aurora:auroraPage};
   const match=page.match(/^dag-([1-5])$/);
   main.innerHTML = match ? dayPage(Number(match[1])-1) : (routes[page] || home)();
-  document.title = `${match?D.days[Number(match[1])-1].title:({home:'Home',programma:'Programma',kaart:'Expeditiekaart',paklijst:'Paklijst',ontdek:'Ontdek IJsland',podcast:'Podcast',praktisch:'Praktisch',meer:'Meer',profiel:'Mijn profiel',spelletjes:'Spelletjes',quiz:'IJsland Quiz',bingo:'Busbingo',raadplek:'Raad de plek','30seconds':'IJsland 30 Seconds',challenges:'Challenges',fotos:'Onze expeditie',aurora:'Aurora Watch'}[page] || 'Home')} · Expeditie IJsland 2027`;
+  document.title = `${match?D.days[Number(match[1])-1].title:({home:'Home',programma:'Programma',kaart:'Route',paklijst:'Paklijst',ontdek:'Ontdek IJsland',podcast:'Podcast',praktisch:'Praktisch',meer:'Meer',profiel:'Mijn profiel',spelletjes:'Spelletjes',quiz:'IJsland Quiz',bingo:'Busbingo',raadplek:'Raad de plek','30seconds':'IJsland 30 Seconds',challenges:'Challenges',fotos:'Onze expeditie',aurora:'Aurora Watch'}[page] || 'Home')} · Expeditie IJsland 2027`;
   updateNavigation();
   if(page==='paklijst') updatePacking();
   afterModuleRender(page);
-  if(page==='kaart') window.RouteMap?.mount();
+  if(page==='kaart'){window.RouteMap?.mount();window.CurrentLocation?.mount();}
   window.GeoUI?.refresh();
   window.scrollTo(0,0);
 }

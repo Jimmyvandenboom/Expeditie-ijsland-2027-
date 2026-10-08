@@ -380,3 +380,11 @@ dialog h2{font-size:30px;line-height:1.15}dialog .button{width:100%;margin:8px 0
 [data-design] #design-name{flex-basis:100%;text-align:right;font-size:10px}
 [data-design] main{padding-bottom:24px}
 @media(max-width:750px){[data-design] .design-switcher{margin:16px 18px 110px;padding:12px 10px}[data-design] .design-switcher button{font-size:10px}}
+
+/* Style 1: six readable navigation choices and an opt-in current-location preview. */
+[data-design="v5"] .bottom-nav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:3px;max-width:600px}
+[data-design="v5"] .bottom-nav a{min-width:0;padding-inline:2px;font-size:10px}
+.current-location{padding:18px!important;margin:20px 0 26px;border-radius:18px}
+.current-location-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.current-location-heading h2{font-size:20px;margin:4px 0 0}.current-location-heading .eyebrow{font-size:9px;margin:0}.current-location-heading .button{font-size:11px;padding:10px 12px;white-space:normal;max-width:50%}
+.current-location-map{height:210px;border-radius:12px;background:#e8f5fa;overflow:hidden;isolation:isolate;color:#284450}.current-location-placeholder{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background-image:url('assets/geo-contours.svg');background-size:cover;padding:20px;text-align:center}.current-location-placeholder>span{color:#951b81;font-size:35px}.current-location-placeholder p{font-size:12px;margin:0;color:#5b5268}.current-location-status{font-size:11px;line-height:1.7;margin:12px 0 0;color:var(--muted)}
+@media(max-width:360px){[data-design="v5"] .bottom-nav a{font-size:9px}}

@@ -5,8 +5,8 @@ function routeStops(dayIndex) {
   return D.days[dayIndex].route.map(key => D.routeLocations[key]);
 }
 function routeMapPage() {
-  return heading('OP EXPEDITIE','Kaarten & routes','Kies je dag. Bekijk de route en ontdek alle stops onderweg.') +
-    `<nav class="route-day-selector" aria-label="Kies een route">${D.days.map((day,i)=>`<button type="button" data-route-day="${i}" aria-pressed="${i===selectedRouteDay}"><strong>Dag ${i+1}</strong><span>${e(day.title)}</span></button>`).join('')}</nav><section class="route-explorer" aria-labelledby="route-day-title"><div id="route-day-content"></div><div class="route-map-wrap"><div id="route-map" role="region" aria-label="Interactieve routekaart" tabindex="0"></div><span class="route-north" aria-hidden="true">N ↑</span><button type="button" class="route-fit" id="route-fit">Alle stops ↗</button></div><p class="route-map-status" id="route-map-status" role="status"></p><div id="route-stop-content"></div><div class="route-map-external" id="route-map-external"></div></section>`;
+  return heading('OP EXPEDITIE','Route','Kies je dag. Bekijk de route en ontdek alle stops onderweg.') +
+    `${document.documentElement.dataset.design==='v5'?currentLocationCard():''}<nav class="route-day-selector" aria-label="Kies een route">${D.days.map((day,i)=>`<button type="button" data-route-day="${i}" aria-pressed="${i===selectedRouteDay}"><strong>Dag ${i+1}</strong><span>${e(day.title)}</span></button>`).join('')}</nav><section class="route-explorer" aria-labelledby="route-day-title"><div id="route-day-content"></div><div class="route-map-wrap"><div id="route-map" role="region" aria-label="Interactieve routekaart" tabindex="0"></div><span class="route-north" aria-hidden="true">N ↑</span><button type="button" class="route-fit" id="route-fit">Alle stops ↗</button></div><p class="route-map-status" id="route-map-status" role="status"></p><div id="route-stop-content"></div><div class="route-map-external" id="route-map-external"></div></section>`;
 }
 window.RouteMap = (()=>{
   let map, routeLayer, markers, request, generation=0, retry, tilesUnavailable=false, statusMessage='';

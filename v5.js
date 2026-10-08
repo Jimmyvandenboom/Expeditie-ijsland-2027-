@@ -31,7 +31,7 @@ function dashboardHome() {
 
 // V5 mobile GEO edition: the same data and pages, with shortcuts before field notes.
 function mobileGeoHome(){
-  const shortcuts=[['programma','Programma','Alle vijf reisdagen'],['kaart','Locaties & routes','Stops en GEO-veldwerk'],['podcast','Podcast','Verhalen van onderweg'],['praktisch','Praktische info','Goed voorbereid']];
+  const shortcuts=[['programma','Programma','Alle vijf reisdagen'],['kaart','Route','Stops en GEO-veldwerk'],['podcast','Podcast','Verhalen van onderweg'],['praktisch','Praktische info','Goed voorbereid']];
   const extras=tiles.filter(([route])=>route!=='paklijst'&&!shortcuts.some(([shortcut])=>shortcut===route));
   const first=D.days[0];
   return `<section class="hero mobile-geo-hero"><div class="hero-content"><span class="geo-route-badge">${e(D.geo.badge)}</span><div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><span class="mobile-north" aria-hidden="true">N<br>↑</span></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.</p><div class="hero-meta"><span>${e(D.dates)}</span><span>${D.travelers} reizigers</span></div>${geoHomeIdentity(false)}<a class="button" href="#programma">Ontdek het programma <span>→</span></a><div class="mobile-field-mark" aria-hidden="true">65° N · 19° W <span>GEO / FIELD NOTES</span></div></div></section>
