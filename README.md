@@ -121,7 +121,7 @@ en het eerste programma-event, in Nederlandse wintertijd (UTC+1).
 Voeg later een podcast toe aan de bestaande `episodes`-lijst met `locationId`
 (gelijk aan het GEO-locatie-id), `title` en `src`; de locatiecard toont dan audio.
 Tot die tijd staat er expliciet ‘Locatiepodcast volgt’. Afbeeldingen en GEO-code
-worden offline opgeslagen door cacheversie v13.
+worden offline opgeslagen door cacheversie v14.
 
 `tests/geo-future.cjs` vergelijkt alle berekende stijlen en afmetingen van V1–V3-hero's met commit
 `fb29c27` en controleert V4 op vier schermbreedtes, countdown-grenzen,
@@ -171,3 +171,13 @@ Er zijn geen verzonnen reliëflijnen of AI-geografische vormen toegevoegd.
 Op desktop staat de kaart naast de titel; op telefoon schaalt hij onder de
 titel. Bronvermelding, resolutie, projectie en reproduceerbare bronbestanden
 staan in `assets/map-source/README.md`. De PNG is opgenomen in de offlinecache.
+
+
+Het welkomstscherm, de header en de hero delen dezelfde originele asset via
+`heroLogo` in `data.js`. Header en welkomstscherm tonen hun logo alleen als
+die asset is ingesteld; ontbrekende afbeeldingen worden verborgen. Het
+officiële bestand is nog niet toegevoegd omdat het niet als downloadbare
+bijlage beschikbaar is. Voeg na ontvangst `assets/maris-logo.png` toe,
+configureer `heroLogo: 'assets/maris-logo.png'` en neem dit bestaande bestand
+op in `FILES` van de serviceworker. Zo blijft offline installatie volledig: een
+niet-bestaand logobestand wordt nooit aan de verplichte cachelijst toegevoegd.

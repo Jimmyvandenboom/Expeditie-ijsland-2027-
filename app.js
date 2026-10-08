@@ -47,8 +47,21 @@ function routeLinks(day) {
 function heading(kicker,title,text='') { return `<div class="page-heading"><span class="eyebrow">${kicker}</span><h1>${title}</h1>${text ? `<p>${text}</p>` : ''}</div>`; }
 const tiles = [ ['programma','📅','Programma','5 dagen vol avontuur'],['kaart','🗺️','Expeditiekaart','Volg onze route'],['paklijst','🎒','Paklijst','Klaar voor vertrek?'],['ontdek','🌋','Ontdek IJsland','Het land van vuur & ijs'],['podcast','🎙️','Podcast','Verhalen van onderweg'],['praktisch','🚨','Praktisch','Goed voorbereid op pad'],['spelletjes','🎮','Spelletjes','Quiz, bingo & busplezier'],['fotos','📸','Onze expeditie','Foto’s van onderweg'],['profiel','👤','Mijn profiel','Jouw gegevens & instellingen'] ];
 function tileGrid(items) { return `<div class="tile-grid">${items.map(([href,icon,title,sub]) => `<a class="tile" href="#${href}"><span class="tile-icon">${icon}</span><span><strong>${title}</strong><small>${sub}</small></span><span class="arrow">→</span></a>`).join('')}</div>`; }
+// Header, welcome and hero use the same original asset configured in data.js.
+function schoolLogoMarkup(className) {
+  return D.heroLogo ? `<img class="${className}" src="${e(D.heroLogo)}" alt="Maris College Bohemen" onerror="this.hidden=true" />` : '';
+}
+function syncSchoolLogos() {
+  document.querySelectorAll('[data-school-logo]').forEach(slot=>{
+    slot.replaceChildren();slot.hidden=!D.heroLogo;
+    if(!D.heroLogo)return;
+    const image=document.createElement('img');image.className='school-logo';
+    image.alt='Maris College Bohemen';image.src=D.heroLogo;
+    image.onerror=()=>{slot.hidden=true;};slot.append(image);
+  });
+}
 function home() {
-  return `<section class="hero"><div class="hero-logo-slot">${D.heroLogo ? `<img class="hero-logo" src="${e(D.heroLogo)}" alt="Maris College Bohemen" onerror="this.hidden=true" />` : ''}</div><div class="hero-content"><span class="eyebrow">MARIS COLLEGE BOHEMEN</span>${geoHomeIdentity()}<div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><img class="hero-island hero-topography" src="assets/iceland-topography.png" alt="Topografische kaart van IJsland met werkelijk bergreliëf en gletsjers" width="480" height="330"><img class="geo-atlas" src="assets/geo-atlas.svg" alt="Veldatlas van IJsland met windroos, hoogtelijnen, vulkanen en een schematische route" width="640" height="590"></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.<br>Vijf dagen IJsland die je niet vergeet.</p><div class="hero-meta"><span>📅 ${e(D.dates)}</span><span>👥 ${D.travelers} reizigers</span></div><a class="button" href="#programma">Ontdek het programma <span>→</span></a></div><span class="hero-caption">IJSLAND / LAND VAN VUUR & IJS<br>Illustratie van het IJslandse landschap</span></section>
+  return `<section class="hero"><div class="hero-logo-slot">${schoolLogoMarkup('hero-logo')}</div><div class="hero-content"><span class="eyebrow">MARIS COLLEGE BOHEMEN</span>${geoHomeIdentity()}<div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><img class="hero-island hero-topography" src="assets/iceland-topography.png" alt="Topografische kaart van IJsland met werkelijk bergreliëf en gletsjers" width="480" height="330"><img class="geo-atlas" src="assets/geo-atlas.svg" alt="Veldatlas van IJsland met windroos, hoogtelijnen, vulkanen en een schematische route" width="640" height="590"></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.<br>Vijf dagen IJsland die je niet vergeet.</p><div class="hero-meta"><span>📅 ${e(D.dates)}</span><span>👥 ${D.travelers} reizigers</span></div><a class="button" href="#programma">Ontdek het programma <span>→</span></a></div><span class="hero-caption">IJSLAND / LAND VAN VUUR & IJS<br>Illustratie van het IJslandse landschap</span></section>
   ${geoLocationSection()}${profileGreeting()}<a class="aurora-home panel" href="#aurora"><span>🌌</span><div><strong>Aurora Watch · Laugarvatn</strong><small>Bekijk actuele bronnen en de bewolking →</small></div></a><div class="section-label"><span>JOUW EXPEDITIEGIDS</span><span>01 — 09</span></div>${tileGrid(tiles)}
   <section class="next-card"><div><span class="eyebrow">VOLGENDE AVONTUUR</span><h2>${e(D.days[0].title)}</h2><p>${e(D.days[0].date)} · 08:30 verzamelen bij school</p></div><a class="round-link" aria-label="Bekijk dag 1" href="#dag-1">→</a></section>
   <div class="fact-strip"><span>✦</span><p><strong>Wist je dat?</strong> ${e(D.facts[1])}</p><a href="#ontdek">Ontdek meer →</a></div>`;
@@ -69,6 +82,7 @@ function more() { return heading('NOG MEER EXPEDITIE','Alles voor onderweg.','On
 let factIndex = 0;
 function render() {
   window.RouteMap?.destroy();
+  syncSchoolLogos();
   const page = location.hash.slice(1) || 'home';
   const routes = {home,programma:programme,kaart:mapPage,paklijst:packing,ontdek:discover,podcast,praktisch:practical,meer:more,profiel:profilePage,spelletjes:gamesPage,quiz:quizPage,bingo:bingoPage,raadplek:placesPage,'30seconds':secondsPage,challenges:challengesPage,fotos:photosPage,aurora:auroraPage};
   const match=page.match(/^dag-([1-5])$/);

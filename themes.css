@@ -225,3 +225,9 @@ dialog h2{font-size:30px;line-height:1.15}dialog .button{width:100%;margin:8px 0
 /* Topographic home map: real relief stays readable at phone sizes. */
 .hero-island.hero-topography{opacity:1;object-fit:contain}
 @media(max-width:750px){.hero-heading{flex-wrap:wrap}[data-design] .hero-island.hero-topography{width:min(100%,310px);flex-basis:auto;flex-shrink:0;margin:0 auto 18px}}
+
+/* One original school-logo asset, with intrinsic proportions in all three slots. */
+[data-school-logo][hidden]{display:none}.school-logo{display:block;max-width:100%;height:auto;object-fit:contain;border-radius:7px}
+.brand-logo-slot{flex:0 0 72px;width:72px}.brand-logo-slot .school-logo{width:72px;max-height:64px}
+.welcome-logo-slot{width:156px;max-width:60%;margin:0 auto 24px}.welcome-logo-slot .school-logo{width:156px;max-height:140px}
+@media(max-width:750px){.brand-logo-slot{flex-basis:58px;width:58px}.brand-logo-slot .school-logo{width:58px;max-height:52px}.brand{gap:11px}.welcome-logo-slot{width:138px}.welcome-logo-slot .school-logo{width:138px;max-height:125px}}

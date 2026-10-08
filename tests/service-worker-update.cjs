@@ -82,6 +82,10 @@ const server = http.createServer((req, res) => {
         assert.ok(width<=750 ? island.y>=title.y+title.height-1 : island.x>=title.x+title.width-1,'Kaart blijft naast de titel, of eronder op kleine schermen');
         if (logo) {
           const image=page.locator('.hero-logo');await image.evaluate(img=>img.decode());
+          assert.equal(await page.locator('.brand .school-logo').getAttribute('src'),logo);
+          assert.equal(await page.locator('#welcome .school-logo').getAttribute('src'),logo);
+          assert.equal(await page.locator('.brand .school-logo').evaluate(img=>getComputedStyle(img).objectFit),'contain');
+          assert.equal(await page.locator('#welcome .school-logo').evaluate(img=>getComputedStyle(img).objectFit),'contain');
           const box=await image.boundingBox();
           assert.ok(box.y+box.height<=title.y,'Logo valt niet over de titel');
           assert.equal(await image.evaluate(img=>getComputedStyle(img).objectFit),'contain');
@@ -94,7 +98,7 @@ const server = http.createServer((req, res) => {
     await page.screenshot({path:'/tmp/expeditie-hero-mobile.png',fullPage:true});
     const before = counts['/index.html'];
     await page.evaluate(()=>navigator.serviceWorker.controller.postMessage({type:'CHECK_APP_UPDATE'}));
-    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v13');return Boolean(await cache.match('./app.js'));});
+    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v14');return Boolean(await cache.match('./app.js'));});
     await page.waitForTimeout(400);
     assert.ok(counts['/index.html']-before<=1,'Ongewijzigde bestanden veroorzaken geen reload-loop');
     assert.deepEqual(errors,[]);
