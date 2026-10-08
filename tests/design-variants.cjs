@@ -42,6 +42,8 @@ const server=http.createServer((req,res)=>{
           await page.goto(url+'/#'+route);
           assert.equal(await page.locator('h1').count(),1);
           if(route==='home')assert.equal(await page.locator('.hero-island,.geo-atlas').count(),0);
+          if(design==='v5' && route==='home'){assert.equal(await page.locator('.geo-location-card').count(),0);assert.equal(await page.locator('.mobile-shortcut').count(),4);assert.equal(await page.locator('.mobile-day-strip>a').count(),5);assert.equal(await page.locator('.mobile-departure>small').textContent(),await page.evaluate(()=>EXPEDITION.days[0].events[0][1]+' →'));}
+          if(design==='v5' && route==='kaart')assert.equal(await page.locator('.geo-location-card').count(),await page.evaluate(()=>EXPEDITION.geo.locations.length));
           if(route==='home' && ['v3','v5'].includes(design)){assert.equal(await page.locator('.hero-island,.geo-atlas').count(),0);assert.ok(await page.locator('.geo-route-badge').isVisible());assert.ok(await page.locator('.geo-countdown').isVisible());if(design==='v5')assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--ice').trim()),'#951b81');}
           assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`${design}/${route}/${width}: overflow`);
         }

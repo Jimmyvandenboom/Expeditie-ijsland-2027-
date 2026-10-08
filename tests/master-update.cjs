@@ -24,7 +24,7 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
     const logoBox=await logo.boundingBox(), titleBox=await page.locator('#welcome-title').boundingBox(), inputBox=await page.locator('#welcome input[name=firstName]').boundingBox();
     assert.ok(logoBox.y+logoBox.height<=titleBox.y,'Welcome logo above title');assert.ok(logoBox.y+logoBox.height<inputBox.y,'Welcome logo above name field');
     assert.equal(await logo.evaluate(img=>getComputedStyle(img).objectFit),'contain');
-    assert.equal(await page.locator('.brand .school-logo').getAttribute('src'),schoolLogoSource);assert.equal(await page.locator('.hero-logo').getAttribute('src'),schoolLogoSource);
+    assert.equal(await page.locator('.brand .school-logo').getAttribute('src'),schoolLogoSource);if(design==='v5')assert.equal(await page.locator('.hero-logo').count(),0);else assert.equal(await page.locator('.hero-logo').getAttribute('src'),schoolLogoSource);
     assert.ok(await page.locator('#welcome').evaluate(el=>el.scrollWidth<=el.clientWidth),'Welcome has no horizontal clipping');
   }
   await page.evaluate(()=>{applyDesign('v1');render();});await page.setViewportSize({width:375,height:812});

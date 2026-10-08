@@ -28,3 +28,18 @@ function dashboardHome() {
     <a class="dashboard-aurora" href="#aurora">🌌 Aurora Watch · ${e(D.aurora.location)} <span>Bekijk actuele bronnen →</span></a>
     <div class="dashboard-wave" aria-hidden="true"><svg viewBox="0 0 1440 110" preserveAspectRatio="none"><path d="M0 55Q190-15 420 45T870 55T1440 45V110H0Z" fill="#be72b9"/><path d="M0 75Q190 0 420 65T870 75T1440 55V110H0Z" fill="#e6c4e2"/><path d="M0 110Q180 85 420 105T880 75T1440 80V110Z" fill="#951b81"/></svg></div>`;
 }
+
+// V5 mobile GEO edition: the same data and pages, with shortcuts before field notes.
+function mobileGeoHome(){
+  const shortcuts=[['programma','Programma','Alle vijf reisdagen'],['kaart','Locaties & routes','Stops en GEO-veldwerk'],['paklijst','Paklijst','Klaar voor vertrek'],['praktisch','Praktische info','Goed voorbereid']];
+  const extras=tiles.filter(([route])=>!shortcuts.some(([shortcut])=>shortcut===route));
+  const first=D.days[0];
+  return `<section class="hero mobile-geo-hero"><div class="hero-content"><span class="geo-route-badge">${e(D.geo.badge)}</span><div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><span class="mobile-north" aria-hidden="true">N<br>↑</span></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.</p><div class="hero-meta"><span>${e(D.dates)}</span><span>${D.travelers} reizigers</span></div>${geoHomeIdentity(false)}<a class="button" href="#programma">Ontdek het programma <span>→</span></a><div class="mobile-field-mark" aria-hidden="true">65° N · 19° W <span>GEO / FIELD NOTES</span></div></div></section>
+  <section class="mobile-shortcuts" aria-label="Snel naar">${shortcuts.map(([route,title,subtitle])=>`<a href="#${route}" class="mobile-shortcut">${dashboardIcon(route)}<strong>${title}</strong><small>${subtitle}</small><span aria-hidden="true">↗</span></a>`).join('')}</section>
+  ${profileGreeting()}
+  <section class="mobile-days"><div class="section-label"><span>ONZE REIS · ${D.days.length} DAGEN</span><a href="#programma">Alles bekijken →</a></div><div class="mobile-day-strip">${D.days.map((day,index)=>`<a href="#dag-${index+1}"><strong>DAG ${index+1}</strong><span>${e(day.icon)}</span><h2>${e(day.title)}</h2><small>${e(day.date)}</small></a>`).join('')}</div></section>
+  <a class="mobile-departure" href="#dag-1"><span class="eyebrow">DE START VAN ONZE EXPEDITIE</span><strong>${e(first.title)}</strong><span>${e(first.date)} · ${e(first.events[0][0])}</span><small>${e(first.events[0][1])} →</small></a>
+  <div class="section-label"><span>MEER ONTDEKKEN</span><span>GEO FUTURE ROUTE</span></div>${tileGrid(extras)}
+  <a class="aurora-home panel" href="#aurora"><span>🌌</span><div><strong>Aurora Watch · Laugarvatn</strong><small>Bekijk actuele bronnen en de bewolking →</small></div></a>
+  <div class="fact-strip"><span>✦</span><p><strong>Wist je dat?</strong> ${e(D.facts[1])}</p><a href="#ontdek">Ontdek meer →</a></div>`;
+}

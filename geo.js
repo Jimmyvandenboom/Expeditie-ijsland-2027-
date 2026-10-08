@@ -1,6 +1,6 @@
 // GEO is een presentatielaag op dezelfde componenten en dezelfde centrale reisdata.
-function geoHomeIdentity() {
-  return `<div class="geo-only geo-identity"><span class="geo-route-badge">${e(D.geo.badge)}</span><div class="geo-countdown" aria-label="Countdown tot vertrek"><span class="geo-countdown-label">TOT VERTREK</span><div id="geo-countdown-value"></div><small>Verzamelen op school · Nederlandse tijd</small></div></div>`;
+function geoHomeIdentity(includeBadge=true) {
+  return `<div class="geo-only geo-identity">${includeBadge?`<span class="geo-route-badge">${e(D.geo.badge)}</span>`:''}<div class="geo-countdown" aria-label="Countdown tot vertrek"><span class="geo-countdown-label">TOT VERTREK</span><div id="geo-countdown-value"></div><small>Verzamelen op school · Nederlandse tijd</small></div></div>`;
 }
 function geoLocationSection(dayIndex) {
   const locations = Number.isInteger(dayIndex) ? D.geo.locations.filter(location=>D.days[dayIndex].route.some(stop=>stop.startsWith(location.routeName))) : D.geo.locations;

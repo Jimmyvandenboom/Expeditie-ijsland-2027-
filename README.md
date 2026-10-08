@@ -221,3 +221,5 @@ V6 hergebruikt de mobiele componenten van V4 met het officiële Maris-palet (paa
 V3 is verwijderd uit de kiezer. Een opgeslagen V3-keuze gaat naar V4. Alle homescreens (V1, V2, V4, V5, V6) zijn zonder IJslandillustratie; de interactieve routekaart blijft behouden. PWA-cache: `expeditie-v18`.
 
 De stijlen zijn opeenvolgend hernummerd: oude V4 → V3 (GEO Future), oude V5 → V4 (Maris Reisdashboard), oude V6 → V5 (Maris GEO Mobile). Eenmalige migratie behoudt de gekozen presentatie en alle overige opgeslagen gegevens. V5 heeft een smallere, compactere paarse hero en avontuurkaart. PWA-cache: `expeditie-v19`.
+
+V5 mobiel verfijnd: compacte titel/countdown, vier directe snelkoppelingen, horizontale dagkaarten uit de centrale reisdata en GEO-locatiekaarten op de routepagina. De overige functies blijven bereikbaar. V1–V4 zijn visueel ongewijzigd. PWA-cache: `expeditie-v22`.
