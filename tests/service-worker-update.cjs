@@ -98,7 +98,7 @@ const server = http.createServer((req, res) => {
     await page.screenshot({path:'/tmp/expeditie-hero-mobile.png',fullPage:true});
     const before = counts['/index.html'];
     await page.evaluate(()=>navigator.serviceWorker.controller.postMessage({type:'CHECK_APP_UPDATE'}));
-    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v26');return Boolean(await cache.match('./app.js'));});
+    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v27');return Boolean(await cache.match('./app.js'));});
     await page.waitForTimeout(400);
     assert.ok(counts['/index.html']-before<=1,'Ongewijzigde bestanden veroorzaken geen reload-loop');
     assert.deepEqual(errors,[]);

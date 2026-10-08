@@ -326,7 +326,7 @@ dialog h2{font-size:30px;line-height:1.15}dialog .button{width:100%;margin:8px 0
 [data-design="v5"] .mobile-geo-hero{padding:24px;max-width:none;box-shadow:0 5px 0 #e9dbee;border-bottom:3px solid #00a8e8;border-radius:22px;min-height:0;background-position:center}
 [data-design="v5"] .mobile-geo-hero .hero-content{width:100%}
 [data-design="v5"] .mobile-geo-hero .hero-heading{display:flex;align-items:center;justify-content:space-between;gap:18px}
-[data-design="v5"] .mobile-geo-hero h1{font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:clamp(34px,6vw,54px);letter-spacing:-.05em;line-height:1.02;transform:none;margin:20px 0 14px}
+[data-design="v5"] .mobile-geo-hero h1{font-family:Inter,ui-sans-serif,system-ui,sans-serif;font-size:clamp(34px,6vw,54px);letter-spacing:-.05em;line-height:1.02;transform:rotate(-2deg);transform-origin:left center;margin:20px 0 14px}
 [data-design="v5"] .mobile-geo-hero p{font-size:12px;max-width:280px;margin:0 0 14px}
 [data-design="v5"] .mobile-geo-hero .hero-meta{margin:12px 0 16px;gap:8px 14px;font-size:11px}
 [data-design="v5"] .mobile-geo-hero .geo-identity{margin:0 0 18px;display:block}
