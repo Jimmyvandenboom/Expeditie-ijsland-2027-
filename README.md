@@ -213,3 +213,7 @@ app- en routetests controleren daarnaast alle vijf ontwerpen.
 
 V5 gebruikt de effen kleuren uit het originele logo: paars `#951b81` en
 cyaan `#00a8e8`. Het originele PNG-logobestand is ongewijzigd.
+
+### V6 — Maris GEO Mobile
+
+V6 hergebruikt de mobiele componenten van V4 met het officiële Maris-palet (paars `#951b81`, cyaan `#00a8e8`). De hoogtelijnen, kompasdetails, countdown en GEO-locatiekaarten blijven behouden. V4 en V6 tonen geen IJslandkaart in de hero; de interactieve routekaart blijft werken. V5 blijft de brede dashboardvariant. De kiezer onthoudt alle zes stijlen zonder profiel of paklijst te wijzigen. Serviceworker-cache: `expeditie-v17`.
