@@ -74,7 +74,7 @@ Het originele schoollogo staat rechtsboven in de hero en wordt ook gebruikt in d
 
 ## Vier permanente stijlen
 
-Bovenaan kies je jouw stijl: **V1 / V2 / V3 / V4**. Dit is een permanente keuze voor iedere reiziger.
+Via de stijlkiezer kies je jouw stijl: **V1 / V2 / V3 / V4 / V5**. Dit is een permanente keuze voor iedere reiziger.
 
 - **V1 · Expedition:** het bestaande donkere expeditieontwerp.
 - **V2 · Iceland Fresh:** lichte, ruime kaarten, turquoise accenten en een frisse lokale landschapillustratie.
@@ -82,9 +82,9 @@ Bovenaan kies je jouw stijl: **V1 / V2 / V3 / V4**. Dit is een permanente keuze 
 
 - **V4 · GEO / Iceland Explorer:** cartografisch raster, contouren, kompasdetails en veldwerkstijl.
 
-Het actieve ontwerp wordt gemarkeerd en lokaal onthouden onder `expeditie-ijsland-2027-design`. De paklijst gebruikt zijn bestaande, aparte opslagsleutel. Wisselen verandert alleen CSS en laadt geen aparte app: alle ontwerpen gebruiken dezelfde pagina's, functies en `data.js`. De huidige pagina en aangevinkte items blijven behouden. De varianten staan in `themes.css`; V1 blijft gebaseerd op `style.css`. Alle illustraties zijn lokale SVG-bestanden en werken offline.
+Het actieve ontwerp wordt gemarkeerd en lokaal onthouden onder `expeditie-ijsland-2027-design`. De paklijst gebruikt zijn bestaande, aparte opslagsleutel. Wisselen verandert de presentatie en laadt geen aparte app: alle ontwerpen gebruiken dezelfde pagina's, functies en `data.js`. De huidige pagina en aangevinkte items blijven behouden. De varianten staan in `themes.css`; V1 blijft gebaseerd op `style.css`. Alle afbeeldingen staan lokaal in `assets/` en werken offline.
 
-`npm test` controleert ook alle vier de ontwerpen op vier schermbreedtes, wisselen en herladen, behouden paklijstgegevens, gedeelde gegevenswijzigingen en offline gebruik.
+`npm test` controleert ook alle vijf de ontwerpen op vier schermbreedtes, wisselen en herladen, behouden paklijstgegevens, gedeelde gegevenswijzigingen en offline gebruik.
 
 ## Persoonlijk profiel en Mijn bus
 
@@ -107,7 +107,7 @@ De app probeert rechtstreeks, zonder sleutel of credentials:
 
 Externe requests hebben een timeout en gecontroleerde JSON-invoer. Onbereikbare bronnen, CORS-beperkingen, ongeldige data, verlopen Kp of offline gebruik geven een expliciete fallback. Live data worden niet in de serviceworker-cache opgeslagen; de offline app blijft wel werken. De NOAA- en Open-Meteo-domeinen waren in de bouwomgeving door de netwerkproxy geblokkeerd (HTTP 403). **De live verbinding is daarom niet end-to-end bevestigd.** Fixtures testen geldige, verlopen en ontbrekende data, maar bewijzen geen live bereikbaarheid vanuit GitHub Pages. De officiële link blijft beschikbaar. Een specifieke voorspelling voor 31 januari–2 februari 2027 is pas kort voor vertrek zinvol.
 
-`modules.js` beheert de gedeelde lokale profiel-/spelstaat en de voorbereide serviceadapters. Nieuwe spelinhoud, fotovermeldingen en bronconfiguratie staan centraal in `data.js`. `npm test` test daarnaast onboarding, profiel, bussen, alle vier thema’s, vijf spellen, de foto-/pushinterfaces, Aurora-fixtures, offline herladen en behoud van bestaande paklijstgegevens. Voor online brongebruik gelden de toegangs- en gebruiksvoorwaarden van de aanbieders.
+`modules.js` beheert de gedeelde lokale profiel-/spelstaat en de voorbereide serviceadapters. Nieuwe spelinhoud, fotovermeldingen en bronconfiguratie staan centraal in `data.js`. `npm test` test daarnaast onboarding, profiel, bussen, alle vijf thema’s, vijf spellen, de foto-/pushinterfaces, Aurora-fixtures, offline herladen en behoud van bestaande paklijstgegevens. Voor online brongebruik gelden de toegangs- en gebruiksvoorwaarden van de aanbieders.
 
 ### V4 · GEO Future
 
@@ -121,7 +121,7 @@ en het eerste programma-event, in Nederlandse wintertijd (UTC+1).
 Voeg later een podcast toe aan de bestaande `episodes`-lijst met `locationId`
 (gelijk aan het GEO-locatie-id), `title` en `src`; de locatiecard toont dan audio.
 Tot die tijd staat er expliciet ‘Locatiepodcast volgt’. Afbeeldingen en GEO-code
-worden offline opgeslagen door cacheversie v15.
+worden offline opgeslagen door cacheversie v16.
 
 `tests/geo-future.cjs` vergelijkt alle berekende stijlen en afmetingen van V1–V3-hero's met commit
 `fb29c27` en controleert V4 op vier schermbreedtes, countdown-grenzen,
@@ -141,12 +141,12 @@ geplande reis, geen GPS-positie of live verkeersinformatie.
 
 Alle dagvolgordes komen uit `days[].route` in `data.js`. `routeLocations` bevat
 per unieke locatie één zichtbare naam en afgeronde kaartcoördinaten;
-hetzelfde wordt gebruikt voor alle vier de thema's. De laatst gekozen kaartdag
+hetzelfde wordt gebruikt voor alle vijf de thema's. De laatst gekozen kaartdag
 wordt lokaal onthouden. Stops zijn aanklikbaar en de knop ‘Alle stops’ zoomt
 terug naar de volledige route. De externe Maps-link en de deelroutes voor
 lange routes worden uit dezelfde daggegevens samengesteld.
 
-`tests/route-map.cjs` test alle vijf dagen in vier thema's op telefoon en
+`tests/route-map.cjs` test alle vijf dagen in vijf thema's op telefoon en
 desktop, plus zoom/pan, pop-ups, routevolgorde, herstel na offline gebruik en
 fouten van de routering. Externe diensten gebruiken expliciete testfixtures:
 live OSM/OSRM zijn vanuit deze cloudomgeving geblokkeerd (HTTP 403).
@@ -178,5 +178,38 @@ Het welkomstscherm, de header en de hero gebruiken hetzelfde originele logo:
 byte voor byte gelijk aan de upload uit commit `317afc5`; alleen de bestandsnaam
 is genormaliseerd. De oorspronkelijke kleuren en verhoudingen blijven behouden
 met `height: auto` en `object-fit: contain`. De serviceworker bewaart het logo
-offline in cacheversie v15. Bij een ontbrekend bestand blijven de logoplekken
+offline in cacheversie v16. Bij een ontbrekend bestand blijven de logoplekken
 verborgen zodat de app bruikbaar blijft.
+
+
+### V5 · Maris Reisdashboard
+
+Herstelpunt op GitHub: tag `restore-before-v5-2026-10-08`, gericht op commit
+`8891d53` (vóór de V5-wijzigingen). De ontwerpreferentie staat ongewijzigd in
+`assets/Expeditie IJsland Reisdashboard.png`. Het dashboard is opgebouwd uit
+HTML, CSS en JavaScript, met witte navigatie, paarse pictogrammen/titelvlakken,
+zes klikbare kaarten en een SVG-golf. Er wordt geen volledige screenshot als
+achtergrond of interface gebruikt. De lokale fotografische assets (`v5-*.webp`)
+zijn uitsneden van uitsluitend de fotografie uit de goedgekeurde referentie.
+De echte IJslandkaart blijft de Natural Earth-topografische asset. De
+referentiekaart met onjuiste daglabels/routes wordt niet overgenomen.
+
+Alle links gaan naar bestaande app-pagina's; Downloads, Schoolgids, Groep
+en Werken bij worden niet als nieuwe functies gesuggereerd. Reisdata,
+locaties en het dag-2-onderdeel komen uitsluitend uit `data.js`, dat voor
+V5 ongewijzigd blijft. `v5.js` bevat alleen de presentatie.
+
+V5 is de nieuwe standaard. Bestaande installaties krijgen deze presentatie
+eenmalig; profiel, buskeuze, paklijst en spellen blijven behouden. Daarna
+wordt een eigen keus uit V1–V5 weer gewoon onthouden. De kleine stijlkiezer
+staat bij V5 rechtsonder en V1–V4 blijven beschikbaar. Alle gebruikte assets
+worden offline opgeslagen in cacheversie v16.
+
+`tests/v5-dashboard.cjs` controleert de home-layout op 320, 375, 430 en 1440px,
+kaart/titelplaatsing, actuele gedeelde data, werkende kaarten/links, naamopslag,
+de paklijst bij versie wisselen, offline eerste aanmelding en behoud van
+bestaande gebruikersgegevens tijdens de eenmalige overgang. De algemene
+app- en routetests controleren daarnaast alle vijf ontwerpen.
+
+V5 gebruikt de effen kleuren uit het originele logo: paars `#951b81` en
+cyaan `#00a8e8`. Het originele PNG-logobestand is ongewijzigd.

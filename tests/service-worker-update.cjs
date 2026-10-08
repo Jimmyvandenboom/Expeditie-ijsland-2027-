@@ -32,7 +32,7 @@ const server = http.createServer((req, res) => {
   const browser = await chromium.launch({executablePath:process.env.CHROMIUM_PATH || '/usr/bin/chromium',args:['--no-sandbox']});
   try {
     const context = await browser.newContext({viewport:{width:375,height:812}});
-    await context.addInitScript(()=>{if(!localStorage.getItem('expeditie-ijsland-2027-profile'))localStorage.setItem('expeditie-ijsland-2027-profile',JSON.stringify({firstName:'Test',className:'Testklas',bus:null}));});
+    await context.addInitScript(()=>{localStorage.setItem('expeditie-ijsland-2027-design','v1');localStorage.setItem('expeditie-ijsland-2027-design-release','v5');if(!localStorage.getItem('expeditie-ijsland-2027-profile'))localStorage.setItem('expeditie-ijsland-2027-profile',JSON.stringify({firstName:'Test',className:'Testklas',bus:null}));});
     const page = await context.newPage();
     page.setDefaultTimeout(15000);
     const errors = [];
@@ -102,7 +102,7 @@ const server = http.createServer((req, res) => {
     await page.screenshot({path:'/tmp/expeditie-hero-mobile.png',fullPage:true});
     const before = counts['/index.html'];
     await page.evaluate(()=>navigator.serviceWorker.controller.postMessage({type:'CHECK_APP_UPDATE'}));
-    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v15');return Boolean(await cache.match('./app.js'));});
+    await page.waitForFunction(async()=>{const cache=await caches.open('expeditie-v16');return Boolean(await cache.match('./app.js'));});
     await page.waitForTimeout(400);
     assert.ok(counts['/index.html']-before<=1,'Ongewijzigde bestanden veroorzaken geen reload-loop');
     assert.deepEqual(errors,[]);

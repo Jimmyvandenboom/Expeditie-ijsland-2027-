@@ -17,7 +17,7 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
   await page.goto(url);assert.ok(await page.locator('#welcome').isVisible());assert.equal(await page.locator('#welcome input').count(),2);assert.equal(await page.locator('#welcome [data-bus]').count(),0);
   const schoolLogoSource=await page.evaluate(()=>EXPEDITION.heroLogo);
   assert.equal(schoolLogoSource,'assets/maris-logo.png');
-  for(const design of ['v1','v2','v3','v4'])for(const width of [320,375,1440]){
+  for(const design of ['v1','v2','v3','v4','v5'])for(const width of [320,375,1440]){
     await page.evaluate(choice=>applyDesign(choice),design);await page.setViewportSize({width,height:900});
     const logo=page.locator('#welcome .school-logo');await logo.evaluate(img=>img.decode());
     assert.deepEqual(await logo.evaluate(img=>[img.naturalWidth,img.naturalHeight]),[495,430]);
@@ -33,7 +33,7 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
   await page.reload();assert.ok(await page.locator('#welcome').isHidden());await page.goto(url+'/#paklijst');assert.ok(await page.getByLabel('Winterjas',{exact:true}).isChecked());
   await page.goto(url+'/#profiel');await page.locator('#profile-form input[name=firstName]').fill('Gewijzigd');await page.locator('#profile-form input[name=className]').fill('4B');await page.getByRole('button',{name:'Profiel opslaan'}).click();assert.ok((await page.locator('#profile-saved').innerText()).includes('opgeslagen'));await page.locator('[data-bus="2"]').click();
   await page.reload();assert.equal(await page.locator('#profile-form input[name=firstName]').inputValue(),'Gewijzigd');assert.equal(await page.locator('[data-bus="2"]').getAttribute('aria-pressed'),'true');assert.ok((await page.locator('main').innerText()).includes('geen pushberichten'));assert.equal(await page.evaluate(()=>window.ExpeditionServices.push.enabled),false);
-  for(const design of ['v1','v2','v3','v4']){
+  for(const design of ['v1','v2','v3','v4','v5']){
     await page.locator(`[data-design-choice=${design}]`).click();await page.reload();assert.equal(await page.evaluate(()=>document.documentElement.dataset.design),design);
     for(const width of [320,375,430,1440]){
       await page.setViewportSize({width,height:900});
@@ -64,6 +64,6 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,'http:
   assert.ok(await page.getByLabel('Winterjas',{exact:true}).isChecked());await page.goto(url+'/#profiel');assert.equal(await page.locator('[data-bus="2"]').getAttribute('aria-pressed'),'true');await page.goto(url+'/#bingo');assert.equal(await page.locator('[data-bingo="0"]').getAttribute('aria-pressed'),'true');await page.goto(url+'/#aurora');await page.locator('[data-aurora-refresh]').click();await page.waitForFunction(()=>!auroraState.loading);assert.ok((await page.locator('main').innerText()).includes('offline'));
   // Onboarding itself also works after the shell is installed offline.
   await page.evaluate(()=>localStorage.removeItem('expeditie-ijsland-2027-profile'));await page.reload();assert.ok(await page.locator('#welcome').isVisible());
-  assert.deepEqual(errors,[]);console.log('PASS: four themes, onboarding/profile/bus persistence, old checklist retained, five offline games, photo filters/moderation placeholder, push placeholder, valid/stale/unavailable Aurora fixtures, mobile/desktop and offline onboarding. Live APIs were mocked, not claimed verified.');
+  assert.deepEqual(errors,[]);console.log('PASS: five themes, onboarding/profile/bus persistence, old checklist retained, five offline games, photo filters/moderation placeholder, push placeholder, valid/stale/unavailable Aurora fixtures, mobile/desktop and offline onboarding. Live APIs were mocked, not claimed verified.');
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;}).finally(()=>{server.closeAllConnections();server.close();});

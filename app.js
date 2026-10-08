@@ -1,16 +1,26 @@
 // Eén app, één gegevensbron: de kiezer verandert uitsluitend de CSS-presentatie.
-const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v3: 'Adventure', v4: 'GEO Future' };
+const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v3: 'Adventure', v4: 'GEO Future', v5: 'Maris Reisdashboard' };
 const designStorageKey = 'expeditie-ijsland-2027-design';
 function applyDesign(design) {
-  if (!Object.hasOwn(designNames, design)) design = 'v1';
+  if (!Object.hasOwn(designNames, design)) design = 'v5';
   document.documentElement.dataset.design = design;
   document.querySelectorAll('[data-design-choice]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.designChoice === design)));
   document.querySelector('#design-name').textContent = designNames[design];
-  document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#15221c',v4:'#102e35'}[design];
+  document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#15221c',v4:'#102e35',v5:'#ffffff'}[design];
   window.GeoUI?.refresh();
+  if(homeDesignReady && (!location.hash || location.hash==='#home'))render();
 }
-let initialDesign = 'v1';
-try { initialDesign = localStorage.getItem(designStorageKey) || 'v1'; } catch { /* Default blijft bruikbaar zonder opslag. */ }
+let homeDesignReady = false;
+let initialDesign = 'v5';
+try {
+  // Introduce the approved release once, while preserving profile and checklist.
+  if(localStorage.getItem('expeditie-ijsland-2027-design-release')==='v5') {
+    initialDesign=localStorage.getItem(designStorageKey)||'v5';
+  } else {
+    localStorage.setItem('expeditie-ijsland-2027-design-release','v5');
+    localStorage.setItem(designStorageKey,'v5');
+  }
+} catch { /* Default blijft bruikbaar zonder opslag. */ }
 applyDesign(initialDesign);
 document.querySelector('.design-switcher').addEventListener('click', event => {
   const button = event.target.closest('[data-design-choice]');
@@ -61,6 +71,7 @@ function syncSchoolLogos() {
   });
 }
 function home() {
+  if(document.documentElement.dataset.design==='v5')return dashboardHome();
   return `<section class="hero"><div class="hero-logo-slot">${schoolLogoMarkup('hero-logo')}</div><div class="hero-content"><span class="eyebrow">MARIS COLLEGE BOHEMEN</span>${geoHomeIdentity()}<div class="hero-heading"><h1>Expeditie<br><em>IJsland</em></h1><img class="hero-island hero-topography" src="assets/iceland-topography.png" alt="Topografische kaart van IJsland met werkelijk bergreliëf en gletsjers" width="480" height="330"><img class="geo-atlas" src="assets/geo-atlas.svg" alt="Veldatlas van IJsland met windroos, hoogtelijnen, vulkanen en een schematische route" width="640" height="590"></div><p>Vuur onder je voeten. Noorderlicht boven je hoofd.<br>Vijf dagen IJsland die je niet vergeet.</p><div class="hero-meta"><span>📅 ${e(D.dates)}</span><span>👥 ${D.travelers} reizigers</span></div><a class="button" href="#programma">Ontdek het programma <span>→</span></a></div><span class="hero-caption">IJSLAND / LAND VAN VUUR & IJS<br>Illustratie van het IJslandse landschap</span></section>
   ${geoLocationSection()}${profileGreeting()}<a class="aurora-home panel" href="#aurora"><span>🌌</span><div><strong>Aurora Watch · Laugarvatn</strong><small>Bekijk actuele bronnen en de bewolking →</small></div></a><div class="section-label"><span>JOUW EXPEDITIEGIDS</span><span>01 — 09</span></div>${tileGrid(tiles)}
   <section class="next-card"><div><span class="eyebrow">VOLGENDE AVONTUUR</span><h2>${e(D.days[0].title)}</h2><p>${e(D.days[0].date)} · 08:30 verzamelen bij school</p></div><a class="round-link" aria-label="Bekijk dag 1" href="#dag-1">→</a></section>
@@ -89,7 +100,7 @@ function render() {
   main.innerHTML = match ? dayPage(Number(match[1])-1) : (routes[page] || home)();
   document.title = `${match?D.days[Number(match[1])-1].title:({home:'Home',programma:'Programma',kaart:'Expeditiekaart',paklijst:'Paklijst',ontdek:'Ontdek IJsland',podcast:'Podcast',praktisch:'Praktisch',meer:'Meer',profiel:'Mijn profiel',spelletjes:'Spelletjes',quiz:'IJsland Quiz',bingo:'Busbingo',raadplek:'Raad de plek','30seconds':'IJsland 30 Seconds',challenges:'Challenges',fotos:'Onze expeditie',aurora:'Aurora Watch'}[page] || 'Home')} · Expeditie IJsland 2027`;
   const active = match?'programma':(['ontdek','podcast','praktisch','profiel','spelletjes','quiz','bingo','raadplek','30seconds','challenges','fotos','aurora'].includes(page)?'meer':routes[page]?page:'home');
-  document.querySelectorAll('.bottom-nav a').forEach(link=>{ if(link.hash==='#'+active) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current'); });
+  document.querySelectorAll('.bottom-nav a,.v5-top-nav a').forEach(link=>{ if(link.hash==='#'+(link.closest('.v5-top-nav')&&page==='praktisch'?'praktisch':active)) link.setAttribute('aria-current','page'); else link.removeAttribute('aria-current'); });
   if(page==='paklijst') updatePacking();
   afterModuleRender(page);
   if(page==='kaart') window.RouteMap?.mount();
@@ -106,6 +117,8 @@ main.addEventListener('change',event=>{
 });
 main.addEventListener('click',event=>{ if(event.target.closest('#new-fact')) { factIndex=(factIndex+1)%D.facts.length; document.querySelector('#fact-text').textContent=D.facts[factIndex]; } });
 window.addEventListener('hashchange',()=>{render();main.focus({preventScroll:true});});
+homeDesignReady = true;
+document.querySelectorAll('[data-dashboard-icon]').forEach(slot=>slot.innerHTML=dashboardIcon(slot.dataset.dashboardIcon));
 render();
 initModules();
 window.GeoUI?.start();
