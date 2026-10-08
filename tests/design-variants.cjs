@@ -82,7 +82,7 @@ const server=http.createServer((req,res)=>{
     }
     for(const [oldDesign,newDesign] of [['v4','v3'],['v5','v4'],['v6','v5']]){await page.evaluate(old=>{localStorage.setItem('expeditie-ijsland-2027-design',old);localStorage.setItem('expeditie-ijsland-2027-design-release','v5');localStorage.removeItem('expeditie-ijsland-2027-design-numbering');},oldDesign);await page.reload();assert.equal(await page.evaluate(()=>document.documentElement.dataset.design),newDesign);await page.reload();assert.equal(await page.evaluate(()=>document.documentElement.dataset.design),newDesign);assert.ok(await page.getByLabel('Winterjas',{exact:true}).isChecked());}
     // Ongeldige opgeslagen keus heeft een werkende standaard.
-    await page.evaluate(()=>localStorage.setItem('expeditie-ijsland-2027-design','invalid'));await page.reload();assert.equal(await page.evaluate(()=>document.documentElement.dataset.design),'v4');
+    await page.evaluate(()=>localStorage.setItem('expeditie-ijsland-2027-design','invalid'));await page.reload();assert.equal(await page.evaluate(()=>document.documentElement.dataset.design),'v5');
     assert.deepEqual(errors,[]);
     console.log('PASS: five designs, every page at four widths, active selector and persistence, shared data changes, checklist retained, day buttons/Maps/facts/contacts, offline design selection, no console errors.');
   }finally{await browser.close();}

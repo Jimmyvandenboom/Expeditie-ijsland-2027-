@@ -1,29 +1,30 @@
 // Eén app, één gegevensbron: de kiezer verandert uitsluitend de CSS-presentatie.
 const designNames = { v1: 'Expedition', v2: 'Iceland Fresh', v3: 'GEO Future', v4: 'Maris Reisdashboard', v5: 'Maris GEO Mobile' };
+const styleNumbers = {v5:1,v1:2,v2:3,v3:4,v4:5};
 const designStorageKey = 'expeditie-ijsland-2027-design';
 function applyDesign(design) {
-  if (!Object.hasOwn(designNames, design)) design = 'v4';
+  if (!Object.hasOwn(designNames, design)) design = 'v5';
   try { localStorage.setItem(designStorageKey, design); } catch { /* Opslag is optioneel. */ }
   document.documentElement.dataset.design = design;
   document.querySelectorAll('[data-design-choice]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.designChoice === design)));
-  document.querySelector('#design-name').textContent = `${design.toUpperCase()} · ${designNames[design]}`;
+  document.querySelector('#design-name').textContent = `Stijl ${styleNumbers[design]} · ${designNames[design]}`;
   document.querySelector('meta[name="theme-color"]').content = {v1:'#091823',v2:'#edf7f8',v3:'#102e35',v4:'#ffffff',v5:'#951b81'}[design];
   updateNavigation();
   window.GeoUI?.refresh();
   if(homeDesignReady && (!location.hash || location.hash==='#home' || location.hash==='#meer'))render();
 }
 let homeDesignReady = false;
-let initialDesign = 'v4';
+let initialDesign = 'v5';
 try {
   // Introduce the approved release once, while preserving profile and checklist.
   if(localStorage.getItem('expeditie-ijsland-2027-design-release')==='v5') {
-    initialDesign=localStorage.getItem(designStorageKey)||'v4';
+    initialDesign=localStorage.getItem(designStorageKey)||'v5';
     if(localStorage.getItem('expeditie-ijsland-2027-design-numbering')!=='sequential-5'){
       initialDesign=({v3:'v3',v4:'v3',v5:'v4',v6:'v5'})[initialDesign]||initialDesign;
     }
   } else {
     localStorage.setItem('expeditie-ijsland-2027-design-release','v5');
-    localStorage.setItem(designStorageKey,'v4');
+    localStorage.setItem(designStorageKey,'v5');
   }
   localStorage.setItem('expeditie-ijsland-2027-design-numbering','sequential-5');
 } catch { /* Default blijft bruikbaar zonder opslag. */ }

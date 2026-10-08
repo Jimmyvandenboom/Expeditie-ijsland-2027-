@@ -225,3 +225,5 @@ De stijlen zijn opeenvolgend hernummerd: oude V4 → V3 (GEO Future), oude V5 �
 V5 mobiel verfijnd: compacte titel/countdown, vier directe snelkoppelingen, horizontale dagkaarten uit de centrale reisdata en GEO-locatiekaarten op de routepagina. De overige functies blijven bereikbaar. V1–V4 zijn visueel ongewijzigd. PWA-cache: `expeditie-v22`.
 
 V5: Podcast vervangt Paklijst in de onderste navigatie en in de snelknoppen; Paklijst is bereikbaar via Meer. Ontdek IJsland bevat negen uitklapbare GEO-thema’s met uitgebreide uitleg, lokale schematische SVG-illustraties, reisdaglinks en onderzoeksvragen. Aanvullende inhoud staat centraal in `data.js` (`knowledgeDetails`). Alle visuals worden offline gecachet. Cache: `expeditie-v23`.
+
+De publieke stijlnamen zijn Stijl 1–5. Stijl 1 is de basis (Maris GEO Mobile, intern `v5`); daarna Expedition, Iceland Fresh, GEO Future en Maris Reisdashboard. De kiezer staat in de footer. Nieuwe bezoekers starten met Stijl 1; een bestaande keuze blijft behouden. Cache: `expeditie-v24`.

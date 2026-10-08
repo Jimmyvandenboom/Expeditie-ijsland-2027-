@@ -371,3 +371,12 @@ dialog h2{font-size:30px;line-height:1.15}dialog .button{width:100%;margin:8px 0
 [data-design="v5"] .geo-learning-question{margin-top:20px;border-top:1px dashed #d9bce0;padding-top:16px}
 [data-design="v5"] .geo-learning-question strong{font-size:12px;color:#951b81}
 [data-design="v5"] .geo-learning-question p{font-size:13px;margin:8px 0 0}
+
+/* Public styles 1–5 live below the page; mobile GEO is the default first style. */
+[data-design] .design-switcher{position:relative;inset:auto;margin:12px auto 115px;max-width:720px;background:var(--panel);box-shadow:none;z-index:1}
+[data-design] .design-switcher-buttons{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;width:100%}
+[data-design] .design-switcher button{min-width:0;padding:8px 4px;font-size:11px;white-space:nowrap}
+[data-design] .design-switcher-label{flex-basis:100%;font-size:9px}
+[data-design] #design-name{flex-basis:100%;text-align:right;font-size:10px}
+[data-design] main{padding-bottom:24px}
+@media(max-width:750px){[data-design] .design-switcher{margin:16px 18px 110px;padding:12px 10px}[data-design] .design-switcher button{font-size:10px}}
